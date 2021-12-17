@@ -1,4 +1,4 @@
-| Component                               | Copyright |							| License   |             			
+| Component                               | Copyright 							| License   |             			
 |:---------                               |:-------                 			|:----------|
 | CMSIS                           	      | ARM Limited 						| Apache License 2.0 |  		    	
 | CMSIS Device                    		  | ARM Limited - STMicroelectronics 	| Apache License 2.0 |  	            
