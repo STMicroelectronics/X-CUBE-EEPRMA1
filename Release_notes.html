@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Release Notes for X-CUBE-EEPRMA1 Package</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-4">
+<center>
+<h1 id="release-notes-for-x-cube-eeprma1">Release Notes for <mark>X-CUBE-EEPRMA1</mark></h1>
+<p>Copyright © 2021 STMicroelectronics<br />
+</p>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
+</center>
+<h1 id="purpose">Purpose</h1>
+<p>The <mark>X-CUBE-EEPRMA1</mark> software package is an expansion for STM32Cube. This software is evaluating M24xx I2C and M95xx SPI EEPROM for reading and writing various size chunk of data. It is built on top of STM32Cube software technology that ease portability across different STM32 microcontrollers.</p>
+<p>X-CUBE-EEPRMA1 software features:</p>
+<ul>
+<li>Complete software to build applications using M24xx or M95x based EEPROM</li>
+<li>Easy portability across different MCU families thanks to STM32Cube</li>
+<li>Free user-friendly license terms</li>
+<li>Example implementation available on the board X-NUCLEO-EEPRMA2, STM32 expansion board plugged on top of one NUCLEO-F401RE or NUCLEO-G474RE or NUCLEO-L053R8</li>
+</ul>
+<p>[<img src="_htmresc/SW_Layers.png" alt="The X-CUBE-EEPRMA1 package contents" />]</p>
+<p>Here is the list of references to user documents:</p>
+<ul>
+<li><a href="https://www.st.com/content/st_com/en/stm32cube-ecosystem.html">STM32Cube</a></li>
+<li><a href="https://www.st.com/en/evaluation-tools/stm32-nucleo-boards.html">STM32 Nucleo boards</a></li>
+<li><a href="https://www.st.com/en/evaluation-tools/stm32-nucleo-expansion-boards.html">STM32 Nucleo expansion boards</a></li>
+</ul>
+</div>
+<section id="update-history" class="col-sm-12 col-lg-8">
+<h1>Update History</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V3.1.1 / 14-Dec-2021</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Align to STMicroelectronics.X-CUBE-EEPRMA1.3.1.1.pack for STM32CubeMX 6.4.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update on STM32Cube HAL drivers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Neutral license file added</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aligned for GITHUB Publication</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">Contents</h2>
+<p>The X-CUBE-EEPRMA1 expansion software package comes with a rich set of examples running on STMicroelectronics boards, provided with preconfigured projects for the main supported toolchains.</p>
+<p>Documentation</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Document</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X-CUBE-EEPRMA1 API Description</td>
+<td style="text-align: left;">V3.1.1</td>
+<td style="text-align: left;"><a href="Documentation\X-CUBE-EEPRMA1.chm">CHM</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Getting Started with X-CUBE-EEPRMA1 pack for STM32CubeMX</td>
+<td style="text-align: left;">V3.1.1</td>
+<td style="text-align: left;"><a href="Documentation\STMicroelectronics.X-CUBE-EEPRMA1_GettingStarted.pdf">PDF</a></td>
+</tbody>
+</table>
+<p>Drivers</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32F4xx CMSIS</td>
+<td style="text-align: left;">V2.6.6</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32F4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32F4xx HAL</td>
+<td style="text-align: left;">V1.7.11</td>
+<td style="text-align: left;"><a href="Drivers\STM32F4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32F4xx_Nucleo</td>
+<td style="text-align: left;">V1.2.7</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32F4xx-Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32L0xx CMSIS</td>
+<td style="text-align: left;">V1.9.1</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L0xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32L0xx HAL</td>
+<td style="text-align: left;">V1.10.4</td>
+<td style="text-align: left;"><a href="Drivers\STM32L0xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32L0xx_Nucleo</td>
+<td style="text-align: left;">V2.1.3</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L0xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G4xx CMSIS</td>
+<td style="text-align: left;">V1.2.1</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G4xx HAL</td>
+<td style="text-align: left;">V1.2.1</td>
+<td style="text-align: left;"><a href="Drivers\STM32L4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
+<td style="text-align: left;">V1.0.2</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L4xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA1</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA1\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA2</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA2\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p>Projects</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Projects</td>
+<td style="text-align: left;">V3.1.1</td>
+<td style="text-align: left;"><a href="Projects\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Not Any</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.50.9</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.32.0</li>
+<li>STM32CubeIDE V1.7.0</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>STM32F401RE devices and STM32F401RE-Nucleo board RevC</li>
+<li>STM32L053R8 devices and STM32L053R8-Nucleo board RevC</li>
+<li>STM32G474RG devices and STM32G474RG-Nucleo board RevC</li>
+<li>M24xx, M95xx, X-NUCLEO-EEPRMA1 and X-NUCLEO-EEPRMA2 board </li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V3.1.0 / 23-June-2021</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Align to STMicroelectronics.X-CUBE-EEPRMA1.3.1.0.pack for STM32CubeMX 6.3.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update on STM32Cube HAL drivers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Add support to Example Selector in STM32CubeMX</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bug fix in GCC compiler for Linux compatibilty</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">Contents</h2>
+<p>The X-CUBE-EEPRMA1 expansion software package comes with a rich set of examples running on STMicroelectronics boards, provided with preconfigured projects for the main supported toolchains.</p>
+<p>Documentation</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Document</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X-CUBE-EEPRMA1 API Description</td>
+<td style="text-align: left;">V3.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Documentation\X-CUBE-EEPRMA1.chm">CHM</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Getting Started with X-CUBE-EEPRMA1 pack for STM32CubeMX</td>
+<td style="text-align: left;">V3.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Documentation\STMicroelectronics.X-CUBE-EEPRMA1_GettingStarted.pdf">PDF</a></td>
+</tbody>
+</table>
+<p>Drivers</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32F4xx CMSIS</td>
+<td style="text-align: left;">V2.6.6</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32F4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32F4xx HAL</td>
+<td style="text-align: left;">V1.7.11</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32F4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32F4xx_Nucleo</td>
+<td style="text-align: left;">V1.2.7</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32F4xx-Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32L0xx CMSIS</td>
+<td style="text-align: left;">V1.9.1</td>
+<td style="text-align: left;"><a href="http://www.apache.org/licenses/">Apache License v2.0</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L0xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32L0xx HAL</td>
+<td style="text-align: left;">V1.10.4</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32L0xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32L0xx_Nucleo</td>
+<td style="text-align: left;">V2.1.3</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L0xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G4xx CMSIS</td>
+<td style="text-align: left;">V1.2.1</td>
+<td style="text-align: left;"><a href="http://www.apache.org/licenses/">Apache License v2.0</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G4xx HAL</td>
+<td style="text-align: left;">V1.2.1</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32L4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
+<td style="text-align: left;">V1.0.2</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L4xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA1</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA1\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA2</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA2\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p>Projects</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Projects</td>
+<td style="text-align: left;">V3.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Projects\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Not Any</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.50.9</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.32.0</li>
+<li>STM32CubeIDE V1.6.1</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>STM32F401RE devices and STM32F401RE-Nucleo board RevC</li>
+<li>STM32L053R8 devices and STM32L053R8-Nucleo board RevC</li>
+<li>STM32G474RG devices and STM32G474RG-Nucleo board RevC</li>
+<li>M24xx, M95xx, X-NUCLEO-EEPRMA1 and X-NUCLEO-EEPRMA2 board </li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V3.0.0 / 24-Sept-2020</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">BSP Driver development as per the STM32CubeMX Model</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X-CUBE-EEPRMA1 Integration with STM32CubeMX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Application support for X-NUCLEO-EEPRMA1 and X-NUCLEO-EEPRMA2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Align to STMicroelectronics.X-CUBE-EEPRMA1.3.0.0.pack for STM32CubeMX v6.0.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">Contents</h2>
+<p>The X-CUBE-EEPRMA1 expansion software package comes with a rich set of examples running on STMicroelectronics boards, provided with preconfigured projects for the main supported toolchains.</p>
+<p>Documentation</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Document</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X-CUBE-EEPRMA1 API Description</td>
+<td style="text-align: left;">V3.0.0</td>
+<td style="text-align: left;"><a href="https://www.st.com/content/st_com/en/search.html#q=SLA0077-t=resources-page=1">SLA0077</a></td>
+<td style="text-align: left;"><a href="Documentation\X-CUBE-EEPRMA1.chm">CHM</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Getting Started with X-CUBE-EEPRMA1 pack for STM32CubeMX</td>
+<td style="text-align: left;">V3.0.0</td>
+<td style="text-align: left;"><a href="https://www.st.com/content/st_com/en/search.html#q=SLA0077-t=resources-page=1">SLA0077</a></td>
+<td style="text-align: left;"><a href="Documentation\STMicroelectronics.X-CUBE-EEPRMA1_GettingStarted.pdf">PDF</a></td>
+</tbody>
+</table>
+<p>Drivers</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32F4xx CMSIS</td>
+<td style="text-align: left;">V2.6.5</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32F4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32F4xx HAL</td>
+<td style="text-align: left;">V1.7.9</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32F4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32F4xx_Nucleo</td>
+<td style="text-align: left;">V1.2.7</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32F4xx-Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32L0xx CMSIS</td>
+<td style="text-align: left;">V1.9.0</td>
+<td style="text-align: left;"><a href="http://www.apache.org/licenses/">Apache License v2.0</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L0xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32L0xx HAL</td>
+<td style="text-align: left;">V1.10.3</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32L0xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32L0xx_Nucleo</td>
+<td style="text-align: left;">V2.1.2</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L0xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G4xx CMSIS</td>
+<td style="text-align: left;">V1.2.0</td>
+<td style="text-align: left;"><a href="http://www.apache.org/licenses/">Apache License v2.0</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G4xx HAL</td>
+<td style="text-align: left;">V1.2.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32L4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
+<td style="text-align: left;">V1.0.1</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L4xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA1</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="https://www.st.com/content/st_com/en/search.html#q=SLA0077-t=resources-page=1">SLA0077</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA1\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA2</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="https://www.st.com/content/st_com/en/search.html#q=SLA0077-t=resources-page=1">SLA0077</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA2\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Not Any</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.50.4</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.31.0</li>
+<li>STM32CubeIDE V1.6.1</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>STM32F401RE devices and STM32F401RE-Nucleo board RevC</li>
+<li>STM32L053R8 devices and STM32L053R8-Nucleo board RevC</li>
+<li>STM32G474RG devices and STM32G474RG-Nucleo board RevC</li>
+<li>M24xx, M95xx, X-NUCLEO-EEPRMA1 and X-NUCLEO-EEPRMA2 board </li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+</section>
+</div>
+<footer class="sticky">
+<div class="columns">
+<div class="column" style="width:95%;">
+<p>For complete documentation on <strong>X-CUBE-EEPRMA1</strong>, visit: <a href="https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32cube-expansion-packages/x-cube-eeprma1.html">www.st.com</a></p>
+</div><div class="column" style="width:5%;">
+<p><abbr title="Based on template cx566953 version 2.0">Info</abbr></p>
+</div>
+</div>
+</footer>
+</body>
+</html>
