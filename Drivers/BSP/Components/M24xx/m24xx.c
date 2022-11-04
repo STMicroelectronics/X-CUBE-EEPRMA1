@@ -262,6 +262,28 @@ int32_t M24_i2c_WritePage(M24_Object_t *pObj, uint8_t * pData, const uint32_t Ta
     return status; 
 }
 
+
+uint32_t  _Get_Address_PageID(uint32_t PageSizeByte,uint32_t Address)
+{
+   return Address / PageSizeByte;
+}
+
+static uint32_t  _Get_PageID_FirstAddress(uint32_t PageSizeByte,uint32_t PageID)
+{
+   return PageID * PageSizeByte;
+}
+
+static uint32_t  _Get_Address_PageOffset(uint32_t PageSizeByte,uint32_t Address)
+{
+   return Address % PageSizeByte;
+}
+
+
+static uint32_t _Min(uint32_t A , uint32_t B)
+{
+	return A < B ? A : B;
+}
+
 /**
   * @brief  Write N data bytes starting from specified I2C Address
   * @param  pData : pointer of the data to write
@@ -272,92 +294,69 @@ int32_t M24_i2c_WritePage(M24_Object_t *pObj, uint8_t * pData, const uint32_t Ta
   * @retval EEPROMEX enum status
   */
 
-int32_t M24_i2c_WriteData(M24_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr,
-                                          const uint16_t PageSize, const uint16_t Size )
+int32_t M24_i2c_WriteData(M24_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr,const uint16_t PageSize, const uint16_t Size )
 {
-  
- uint32_t iNumberOfPage;
-  int32_t status = M24_OK;
-  uint32_t targetAddress = TarAddr;
-  /*to handle dynamically start writing address*/
-  if (targetAddress >= PageSize)
-    {
-     iNumberOfPage =  Size / PageSize;
-    if ((targetAddress % PageSize) > 0)
-      {
-      iNumberOfPage += 1;
-      } 
-    }
-  else  
-    {
-    iNumberOfPage = ( targetAddress + Size ) / PageSize;
-    }
-  
-  uint32_t iRemainder = ( targetAddress + Size ) % PageSize;
-  uint8_t * pageIndex = pData;
-    
- if (iRemainder>0)
-  {
-    iNumberOfPage += 1;
-  }
+
+	/*5.1.2 Page write
+	The page write mode allows up to #PageSize byte to be written in a single write cycle, provided that they are all located
+	in the same page in the memory: that is, the most significant memory address bits, A15/A6, are the same.
+	If more bytes are sent than will fit up to the end of the page, a “roll-over” occurs, i.e. the bytes exceeding the page end
+	are written on the same page, from location 0.*/
+
+	//Note : I assume that data size fit check is already done by upper layer
+	//Note : i2c frame length is not limited, some i2c controller have limitation on i2c transaction length (126 byte on NXP lpi2c for exemple)
+	//Todo : Check i2c transaction max length
+
+	//Check on how many page the write request will spread
+	uint32_t LastAddressW = TarAddr + Size - 1;
+	uint32_t FirstPageID = _Get_Address_PageID(PageSize,TarAddr);
+	uint32_t LastPageID = _Get_Address_PageID(PageSize,LastAddressW);
+	//If the write request is on multiple page, we will have to split into multiple i2c transaction (see 5.1.2)
+	uint32_t RequestedTransaction = 1 + LastPageID - FirstPageID;
+
+	int32_t status = M24_OK;
+	uint16_t ByteToWrite = Size;
+	uint16_t ByteWrited = 0;
+	uint32_t TransactionSize = 0;
+	uint32_t TransactionWAddr = 0;
   
   if (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK )
   {
     return M24_TIMEOUT;
   }  
   
-  if (targetAddress == 0)       /*If target address from which read/write will be done starts from 0*/  
-  {
-    for (int index = 0;index < iNumberOfPage;index++)
-    {   
-       uint32_t iSize = PageSize;
-       if (index+1 == iNumberOfPage)     /*For aligning last page of eeprom*/
-        iSize = iRemainder;
-          
-       
-       if (pObj->IO.Address == 0xA8)
-        status = pObj->IO.WriteReg(pObj->IO.Address, targetAddress,  pageIndex, iSize );
-       else
-         status = pObj->IO.WriteReg16(pObj->IO.Address, targetAddress,  pageIndex, iSize );
-       
-        pObj->IO.Delay(6);
-        targetAddress += iSize;
-        pageIndex += iSize;
-        while (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK ) {}; 
-        
-     }
-     return status;    
-  }
-  else
-  {
-    for(int index = 0;index < iNumberOfPage;index++)
-    {
-        uint32_t iSize = PageSize;
-       if (index == 0) /*For aligning first page*/
-        { 
-          if (targetAddress <= PageSize)
-            iSize = (PageSize - targetAddress)>0? (PageSize - targetAddress) : PageSize;
-          else
-            iSize = PageSize - (targetAddress % PageSize); 
-        }
-          
-        if (index+1 == iNumberOfPage) /*For aligning last page of eeprom*/
-          iSize = iRemainder;
-         
-       if (pObj->IO.Address == 0xA8)
-    	   status = pObj->IO.WriteReg(pObj->IO.Address, targetAddress,  pageIndex, iSize );
-       else
-    	   status = pObj->IO.WriteReg16(pObj->IO.Address, targetAddress,  pageIndex, iSize );
-       
-        pObj->IO.Delay(6);
-        targetAddress += iSize;
-        pageIndex += iSize;
-                   
-        while (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK ) {}; 
-        
-     }
-     return status;     
-  }  
+  	for(uint8_t Transaction = 0; Transaction < RequestedTransaction ; Transaction++)
+	{
+	  if(Transaction == 0)
+	  {
+		 TransactionWAddr = TarAddr;
+		 //Todo : Check i2c transaction max length, implement limitation if required
+		 //The first transaction can start at any address of the page
+		 TransactionSize = _Min(PageSize - _Get_Address_PageOffset(PageSize,TarAddr),ByteToWrite);
+	  }
+	  else
+	  {
+		 //Other transaction start aligned with first page address
+		 TransactionWAddr = TarAddr + ByteWrited;
+		 TransactionSize = _Min(PageSize,ByteToWrite);
+	  }
+
+	  if (pObj->IO.Address == 0xA8)
+	  {
+		  status = pObj->IO.WriteReg(pObj->IO.Address, TransactionWAddr,  pData + ByteWrited, TransactionSize );
+	  }
+	  else
+	  {
+		  status = pObj->IO.WriteReg16(pObj->IO.Address, TransactionWAddr,  pData + ByteWrited, TransactionSize );
+	  }
+
+	 pObj->IO.Delay(6);
+	 ByteToWrite -= TransactionSize;
+	 ByteWrited += TransactionSize;
+
+	 while (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK ) {};
+	}
+
 }
 
 /**
