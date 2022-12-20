@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -141,6 +141,7 @@ int32_t BSP_SPI1_SendRecv(uint8_t *pTxData, uint8_t *pRxData, uint16_t Length);
 int32_t BSP_SPI1_RegisterDefaultMspCallbacks (void);
 int32_t BSP_SPI1_RegisterMspCallbacks (BSP_SPI_Cb_t *Callbacks);
 #endif /* (USE_HAL_SPI_REGISTER_CALLBACKS == 1U) */
+
 /* BUS IO driver over I2C Peripheral */
 HAL_StatusTypeDef MX_I2C1_Init(I2C_HandleTypeDef* hi2c);
 int32_t BSP_I2C1_Init(void);

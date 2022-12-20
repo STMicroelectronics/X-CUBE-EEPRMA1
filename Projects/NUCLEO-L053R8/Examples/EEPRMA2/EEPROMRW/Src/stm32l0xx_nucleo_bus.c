@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -760,7 +760,7 @@ static void I2C1_MspDeInit(I2C_HandleTypeDef* i2cHandle)
   * @brief  Convert the SPI baudrate into prescaler.
   * @param  clock_src_hz : SPI source clock in HZ.
   * @param  baudrate_mbps : SPI baud rate in mbps.
-  * @retval Prescaler dividor
+  * @retval Prescaler divisor
   */
 static uint32_t SPI_GetPrescaler( uint32_t clock_src_hz, uint32_t baudrate_mbps )
 {

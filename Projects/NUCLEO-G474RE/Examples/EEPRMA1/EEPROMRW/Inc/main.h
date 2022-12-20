@@ -30,6 +30,7 @@ extern "C" {
 #include "stm32g4xx_hal.h"
 
 #include "eeprma1_conf.h"
+#include "com_conf.h"
 #include "stm32g4xx_nucleo.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -68,6 +69,7 @@ void Error_Handler(void);
 #define T_SWCLK_GPIO_Port GPIOA
 #define T_SWO_Pin GPIO_PIN_3
 #define T_SWO_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

@@ -22,7 +22,7 @@
 #define  __RTE_COMPONENTS_H__
 
 /* Defines ------------------------------------------------------------------*/
-/* STMicroelectronics.X-CUBE-EEPRMA1.3.1.1 */
+/* STMicroelectronics.X-CUBE-EEPRMA1.4.1.0 */
 #define EEPRMA1_EEPROMRW_DEMO
 #define EEPRMA1
 

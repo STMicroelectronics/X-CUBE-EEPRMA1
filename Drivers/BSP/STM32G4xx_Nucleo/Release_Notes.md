@@ -17,12 +17,6 @@ Copyright &copy; 2018 STMicroelectronics\
 :::
 :::
 
-# License
-
-This software component is licensed by ST under BSD 3-Clause license, the "License"; You may not use this component except in compliance with the License. You may obtain a copy of the License at:
-
-[https://opensource.org/licenses/BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
-
 # Purpose
 
 This driver provides a set of functions to manage:
@@ -35,6 +29,45 @@ This driver provides a set of functions to manage:
 
 ::: {.col-sm-12 .col-lg-8}
 # Update History
+::: {.collapse}
+<input type="checkbox" id="collapse-section4" aria-hidden="true">
+<label for="collapse-section4" aria-hidden="true">V1.0.4 / 10-November-2021</label>
+<div>			
+
+### Maintenance release
+
+Maintenance release of B-G474E-DPOW1 board drivers
+
+
+## Contents
+
+  Headline
+  --------
+  All source files: update disclaimer to add reference to the new license agreement.
+  Add README.md, rename License.md (capitalize) for GitHub publication.
+
+  : Additional features
+
+## Development Toolchains and Compilers
+- IAR Embedded Workbench for ARM (EWARM) toolchain V8.50.4 + ST-Link
+- RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.31 + ST-Link
+- CubeIDE toolchain V1.6.0
+
+## Supported Devices and Boards
+- STM32G4xx devices
+- STM32G431KB-Nucleo32 (MB1430)
+- STM32G431RB-Nucleo64 (MB1367)
+- STM32G474RE-Nucleo64 (MB1367)
+- STM32G491RE-Nucleo64 (MB1367)
+ 
+## Known limitations
+
+## Backward compatibility
+
+This release is compatible with previous version
+
+</div>
+:::
 ::: {.collapse}
 <input type="checkbox" id="collapse-section3" aria-hidden="true">
 <label for="collapse-section3" aria-hidden="true">V1.0.2 / 15-January-2021</label>

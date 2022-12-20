@@ -517,4 +517,3 @@ int32_t M24_i2c_LockStatus(M24_Object_t *pObj, uint8_t * pData )
  * @}
  */
 
-/******************* (C) COPYRIGHT 2020 STMicroelectronics *****END OF FILE****/

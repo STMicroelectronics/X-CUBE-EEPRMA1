@@ -643,24 +643,7 @@ void EEPRMA2_M24MemorySizeLocator(uint32_t Instance)
   }
 }
 
-///**
-//  * @brief  This function give high on selected control pin
-//  * @param  pin : selected control pin
-//  * @retval None
-//  */
-//void EEPROMEX_CTRL_HIGH(const uint8_t pin ){
-//  HAL_GPIO_WritePin(EEPROMEX_CtrlPin[pin].EEPROMEX_PIN_PORT,EEPROMEX_CtrlPin[pin].EEPROMEX_PIN,GPIO_PIN_SET);
-//}
 
-/////**
-//  * @brief  This function give low on selected control pin
-//  * @param  pin : selected control pin
-//  * @retval None
-//  */
-//void EEPROMEX_CTRL_LOW(const uint8_t pin){  
-// 
-//  HAL_GPIO_WritePin(EEPROMEX_CtrlPin[pin].EEPROMEX_PIN_PORT,EEPROMEX_CtrlPin[pin].EEPROMEX_PIN,GPIO_PIN_RESET);  
-//}
 /**
  * @}
  */
@@ -673,4 +656,3 @@ void EEPRMA2_M24MemorySizeLocator(uint32_t Instance)
  * @}
  */
 
-/******************* (C) COPYRIGHT 2018 STMicroelectronics *****END OF FILE****/

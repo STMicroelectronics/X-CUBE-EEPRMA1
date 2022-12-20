@@ -47,8 +47,6 @@ extern "C" {
 
 #define EEPRMA2_SPI_Init         BSP_SPI1_Init
 #define EEPRMA2_SPI_DeInit       BSP_SPI1_DeInit
-//#define EEPRMA2_SPI_ReadReg      BSP_SPI1_Recv
-//#define EEPRMA2_SPI_WriteReg     BSP_SPI1_Send  
 #define EEPRMA2_SPI_Recv         BSP_SPI1_Recv
 #define EEPRMA2_SPI_Send         BSP_SPI1_Send
 #define EEPRMA2_SPI_SendRecv     BSP_SPI1_SendRecv
@@ -61,4 +59,3 @@ extern "C" {
 
 #endif /* __EEPRMA2_CONF_H__*/
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

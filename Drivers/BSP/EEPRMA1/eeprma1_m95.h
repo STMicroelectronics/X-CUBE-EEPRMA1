@@ -143,4 +143,3 @@ void EEPRMA1_GPIO_Init( void );
 #endif
 #endif /* __X_NUCLEO_EEPRMA_H */
 
-/******************* (C) COPYRIGHT 2018 STMicroelectronics *****END OF FILE****/

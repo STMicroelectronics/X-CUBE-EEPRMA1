@@ -1,12 +1,13 @@
+
 /**
   ******************************************************************************
-  * @file           : stmicroelectronics_x-cube-eeprma1_3_1_1.h
+  * @file           : app_x-cube-eeprma1.h
   * @brief          :  This file provides code for the configuration
-  *						of the STMicroelectronics.X-CUBE-EEPRMA1.3.1.1 instances.
+  *						of the EEPRMA2 instances.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -17,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __INIT_H
-#define __INIT_H
+#ifndef __APP_X_CUBE_EEPRMA1_H
+#define __APP_X_CUBE_EEPRMA1_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -32,6 +33,5 @@ void MX_EEPROM_Process(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /* __INIT_H */
+#endif /* __APP_X_CUBE_EEPRMA1_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

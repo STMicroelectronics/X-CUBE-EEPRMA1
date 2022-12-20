@@ -183,12 +183,13 @@ int32_t M95_spi_ReadByte(M95_Object_t *pObj, uint8_t * const pData, const uint32
   */
 int32_t M95_spi_ReadPage(M95_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr, const uint16_t PageSize )
 {    		
-//  if ( M95_spi_IsDeviceReady() != M95_OK ) 
-//  {
-//    return M95_ERROR;
-//  }
- return pObj->IO.IsReady( pObj->IO.Address );
- // return IO_M95func.ReadBuffer( pData, TarAddr, IO_M95func.Address, PageSize, EEPROMEX_READ );
+  int32_t status = M95_OK;
+  
+  while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {};
+  
+  status = M95_spi_ReadData( pObj, pData, TarAddr, PageSize );
+  
+  return status;
 }
 /**
   * @brief  Read N bytes starting from specified SPI address
@@ -202,7 +203,7 @@ int32_t M95_spi_ReadData( M95_Object_t *pObj,uint8_t * pData, const uint32_t Tar
 { 
   int32_t status = M95_OK;
   uint32_t targetAddress = TarAddr;
-  //M95_spi_IsDeviceReady();
+  
   pObj->IO.IsReady( pObj->IO.Address );
   
   if (pObj->IO.Address == 0xC6)     /* Required for 4Kb SPI EEPROM only*/
@@ -237,7 +238,7 @@ int32_t M95_spi_ReadData( M95_Object_t *pObj,uint8_t * pData, const uint32_t Tar
 int32_t M95_spi_WriteByte(M95_Object_t *pObj,uint8_t * pData, const uint32_t TarAddr)
 {
   int32_t status;
- // M95_spi_IsDeviceReady();
+ 
   pObj->IO.IsReady( pObj->IO.Address );
   /* Condition Matters only for 4Kb SPI ie M95040, for others EEPROMEX_WRITE & EEPROMEX_UPWRITE are same */
   if (pObj->IO.Address == 0xC6)
@@ -250,27 +251,28 @@ int32_t M95_spi_WriteByte(M95_Object_t *pObj,uint8_t * pData, const uint32_t Tar
   else
     status = pObj->IO.WriteBuffer( pData, TarAddr, pObj->IO.Address, 1 ,EEPROMEX_WRITE);
   
-//  M95_spi_IsDeviceReady();
+
   pObj->IO.IsReady( pObj->IO.Address );
   return status;
 }
 
-/*
+/**
   * @brief  Write maximum of pagesize bytes starting from specified SPI Address
   * @param  pData : pointer of the data to write
   * @param  TarAddr : SPI data memory address to write
   * @param  PageSize : Size of the page of selected memory
   * @param  NbByte : number of bytes to write
   * @retval M95 status
-*/
+  */
 
 int32_t M95_spi_WritePage( M95_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr, 
                                           const uint16_t PageSize,const uint16_t NByte)
 {
   int32_t status = M95_OK;
-//  M95_spi_IsDeviceReady();  
-//  status = IO_M95func.WriteBuffer( pData,  TarAddr, IO_M95func.Address, PageSize, EEPROMEX_WRITE);
-//  M95_spi_IsDeviceReady();
+  while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {};
+    
+  status = M95_spi_WriteData(pObj, pData, TarAddr , PageSize, NByte );
+  
   return status;
 }
 
@@ -322,7 +324,7 @@ int32_t M95_spi_WriteData(M95_Object_t *pObj, uint8_t * pData, const uint32_t Ta
     iNumberOfPage += 1;
   }
   
-//  if ( M95_spi_IsDeviceReady() != M95_OK )
+
   if (pObj->IO.IsReady( pObj->IO.Address ) !=M95_OK)
   {
     return M95_ERROR;
@@ -356,7 +358,7 @@ int32_t M95_spi_WriteData(M95_Object_t *pObj, uint8_t * pData, const uint32_t Ta
          
         targetAddress += iSize;
         pageIndex += iSize;
-       // while( M95_spi_IsDeviceReady() != M95_OK ) {}; 
+       
         while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {}; 
         pObj->IO.Delay(6);
      }
@@ -418,35 +420,39 @@ int32_t M95_spi_WriteID(M95_Object_t *pObj ,uint8_t * pData, const uint32_t TarA
                                const uint16_t PageSize, const uint16_t NbByte)
 {
   int32_t status = M95_OK;
-//  uint32_t mem_addr = TarAddr;
-//  uint8_t *pdata_index = (uint8_t *)pData;
-//  uint16_t  count;
-//  uint16_t temp = PageSize;
-//  uint16_t  bitcount = BITCOUNT;
-//  uint32_t mask = 0 ;         
-//  if ( M95_spi_IsDeviceReady() != M95_OK )
-//  {
-//    return M95_ERROR;
-//  }  
-//  while( temp / ( 1 << bitcount ) != 0 )
-//  {  /* Generate mask for address*/
-//   mask |= ( 1 << (bitcount - 1) );
-//   bitcount++;
-//  }
-//  mem_addr &= mask;                        /* Mask address according to pagesize*/
-//  count = PageSize - TarAddr % PageSize;  /* Calculate available space in the ID page */
-//  if ( TarAddr % PageSize == 0 && NbByte <= PageSize )
-//  {  /*If adress is aligned to page */
-//    status = IO_M95func.WriteBuffer( pdata_index, mem_addr, IO_M95func.Address, NbByte, EEPROMEX_WRID );
-//  }
-//  else if ( NbByte <= count )
-//  {  /* Address byte is not aligned with page and no byte must be less than free bytes in ID page*/
-//    status = IO_M95func.WriteBuffer( pdata_index, mem_addr, IO_M95func.Address, NbByte, EEPROMEX_WRID );
-//  }
-//  else 
-//    return M95_ERROR;   /* Return error if above two condtions does'nt met */
-//  M95_spi_IsDeviceReady();
-  return status; 
+  
+    uint32_t temp_TarAddr;
+  while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {};
+  
+  switch(pObj->IO.Address)
+  {
+  case 0xC6:
+    temp_TarAddr = TarAddr & 0x0F;    
+    break;
+    
+  case 0xC9:
+    temp_TarAddr = TarAddr & 0x3F;
+    break;
+    
+  case 0xCC:
+    temp_TarAddr = TarAddr & 0x1FF;
+    break;
+    
+  default:
+    return M95_ERROR; 
+    
+  }
+  
+  if((temp_TarAddr + NbByte) >= PageSize)
+  {
+    return M95_ADDR_OVERFLOW;
+  }
+  else
+  {
+    status = pObj->IO.WriteBuffer( pData, temp_TarAddr, pObj->IO.Address, NbByte, EEPROMEX_WRID);    
+  }
+  
+  return status;
 }
 
 /**
@@ -460,28 +466,39 @@ int32_t M95_spi_WriteID(M95_Object_t *pObj ,uint8_t * pData, const uint32_t TarA
 int32_t M95_spi_ReadID( M95_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr,
                                        const uint16_t PageSize, const uint16_t NbByte )
 {
+  
   int32_t status = M95_OK;
-//  uint32_t mem_addr;
-//  uint16_t count;
-//  uint16_t temp;  
-//  uint8_t bitcount;
-//  uint32_t mask;
-//  M95_spi_IsDeviceReady();
-//  mask = 0;
-//  bitcount = BITCOUNT;
-//  temp = PageSize; 
-//  mem_addr = TarAddr;
-//  while( temp / ( 1 << bitcount ) != 0 )
-//  {
-//   mask |= ( 1 << (bitcount - 1) );
-//   bitcount++;
-//  }
-//  mem_addr &= mask;
-//  count = PageSize - mem_addr % PageSize;
-//  if ( count > NbByte )
-//    status =  IO_M95func.ReadBuffer( pData, TarAddr, IO_M95func.Address, NbByte, EEPROMEX_RDID );
-//  else
-//    status =  IO_M95func.ReadBuffer( pData, TarAddr, IO_M95func.Address, count, EEPROMEX_RDID );
+  uint32_t temp_TarAddr;
+  while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {};
+  
+  switch(pObj->IO.Address)
+  {
+  case 0xC6:
+    temp_TarAddr = TarAddr & 0x0F;    
+    break;
+    
+  case 0xC9:
+    temp_TarAddr = TarAddr & 0x3F;
+    break;
+    
+  case 0xCC:
+    temp_TarAddr = TarAddr & 0x1FF;
+    break;
+    
+  default:
+    return M95_ERROR; 
+    
+  }
+  
+  if((temp_TarAddr + NbByte) >= PageSize)
+  {
+    return M95_ADDR_OVERFLOW;
+  }
+  else
+  {
+    status = pObj->IO.ReadBuffer( pData, temp_TarAddr, pObj->IO.Address, NbByte, EEPROMEX_RDID);    
+  }
+  
   return status;
 }
 
@@ -492,9 +509,12 @@ int32_t M95_spi_ReadID( M95_Object_t *pObj, uint8_t * pData, const uint32_t TarA
   */
 int32_t M95_spi_LockStatus( M95_Object_t *pObj, uint8_t * pData )
 {
+  int32_t status = M95_OK;
+  while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {};
   
-//    return IO_M95func.ReadBuffer( pData, ADDRLID_SPI, IO_M95func.Address, 1, EEPROMEX_RDLS );
- return M95_OK;
+  status = pObj->IO.ReadBuffer(pData, ADDRLID_SPI, pObj->IO.Address, 1, EEPROMEX_RDLS);
+  
+  return status;
 }
 
 /**
@@ -504,9 +524,20 @@ int32_t M95_spi_LockStatus( M95_Object_t *pObj, uint8_t * pData )
 int32_t M95_spi_LockID(M95_Object_t *pObj)
 {
   int32_t status = M95_OK;
-//  uint8_t lock_data = LOCKDATA_SPI;
-//  status = IO_M95func.WriteBuffer( &lock_data, ADDRLID_SPI, IO_M95func.Address, 1, EEPROMEX_LID );
-//  while( M95_spi_IsDeviceReady() != M95_OK ) {}; 
+  uint8_t lock_data;
+  while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {};
+  
+  if(pObj->IO.Address == 0xCC)
+  {
+    lock_data = LOCKDATA_SPI_M04;    
+  }
+  else
+  {
+    lock_data = LOCKDATA_SPI;    
+  }
+  
+  status = pObj->IO.WriteBuffer( &lock_data, ADDRLID_SPI, pObj->IO.Address, 1, EEPROMEX_LID);  
+
   return status;
 }  
 
@@ -526,5 +557,4 @@ int32_t M95_spi_LockID(M95_Object_t *pObj)
  * @}
  */
 
-/******************* (C) COPYRIGHT 2017 STMicroelectronics *****END OF FILE****/
 

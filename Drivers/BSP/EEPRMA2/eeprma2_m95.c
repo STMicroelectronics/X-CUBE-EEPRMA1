@@ -897,4 +897,3 @@ void EEPRMA2_M95MemorySizeLocator(uint32_t Instance)
  * @}
  */
 
-/******************* (C) COPYRIGHT 2018 STMicroelectronics *****END OF FILE****/

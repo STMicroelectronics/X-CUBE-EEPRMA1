@@ -56,6 +56,7 @@
   
 #define ADDRLID_SPI             0x0480    
 #define LOCKDATA_SPI            0x02
+#define LOCKDATA_SPI_M04        0x01
     
 #define BITCOUNT                0x01  /* Initial count value */
 #define IDMASK                  0x04  /* Mask fith bit of I2C mem device address */
@@ -188,23 +189,12 @@ extern M95_Drv_t M95_spi_Drv;
 /* Exported macro ------------------------------------------------------------*/
 /* Imported functions ------------------------------------------------------- */
 
-// extern EEPROMEX_StatusTypeDef M95_IO_Init( void );
-// extern EEPROMEX_StatusTypeDef M95_IO_DeInit( void );
-// extern EEPROMEX_StatusTypeDef M95_IO_MemWrite( const uint8_t * const pData,const uint8_t DevAddr, const uint32_t TarAddr,  const uint16_t Size, const uint8_t Inst );
-// extern EEPROMEX_StatusTypeDef M95_IO_MemRead(uint8_t * const pData, const uint32_t TarAddr, const uint8_t TargetName, const uint16_t Size, const uint8_t Inst  );
-// extern EEPROMEX_StatusTypeDef M95_IO_WriteCmd( const uint8_t TxData, const uint8_t DevAddr);
-// extern EEPROMEX_StatusTypeDef M95_IO_Write( const uint8_t TxData);
-// extern EEPROMEX_StatusTypeDef M95_IO_IsDeviceReady( const uint8_t DevAddr, const uint32_t Trials );
 int32_t M95_IO_ReadReg(uint8_t * const pData);
-// extern EEPROMEX_StatusTypeDef M95_IO_WriteReg( const uint8_t Data, const uint8_t DevAddr );
-// extern EEPROMEX_StatusTypeDef M95_IO_WriteID( const uint8_t * const pData, const uint8_t DevAddr, const uint32_t TarAddr,const uint16_t Size );
-// extern EEPROMEX_StatusTypeDef M95_IO_ReadID( uint8_t * const pData, const uint32_t TarAddr, const uint8_t DevAddr, const uint16_t Size );
 
 /** @addtogroup M95xx_Private_Functions
  * @{
  */
-//int32_t M95040_RegisterBusIO(M95_Object_t *pObj, M95_IO_t *pIOM95040);
-//int32_t M95256_RegisterBusIO(M95_Object_t *pObj, M95_IO_t *pIOM95256);
+
 int32_t M95_RegisterBusIO(M95_Object_t *pObj, M95_IO_t *pIO);
 int32_t M95_spi_Init( M95_Object_t *pObj );
 int32_t M95_spi_DeInit( M95_Object_t *pObj );
@@ -247,4 +237,3 @@ int32_t M95_spi_LockStatus( M95_Object_t *pObj,uint8_t * pData);
 #endif
 #endif /* __M95_XX_H */
 
-/******************* (C) COPYRIGHT 2018 STMicroelectronics *****END OF FILE****/

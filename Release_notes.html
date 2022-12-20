@@ -25,18 +25,18 @@
 <div class="col-sm-12 col-lg-4">
 <center>
 <h1 id="release-notes-for-x-cube-eeprma1">Release Notes for <mark>X-CUBE-EEPRMA1</mark></h1>
-<p>Copyright © 2021 STMicroelectronics<br />
+<p>Copyright © 2022 STMicroelectronics<br />
 </p>
 <a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
 <h1 id="purpose">Purpose</h1>
-<p>The <mark>X-CUBE-EEPRMA1</mark> software package is an expansion for STM32Cube. This software is evaluating M24xx I2C and M95xx SPI EEPROM for reading and writing various size chunk of data. It is built on top of STM32Cube software technology that ease portability across different STM32 microcontrollers.</p>
+<p>The <mark>X-CUBE-EEPRMA1</mark> software package is an expansion for STM32Cube. This software is evaluating M24xx I2C, M95xx and M95P32 SPI EEPROM for reading and writing various size chunk of data. It is built on top of STM32Cube software technology that ease portability across different STM32 microcontrollers.</p>
 <p>X-CUBE-EEPRMA1 software features:</p>
 <ul>
-<li>Complete software to build applications using M24xx or M95x based EEPROM</li>
+<li>Complete software to build applications using M24xx or M95x or M95P32 based EEPROM</li>
 <li>Easy portability across different MCU families thanks to STM32Cube</li>
 <li>Free user-friendly license terms</li>
-<li>Example implementation available on the board X-NUCLEO-EEPRMA2, STM32 expansion board plugged on top of one NUCLEO-F401RE or NUCLEO-G474RE or NUCLEO-L053R8</li>
+<li>Example implementation available on the board X-NUCLEO-EEPRMA2, X-NUCLEO-PGEEZ1, STM32 expansion board plugged on top of one NUCLEO-F401RE or NUCLEO-G474RE or NUCLEO-L053R8 or NUCLEO-H743ZI</li>
 </ul>
 <p>[<img src="_htmresc/SW_Layers.png" alt="The X-CUBE-EEPRMA1 package contents" />]</p>
 <p>Here is the list of references to user documents:</p>
@@ -49,7 +49,351 @@
 <section id="update-history" class="col-sm-12 col-lg-8">
 <h1>Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V3.1.1 / 14-Dec-2021</label>
+<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V4.1.0 / 23-November-2022</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Align to STMicroelectronics.X-CUBE-EEPRMA1.4.1.0 pack for STM32CubeMX 6.6.1(X-NUCLEO-EEPRMA1, X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update on BSP drivers for X-NUCLEO-PGEEZ1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">Contents</h2>
+<p>The X-CUBE-EEPRMA1 expansion software package comes with a rich set of examples running on STMicroelectronics boards, provided with preconfigured projects for the main supported toolchains.</p>
+<p>Documentation</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Document</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X-CUBE-EEPRMA1 API Description</td>
+<td style="text-align: left;">V4.1.0</td>
+<td style="text-align: left;"><a href="Documentation\X-CUBE-EEPRMA1.chm">CHM</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Getting Started with X-CUBE-EEPRMA1 pack for STM32CubeMX</td>
+<td style="text-align: left;">V4.1.0</td>
+<td style="text-align: left;"><a href="Documentation\STMicroelectronics.X-CUBE-EEPRMA1_GettingStarted.pdf">PDF</a></td>
+</tbody>
+</table>
+<p>Drivers</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32F4xx CMSIS</td>
+<td style="text-align: left;">V2.6.8</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32F4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32F4xx HAL</td>
+<td style="text-align: left;">V1.8.0</td>
+<td style="text-align: left;"><a href="Drivers\STM32F4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32F4xx_Nucleo</td>
+<td style="text-align: left;">V1.2.8</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32F4xx-Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32L0xx CMSIS</td>
+<td style="text-align: left;">V1.9.2</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L0xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32L0xx HAL</td>
+<td style="text-align: left;">V1.10.5</td>
+<td style="text-align: left;"><a href="Drivers\STM32L0xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32L0xx_Nucleo</td>
+<td style="text-align: left;">V2.1.3</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L0xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G4xx CMSIS</td>
+<td style="text-align: left;">V1.2.2</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32G4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G4xx HAL</td>
+<td style="text-align: left;">V1.2.2</td>
+<td style="text-align: left;"><a href="Drivers\STM32G4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
+<td style="text-align: left;">V1.0.4</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32G4xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32H7xx CMSIS</td>
+<td style="text-align: left;">V1.10.2</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32H7xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7xx HAL</td>
+<td style="text-align: left;">V1.11.0</td>
+<td style="text-align: left;"><a href="Drivers\STM32H7xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32H7xx_Nucleo</td>
+<td style="text-align: left;">V1.3.1</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32H7xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA1</td>
+<td style="text-align: left;">V2.0.1</td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA1\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA2</td>
+<td style="text-align: left;">V2.0.1</td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA2\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-PGEEZ1</td>
+<td style="text-align: left;">V1.1.0</td>
+<td style="text-align: left;"><a href="Drivers\BSP\PGEEZ1\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p>Projects</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Projects</td>
+<td style="text-align: left;">V4.1.0</td>
+<td style="text-align: left;"><a href="Projects\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Not Any</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.37.0.0</li>
+<li>STM32CubeIDE V1.10.1</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>STM32F401RE devices and STM32F401RE-Nucleo board RevC</li>
+<li>STM32L053R8 devices and STM32L053R8-Nucleo board RevC</li>
+<li>STM32G474RG devices and STM32G474RG-Nucleo board RevC</li>
+<li>STM32H743ZI devices and STM32H743ZI-Nucleo board RevE</li>
+<li>M24xx, M95xx, M95P32, X-NUCLEO-EEPRMA1, X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1 board </li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V4.0.0 / 21-August-2022</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Align to STMicroelectronics.X-CUBE-EEPRMA1.4.0.0 pack for STM32CubeMX 6.6.1(X-NUCLEO-EEPRMA1, X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update on STM32Cube HAL drivers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Neutral license file added</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aligned for GITHUB Publication</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">Contents</h2>
+<p>The X-CUBE-EEPRMA1 expansion software package comes with a rich set of examples running on STMicroelectronics boards, provided with preconfigured projects for the main supported toolchains.</p>
+<p>Documentation</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Document</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X-CUBE-EEPRMA1 API Description</td>
+<td style="text-align: left;">V4.0.0</td>
+<td style="text-align: left;"><a href="Documentation\X-CUBE-EEPRMA1.chm">CHM</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Getting Started with X-CUBE-EEPRMA1 pack for STM32CubeMX</td>
+<td style="text-align: left;">V4.0.0</td>
+<td style="text-align: left;"><a href="Documentation\STMicroelectronics.X-CUBE-EEPRMA1_GettingStarted.pdf">PDF</a></td>
+</tbody>
+</table>
+<p>Drivers</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32F4xx CMSIS</td>
+<td style="text-align: left;">V2.6.8</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32F4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32F4xx HAL</td>
+<td style="text-align: left;">V1.8.0</td>
+<td style="text-align: left;"><a href="Drivers\STM32F4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32F4xx_Nucleo</td>
+<td style="text-align: left;">V1.2.8</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32F4xx-Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32L0xx CMSIS</td>
+<td style="text-align: left;">V1.9.2</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L0xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32L0xx HAL</td>
+<td style="text-align: left;">V1.10.5</td>
+<td style="text-align: left;"><a href="Drivers\STM32L0xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32L0xx_Nucleo</td>
+<td style="text-align: left;">V2.1.3</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L0xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G4xx CMSIS</td>
+<td style="text-align: left;">V1.2.2</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32G4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G4xx HAL</td>
+<td style="text-align: left;">V1.2.2</td>
+<td style="text-align: left;"><a href="Drivers\STM32G4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
+<td style="text-align: left;">V1.0.4</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32G4xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32H7xx CMSIS</td>
+<td style="text-align: left;">V1.10.2</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32H7xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7xx HAL</td>
+<td style="text-align: left;">V1.11.0</td>
+<td style="text-align: left;"><a href="Drivers\STM32H7xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32H7xx_Nucleo</td>
+<td style="text-align: left;">V1.3.1</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32H7xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA1</td>
+<td style="text-align: left;">V2.0.1</td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA1\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA2</td>
+<td style="text-align: left;">V2.0.1</td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA2\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-PGEEZ1</td>
+<td style="text-align: left;">V1.0.0</td>
+<td style="text-align: left;"><a href="Drivers\BSP\PGEEZ1\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p>Projects</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Projects</td>
+<td style="text-align: left;">V4.0.0</td>
+<td style="text-align: left;"><a href="Projects\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Not Any</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.37.0.0</li>
+<li>STM32CubeIDE V1.10.1</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>STM32F401RE devices and STM32F401RE-Nucleo board RevC</li>
+<li>STM32L053R8 devices and STM32L053R8-Nucleo board RevC</li>
+<li>STM32G474RG devices and STM32G474RG-Nucleo board RevC</li>
+<li>STM32H743ZI devices and STM32H743ZI-Nucleo board RevE</li>
+<li>M24xx, M95xx, M95P32, X-NUCLEO-EEPRMA1, X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1 board </li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V3.1.1 / 14-Dec-2021</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="product-update">Product update</h3>
@@ -140,17 +484,17 @@
 <tr class="odd">
 <td style="text-align: left;">STM32G4xx CMSIS</td>
 <td style="text-align: left;">V1.2.1</td>
-<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L4xx\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32G4xx\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32G4xx HAL</td>
 <td style="text-align: left;">V1.2.1</td>
-<td style="text-align: left;"><a href="Drivers\STM32L4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32G4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
 <td style="text-align: left;">V1.0.2</td>
-<td style="text-align: left;"><a href="Drivers\BSP\STM32L4xx_Nucleo\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32G4xx_Nucleo\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">BSP X-NUCLEO-EEPRMA1</td>
@@ -203,7 +547,7 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V3.1.0 / 23-June-2021</label>
+<input type="checkbox" id="collapse-section4" checked aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V3.1.0 / 23-June-2021</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="product-update">Product update</h3>
@@ -236,7 +580,6 @@
 <tr class="header">
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
-<th style="text-align: left;">License</th>
 <th style="text-align: left;">Document</th>
 </tr>
 </thead>
@@ -244,13 +587,11 @@
 <tr class="odd">
 <td style="text-align: left;">X-CUBE-EEPRMA1 API Description</td>
 <td style="text-align: left;">V3.1.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Documentation\X-CUBE-EEPRMA1.chm">CHM</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Getting Started with X-CUBE-EEPRMA1 pack for STM32CubeMX</td>
 <td style="text-align: left;">V3.1.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Documentation\STMicroelectronics.X-CUBE-EEPRMA1_GettingStarted.pdf">PDF</a></td>
 </tbody>
 </table>
@@ -260,7 +601,6 @@
 <tr class="header">
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
-<th style="text-align: left;">License</th>
 <th style="text-align: left;">Release note</th>
 </tr>
 </thead>
@@ -268,67 +608,56 @@
 <tr class="odd">
 <td style="text-align: left;">STM32F4xx CMSIS</td>
 <td style="text-align: left;">V2.6.6</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32F4xx\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32F4xx HAL</td>
 <td style="text-align: left;">V1.7.11</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\STM32F4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">BSP STM32F4xx_Nucleo</td>
 <td style="text-align: left;">V1.2.7</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\BSP\STM32F4xx-Nucleo\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32L0xx CMSIS</td>
 <td style="text-align: left;">V1.9.1</td>
-<td style="text-align: left;"><a href="http://www.apache.org/licenses/">Apache License v2.0</a></td>
 <td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L0xx\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STM32L0xx HAL</td>
 <td style="text-align: left;">V1.10.4</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\STM32L0xx_HAL_Driver\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">BSP STM32L0xx_Nucleo</td>
 <td style="text-align: left;">V2.1.3</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\BSP\STM32L0xx_Nucleo\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STM32G4xx CMSIS</td>
 <td style="text-align: left;">V1.2.1</td>
-<td style="text-align: left;"><a href="http://www.apache.org/licenses/">Apache License v2.0</a></td>
-<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L4xx\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32G4xx\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32G4xx HAL</td>
 <td style="text-align: left;">V1.2.1</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
-<td style="text-align: left;"><a href="Drivers\STM32L4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32G4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
 <td style="text-align: left;">V1.0.2</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
-<td style="text-align: left;"><a href="Drivers\BSP\STM32L4xx_Nucleo\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32G4xx_Nucleo\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">BSP X-NUCLEO-EEPRMA1</td>
 <td style="text-align: left;">V2.0.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\BSP\EEPRMA1\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">BSP X-NUCLEO-EEPRMA2</td>
 <td style="text-align: left;">V2.0.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\BSP\EEPRMA2\Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
@@ -339,7 +668,6 @@
 <tr class="header">
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
-<th style="text-align: left;">License</th>
 <th style="text-align: left;">Release note</th>
 </tr>
 </thead>
@@ -347,7 +675,6 @@
 <tr class="odd">
 <td style="text-align: left;">Projects</td>
 <td style="text-align: left;">V3.1.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Projects\Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
@@ -374,7 +701,7 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V3.0.0 / 24-Sept-2020</label>
+<input type="checkbox" id="collapse-section5" checked aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V3.0.0 / 24-Sept-2020</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="product-update">Product update</h3>
@@ -407,7 +734,6 @@
 <tr class="header">
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
-<th style="text-align: left;">License</th>
 <th style="text-align: left;">Document</th>
 </tr>
 </thead>
@@ -415,13 +741,11 @@
 <tr class="odd">
 <td style="text-align: left;">X-CUBE-EEPRMA1 API Description</td>
 <td style="text-align: left;">V3.0.0</td>
-<td style="text-align: left;"><a href="https://www.st.com/content/st_com/en/search.html#q=SLA0077-t=resources-page=1">SLA0077</a></td>
 <td style="text-align: left;"><a href="Documentation\X-CUBE-EEPRMA1.chm">CHM</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Getting Started with X-CUBE-EEPRMA1 pack for STM32CubeMX</td>
 <td style="text-align: left;">V3.0.0</td>
-<td style="text-align: left;"><a href="https://www.st.com/content/st_com/en/search.html#q=SLA0077-t=resources-page=1">SLA0077</a></td>
 <td style="text-align: left;"><a href="Documentation\STMicroelectronics.X-CUBE-EEPRMA1_GettingStarted.pdf">PDF</a></td>
 </tbody>
 </table>
@@ -431,7 +755,6 @@
 <tr class="header">
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Version</th>
-<th style="text-align: left;">License</th>
 <th style="text-align: left;">Release note</th>
 </tr>
 </thead>
@@ -439,67 +762,56 @@
 <tr class="odd">
 <td style="text-align: left;">STM32F4xx CMSIS</td>
 <td style="text-align: left;">V2.6.5</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32F4xx\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32F4xx HAL</td>
 <td style="text-align: left;">V1.7.9</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\STM32F4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">BSP STM32F4xx_Nucleo</td>
 <td style="text-align: left;">V1.2.7</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\BSP\STM32F4xx-Nucleo\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32L0xx CMSIS</td>
 <td style="text-align: left;">V1.9.0</td>
-<td style="text-align: left;"><a href="http://www.apache.org/licenses/">Apache License v2.0</a></td>
 <td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L0xx\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STM32L0xx HAL</td>
 <td style="text-align: left;">V1.10.3</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\STM32L0xx_HAL_Driver\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">BSP STM32L0xx_Nucleo</td>
 <td style="text-align: left;">V2.1.2</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
 <td style="text-align: left;"><a href="Drivers\BSP\STM32L0xx_Nucleo\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STM32G4xx CMSIS</td>
 <td style="text-align: left;">V1.2.0</td>
-<td style="text-align: left;"><a href="http://www.apache.org/licenses/">Apache License v2.0</a></td>
-<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L4xx\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32G4xx\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32G4xx HAL</td>
 <td style="text-align: left;">V1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
-<td style="text-align: left;"><a href="Drivers\STM32L4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\STM32G4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
 <td style="text-align: left;">V1.0.1</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a></td>
-<td style="text-align: left;"><a href="Drivers\BSP\STM32L4xx_Nucleo\Release_Notes.html">release notes</a></td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32G4xx_Nucleo\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">BSP X-NUCLEO-EEPRMA1</td>
 <td style="text-align: left;">V2.0.0</td>
-<td style="text-align: left;"><a href="https://www.st.com/content/st_com/en/search.html#q=SLA0077-t=resources-page=1">SLA0077</a></td>
 <td style="text-align: left;"><a href="Drivers\BSP\EEPRMA1\Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">BSP X-NUCLEO-EEPRMA2</td>
 <td style="text-align: left;">V2.0.0</td>
-<td style="text-align: left;"><a href="https://www.st.com/content/st_com/en/search.html#q=SLA0077-t=resources-page=1">SLA0077</a></td>
 <td style="text-align: left;"><a href="Drivers\BSP\EEPRMA2\Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>

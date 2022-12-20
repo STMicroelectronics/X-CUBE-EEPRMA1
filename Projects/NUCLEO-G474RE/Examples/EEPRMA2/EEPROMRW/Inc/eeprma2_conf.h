@@ -87,4 +87,3 @@ extern "C" {
 
 #endif /* __EEPRMA2_CONF_H__*/
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

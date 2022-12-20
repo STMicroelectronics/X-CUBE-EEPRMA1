@@ -83,8 +83,7 @@ void EEPRMA1_M24MemorySizeLocator(uint32_t Instance);
 /**
   * @}
   */
-//void EEPROMEX_CTRL_HIGH(const uint8_t pin);
-//void EEPROMEX_CTRL_LOW(const uint8_t pin);
+
 /**
   * @}
   */
@@ -98,4 +97,3 @@ void EEPRMA1_M24MemorySizeLocator(uint32_t Instance);
 #endif
 #endif /* __X_NUCLEO_EEPRMA_H */
 
-/******************* (C) COPYRIGHT 2018 STMicroelectronics *****END OF FILE****/

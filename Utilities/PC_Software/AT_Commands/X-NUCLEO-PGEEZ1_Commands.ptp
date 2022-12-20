@@ -1,0 +1,227 @@
+VERSION
+8
+
+COMMSETTINGS
+0
+COM4
+COM2
+115200
+2
+63
+4
+0
+0
+
+COMMDISPLAY
+0
+
+VERSATAP
+0
+
+CHANNELALIAS
+
+
+
+SEND
+0
+Write Enable (cmd : 06)
+30 36 0D 0A
+0
+5
+
+SEND
+1
+Write Disable (cmd : 04)
+30 34 0D 0A
+0
+5
+
+SEND
+2
+Read Status Register (cmd : 05)
+30 35 0D 0A
+0
+5
+
+SEND
+3
+Write Status and Config Register (cmd : 01, Value : 02)
+30 31 20 30 32 20 30 32 0D 0A
+0
+5
+
+SEND
+4
+Read Data Add : (cmd : 03, Addr in hex :00, No. of bytes in hex : 200)
+30 33 20 30 30 20 32 30 30 0D 0A
+0
+5
+
+SEND
+5
+Fast Read data Add: (cmd : 0B, Addr in hex :00, No. of bytes in hex : 200)
+30 42 20 30 30 20 32 30 30 0D 0A
+0
+5
+
+SEND
+6
+Dual Read data Add: (cmd : 3B, Addr in hex :00, No. of bytes in hex : 200)
+33 42 20 30 30 20 32 30 30 0D 0A
+0
+5
+
+SEND
+7
+Quad Read data Add: (cmd : 6B, Addr in hex :00, No. of bytes in hex : 200)
+36 42 20 30 30 20 32 30 30 0D 0A
+0
+5
+
+SEND
+8
+Write Page: (cmd : 02, start addr in hex : 00, No. of bytes in hex : 100, Data : 0F)
+30 32 20 30 30 20 31 30 30 20 30 46 0D 0A
+0
+5
+
+SEND
+9
+Page Program: (cmd : 0A, Addr in hex : 100, No. of bytes in hex : 20, Data : F0)
+30 41 20 31 30 30 20 32 30 20 46 30 0D 0A
+0
+5
+
+SEND
+10
+Read after Page Program: (cmd : 03, Addr in hex : 100, No. of bytes in hex : 40)
+30 33 20 31 30 30 20 34 30 0D 0A
+0
+5
+
+SEND
+11
+Erase Page Add: (cmd : DB, Addr in hex :00)
+44 42 20 30 30 0D 0A
+0
+5
+
+SEND
+12
+Sector Erase: (cmd : 20, Addr in hex :00)
+32 30 20 30 30 0D 0A
+0
+5
+
+SEND
+13
+Block Erase: (cmd : D8, Addr in hex :00)
+44 38 20 30 30 0D 0A
+0
+5
+
+SEND
+14
+Chip Erase: (cmd : C7)
+43 37 0D 0A
+0
+5
+
+SEND
+15
+Read Identification Page: (cmd : 83, Addr in hex : 00 , No. of bytes : 0x05h)
+38 33 20 30 30 20 30 35 0D 0A
+0
+5
+
+SEND
+16
+Fast Read Identification Page: (cmd : 8B, Addr in hex : 00 , No. of bytes : 0x05h)
+38 42 20 30 30 20 30 35 0D 0A
+0
+5
+
+SEND
+17
+Write Customer Identification Page: (cmd : 82, Addr in hex: 200 , No. of bytes : 0x04, Data : 0x55)
+38 32 20 32 30 30 20 30 34 20 35 35 0D 0A
+0
+5
+
+SEND
+18
+Read Customer Identification Page: (cmd : 83, Addr in hex: 200 , No. of bytes : 0x04)
+38 33 20 32 30 30 20 30 34 0D 0A
+0
+5
+
+SEND
+19
+Deep Power Down Enter: (cmd : B9)
+42 39 0D 0A
+0
+5
+
+SEND
+20
+Deep Power Down Release: (cmd : AB)
+41 42 0D 0A
+0
+5
+
+SEND
+21
+JEDEC Identification Page: (cmd : 9F)
+39 46 0D 0A
+0
+5
+
+SEND
+22
+Read Configuration and Safety Register: (cmd : 15)
+31 35 0D 0A
+0
+5
+
+SEND
+23
+Read Volatile Register: (cmd : 85)
+38 35 0D 0A
+0
+5
+
+SEND
+24
+Write Volatile Register: (cmd : 81, Value: 0x02)
+38 31 20 30 32 0D 0A
+0
+5
+
+SEND
+25
+Clear Safety Stick Flags: (cmd : 50)
+35 30 0D 0A
+0
+5
+
+SEND
+26
+Read SFDP: (cmd : 5A, Start Add: 00, No. of bytes in hex : 0x20)
+35 41 20 30 30 20 32 30 0D 0A
+0
+5
+
+SEND
+27
+Enable Reset: (cmd : 66)
+36 36 0D 0A
+0
+5
+
+SEND
+28
+Software Reset: (cmd : 99)
+39 39 0D 0A
+0
+5
+
