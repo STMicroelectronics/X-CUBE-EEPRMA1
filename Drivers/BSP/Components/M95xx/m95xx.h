@@ -235,5 +235,5 @@ int32_t M95_spi_LockStatus( M95_Object_t *pObj,uint8_t * pData);
 #ifdef __cplusplus
   }
 #endif
-#endif /* __M95_XX_H */
+#endif /* __M_95XX_H */
 
