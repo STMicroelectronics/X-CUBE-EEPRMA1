@@ -134,7 +134,10 @@ int32_t M95_spi_IsDeviceReady( M95_Object_t *pObj )
   */
 int32_t M95_spi_ReadReg( M95_Object_t *pObj, uint8_t * pData) 
 {
-  pObj->IO.IsReady( pObj->IO.Address );
+  if (pObj->IO.IsReady( pObj->IO.Address ) != M95_OK)
+  {
+    return M95_ERROR;
+  } 
   return pObj->IO.Read( pData, pObj->IO.Address);
 }
 /**
@@ -144,8 +147,10 @@ int32_t M95_spi_ReadReg( M95_Object_t *pObj, uint8_t * pData)
   */
 int32_t M95_spi_WriteReg(M95_Object_t *pObj,uint8_t pData)
 {
-
-  pObj->IO.IsReady( pObj->IO.Address );
+  if (pObj->IO.IsReady( pObj->IO.Address ) != M95_OK)
+  {
+    return M95_ERROR;
+  } 
   return pObj->IO.Write( pData, pObj->IO.Address );
 }
 
@@ -159,7 +164,10 @@ int32_t M95_spi_ReadByte(M95_Object_t *pObj, uint8_t * const pData, const uint32
 { 
   int32_t status;
   
-  pObj->IO.IsReady( pObj->IO.Address );
+  if (pObj->IO.IsReady( pObj->IO.Address ) != M95_OK)
+  {
+    return M95_ERROR;
+  } 
   /* Condition Matters only for 4Kb SPI ie M95040, for others EEPROMEX_WRITE & EEPROMEX_UPWRITE are same */
   if (pObj->IO.Address == 0xC6)
   {
@@ -204,7 +212,10 @@ int32_t M95_spi_ReadData( M95_Object_t *pObj,uint8_t * pData, const uint32_t Tar
   int32_t status = M95_OK;
   uint32_t targetAddress = TarAddr;
   
-  pObj->IO.IsReady( pObj->IO.Address );
+  if (pObj->IO.IsReady( pObj->IO.Address ) != M95_OK)
+  {
+    return M95_ERROR;
+  } 
   
   if (pObj->IO.Address == 0xC6)     /* Required for 4Kb SPI EEPROM only*/
   {
@@ -239,7 +250,10 @@ int32_t M95_spi_WriteByte(M95_Object_t *pObj,uint8_t * pData, const uint32_t Tar
 {
   int32_t status;
  
-  pObj->IO.IsReady( pObj->IO.Address );
+  if (pObj->IO.IsReady( pObj->IO.Address ) != M95_OK)
+  {
+    return M95_ERROR;
+  } 
   /* Condition Matters only for 4Kb SPI ie M95040, for others EEPROMEX_WRITE & EEPROMEX_UPWRITE are same */
   if (pObj->IO.Address == 0xC6)
   {
@@ -252,7 +266,7 @@ int32_t M95_spi_WriteByte(M95_Object_t *pObj,uint8_t * pData, const uint32_t Tar
     status = pObj->IO.WriteBuffer( pData, TarAddr, pObj->IO.Address, 1 ,EEPROMEX_WRITE);
   
 
-  pObj->IO.IsReady( pObj->IO.Address );
+  while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {};
   return status;
 }
 
@@ -421,8 +435,11 @@ int32_t M95_spi_WriteID(M95_Object_t *pObj ,uint8_t * pData, const uint32_t TarA
 {
   int32_t status = M95_OK;
   
-    uint32_t temp_TarAddr;
-  while( pObj->IO.IsReady( pObj->IO.Address ) != M95_OK ) {};
+  uint32_t temp_TarAddr;
+  if (pObj->IO.IsReady( pObj->IO.Address ) != M95_OK)
+  {
+    return M95_ERROR;
+  }
   
   switch(pObj->IO.Address)
   {
