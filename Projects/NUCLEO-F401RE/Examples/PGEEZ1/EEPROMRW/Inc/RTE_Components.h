@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -22,7 +22,7 @@
 #define  __RTE_COMPONENTS_H__
 
 /* Defines ------------------------------------------------------------------*/
-/* STMicroelectronics.X-CUBE-EEPRMA1.4.1.0 */
+/* STMicroelectronics.X-CUBE-EEPRMA1.4.2.0 */
 #define PGEEZ1_EEPROMRW_DEMO
 #define USE_SPI
 #define PGEEZ1

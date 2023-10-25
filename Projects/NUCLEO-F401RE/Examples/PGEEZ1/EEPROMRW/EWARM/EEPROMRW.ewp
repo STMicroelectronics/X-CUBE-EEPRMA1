@@ -125,12 +125,12 @@
         <option>
           <name>FPU2</name>
           <version>0</version>
-          <state>0</state>
+          <state>4</state>
         </option>
         <option>
           <name>NrRegs</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>NEON</name>
@@ -220,7 +220,6 @@
           <name>CCDefines</name>
           <state>USE_HAL_DRIVER</state>
           <state>STM32F401xE</state>
-          <state>USE_STM32F401xE_NUCLEO</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -281,7 +280,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -346,9 +345,8 @@
           <state>$PROJ_DIR$/../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32F4xx/Include</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32F4xx-Nucleo</state>
-          <state>$PROJ_DIR$/../../../../../../Drivers/BSP/PGEEZ1</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/M95P32</state>
+          <state>$PROJ_DIR$/../../../../../../Drivers/BSP/PGEEZ1</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -364,7 +362,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -373,7 +371,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -592,7 +590,7 @@
         </option>
         <option>
           <name>AOutputFile</name>
-          <state>$FILE_BNAME$.o</state>
+          <state></state>
         </option>
         <option>
           <name>ALimitErrorsCheck</name>
@@ -646,7 +644,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>EEPROMRW.bin</state>
+          <state>PGEEZ1_EEPROMRW.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -684,16 +682,16 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>IlinkOutputFile</name>
+          <state>EEPROMRW.out</state>
+        </option>
+        <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
           <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOutputFile</name>
-          <state>EEPROMRW.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -990,7 +988,7 @@
         </option>
         <option>
           <name>IlinkTrustzoneImportLibraryOut</name>
-          <state>EEPROMRW_import_lib.o</state>
+          <state></state>
         </option>
         <option>
           <name>OILinkExtraOption</name>

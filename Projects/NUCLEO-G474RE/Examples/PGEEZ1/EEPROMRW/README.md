@@ -60,7 +60,7 @@ In order to make the program work, you must do the following:
    installation path is not too in-depth since the toolchain may report errors
    after building.
    
-- Open STM32CubeIDE (this firmware has been successfully tested with Version 1.10.1).
+- Open STM32CubeIDE (this firmware has been successfully tested with Version 1.13.2).
    Alternatively you can use the Keil uVision toolchain (this firmware
    has been successfully tested with V5.37.0.0) or the IAR toolchain (this firmware has 
    been successfully tested with Embedded Workbench V9.20.1).
@@ -77,6 +77,6 @@ SRA Application Team
 
 ### <b>License</b>
 
-Copyright (c) 2022 STMicroelectronics. All rights reserved.
+Copyright (c) 2023 STMicroelectronics. All rights reserved.
 
 This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-IS.

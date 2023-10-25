@@ -1,29 +1,18 @@
 ---
 pagetitle: Release Notes for STM32L0xx_Nucleo Board Drivers
 lang: en
+header-includes: <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 ---
 
 ::: {.row}
 ::: {.col-sm-12 .col-lg-4}
 
-::: {.card .fluid}
-::: {.sectione .dark}
 <center>
 # <small>Release Notes for</small> <mark>STM32L0xx_Nucleo Board Drivers</mark>
 Copyright &copy; 2017 STMicroelectronics\
     
-[![ST logo](_htmresc/st_logo.png)](https://www.st.com){.logo}
+[![ST logo](_htmresc/st_logo_2020.png)](https://www.st.com){.logo}
 </center>
-:::
-:::
-
-# License
-
-Licensed by ST under BSD 3-Clause license (the \"License\"). You may
-not use this package except in compliance with the License. You may
-obtain a copy of the License at:
-
-[https://opensource.org/licenses/BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
 
 # Purpose
 
@@ -33,6 +22,19 @@ This directory contains the board drivers to demonstrate the capabilities of the
 
 ::: {.col-sm-12 .col-lg-8}
 # Update History
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section15" checked aria-hidden="true">
+<label for="collapse-section15" aria-hidden="true">V2.1.4 / 05-January-2023</label>
+<div>
+
+## Main Changes
+
+-  All source files: update disclaimer to add reference to the new license agreement.
+
+</div>
+:::
+
 
 ::: {.collapse}
 <input type="checkbox" id="collapse-section14" aria-hidden="true">

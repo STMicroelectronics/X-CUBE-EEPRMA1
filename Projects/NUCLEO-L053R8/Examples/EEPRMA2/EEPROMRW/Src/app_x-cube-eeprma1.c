@@ -2,11 +2,11 @@
   ******************************************************************************
   * @file           : app_x-cube-eeprma1.c
   * @brief          : This file provides code for the configuration
-  *						of the STMicroelectronics.X-CUBE-EEPRMA1.4.1.0 instances.
+  *						of the STMicroelectronics.X-CUBE-EEPRMA1.4.2.0 instances.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -111,6 +111,11 @@ int32_t M95_LockID(uint32_t TargetName);
 
 /* Private variables ---------------------------------------------------------*/
 
+/**
+* @brief  Initialize the EEPROM example
+* @param  None
+* @retval None
+*/
 void MX_EEPROM_Init(void)
 {
   /* USER CODE BEGIN SV */
@@ -135,6 +140,11 @@ void MX_EEPROM_Init(void)
 
 }
 
+/**
+* @brief  EEPROM process
+* @param  None
+* @retval None
+*/
 void MX_EEPROM_Process(void)
 {
 
@@ -297,7 +307,6 @@ int32_t WriteDisableReadStatus(uint32_t TargetName)
       readstatus = EEPRMA2_SPI_ReadReg(rx, M95040_SPI_ADDR);
     break;
   }
-
   if (TargetName == EEPRMA2_M95M04_0)
     printf("target: %s|rx: %02x \r\n","M95M04",rx[0]);
   else if (TargetName == EEPRMA2_M95256_0)

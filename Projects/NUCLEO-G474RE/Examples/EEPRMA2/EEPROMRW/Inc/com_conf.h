@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -31,9 +31,6 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 
 /* Private defines -----------------------------------------------------------*/
-
-/* Relevant for X-NUCLEO-PGEEZ1 only */
-#define USARTX_INTERRUPT				LPUART1_IRQn
 
 /* USER CODE BEGIN Private defines */
 

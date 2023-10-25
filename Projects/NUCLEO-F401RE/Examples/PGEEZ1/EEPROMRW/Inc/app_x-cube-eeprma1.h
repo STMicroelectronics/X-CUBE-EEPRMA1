@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -40,9 +40,13 @@ int32_t M95P32_TestPageErase(void);
 int32_t M95P32_TestSectorErase(void);
 int32_t M95P32_TestBlockErase(void);
 int32_t M95P32_TestWriteEnableDisable(void);
-#ifdef USE_QUADSPI
+void M95P32_PageProg_with_SafetyRegisterCheck(void);
+void M95P32_PageWrite_with_SafetyRegisterCheck(void);
+void M95P32_16Word_align(void);
+void M95P32_WriteProtectedArea(void);
+void M95P32_PageProgram_with_BufferLoad(void);
+void PageProgram_with_BufferLoad(uint32_t Instance, uint8_t *pData, uint32_t start_prog_add, uint32_t nb_byte);
 int32_t M95P32_TestBufferMode(void);
-#endif
 
 #ifdef __cplusplus
 }

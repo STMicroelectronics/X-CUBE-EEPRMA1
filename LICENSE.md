@@ -10,7 +10,6 @@
 | BSP STM32G4xx_Nucleo								   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP STM32H7xx_Nucleo								   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP STM32L0xx_Nucleo								   | STMicroelectronics				  | BSD-3-Clause	 |
-| BSP EEPRMA1										   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP EEPRMA2										   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP PGEEZ1										   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP M24xx Components								   | STMicroelectronics				  | BSD-3-Clause	 |

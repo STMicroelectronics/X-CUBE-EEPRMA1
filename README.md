@@ -7,10 +7,10 @@ The X-CUBE-EEPRMA1 software expansion for STM32Cube provides an evaluation softw
 **X-CUBE-EEPRMA1 software features**:
 
 - Complete software to build applications using M24XX, M95XX or M95P32 series based EEPROM.
-- Sample implementation available on the X-NUCLEO-EEPRMA1, X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1 expansion boards plugged to a NUCLEO-F401RE, NUCLEO-G474RE, NUCLEO-L053R8 or NUCLEO-H743ZI development board.
+- Sample implementation available on the X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1 expansion boards plugged to a NUCLEO-F401RE, NUCLEO-G474RE, NUCLEO-L053R8 or NUCLEO-H743ZI development board.
 - Easy portability across different MCU families thanks to STM32Cube.
 - Free, user-friendly license terms.
-- Package compatible with STM32CubeMX (X-NUCLEO-EEPRMA1, X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1), can be downloaded from and installed directly into STM32CubeMX.
+- Package compatible with STM32CubeMX (X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1), can be downloaded from and installed directly into STM32CubeMX.
 
 The figure below shows the overall architecture.
 

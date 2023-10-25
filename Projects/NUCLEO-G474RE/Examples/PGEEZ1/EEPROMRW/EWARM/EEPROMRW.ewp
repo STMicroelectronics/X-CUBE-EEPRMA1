@@ -645,7 +645,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>EEPROMRW.bin</state>
+          <state>PGEEZ1_EEPROMRW.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
