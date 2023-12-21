@@ -81,7 +81,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
+            <RunUserProg2>1</RunUserProg2>
             <UserProg1Name></UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -400,9 +400,9 @@
               <FilePath>../Src/main.c</FilePath>
             </File>
             <File>
-              <FileName>app_x-cube-eeprma1.c</FileName>
+              <FileName>app_eepromrw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Src/app_x-cube-eeprma1.c</FilePath>
+              <FilePath>../Src/app_eepromrw.c</FilePath>
             </File>
             <File>
               <FileName>stm32l0xx_nucleo_bus.c</FileName>

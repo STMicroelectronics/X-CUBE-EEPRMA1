@@ -45,7 +45,7 @@
 #ifdef  USE_SPI
    void EEPROMEX_CTRL_HIGH(void);
    void EEPROMEX_CTRL_LOW(void);
-   void Transmit_Data_polling(M95_Object_t *pObj);
+   int32_t Transmit_Data_polling(M95_Object_t *pObj);
 #endif
 
 int32_t M95P32_RegisterBusIO(M95_Object_t *pObj, M95_IO_t *pIO);

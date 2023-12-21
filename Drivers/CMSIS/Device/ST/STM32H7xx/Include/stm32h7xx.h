@@ -215,9 +215,7 @@ typedef enum
 
 #define READ_REG(REG)         ((REG))
 
-
 #define MODIFY_REG(REG, CLEARMASK, SETMASK)  WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
-
 
 #define POSITION_VAL(VAL)     (__CLZ(__RBIT(VAL)))
 

@@ -28,7 +28,7 @@ extern "C" {
   
   /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
-#include "main.h"
+#include "pgeez1_conf.h"
   
 /** @addtogroup BSP
   * @{

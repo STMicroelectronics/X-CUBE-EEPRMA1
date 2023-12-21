@@ -453,15 +453,15 @@ static int32_t M24C02_0_Probe(void)
   static M24_Object_t M24C02_obj_0;
   
   io_ctxc02.Address     = M24C02_I2C_ADDR;
-  io_ctxc02.Init        = EEPRMA2_I2C_Init;
-  io_ctxc02.DeInit      = EEPRMA2_I2C_DeInit;
-  io_ctxc02.ReadReg     = EEPRMA2_I2C_ReadReg;
-  io_ctxc02.WriteReg    = EEPRMA2_I2C_WriteReg;
-  io_ctxc02.ReadReg16   = EEPRMA2_I2C_ReadReg16;
-  io_ctxc02.WriteReg16  = EEPRMA2_I2C_WriteReg16;
-  io_ctxc02.Transmit    = EEPRMA2_I2C_Send;
-  io_ctxc02.IsReady     = EEPRMA2_I2C_IsReady;	
-  io_ctxc02.Delay       = EEPRMA2_M24_Delay;
+  io_ctxc02.Init        = EEPRMA2_I2C_INIT;
+  io_ctxc02.DeInit      = EEPRMA2_I2C_DEINIT;
+  io_ctxc02.ReadReg     = EEPRMA2_I2C_READREG;
+  io_ctxc02.WriteReg    = EEPRMA2_I2C_WRITEREG;
+  io_ctxc02.ReadReg16   = EEPRMA2_I2C_READREG16;
+  io_ctxc02.WriteReg16  = EEPRMA2_I2C_WRITEREG16;
+  io_ctxc02.Transmit    = EEPRMA2_I2C_SEND;
+  io_ctxc02.IsReady     = EEPRMA2_I2C_ISREADY;	
+  io_ctxc02.Delay       = EEPRMA2_M24_DELAY;
   if (M24_RegisterBusIO(&M24C02_obj_0, &io_ctxc02) != M24_OK)
   {
     ret = BSP_ERROR_UNKNOWN_COMPONENT;
@@ -492,15 +492,15 @@ static int32_t M24256_0_Probe(void)
   static M24_Object_t M24256_obj_0;
   
   io_ctx256.Address     = M24256_I2C_ADDR;
-  io_ctx256.Init        = EEPRMA2_I2C_Init;
-  io_ctx256.DeInit      = EEPRMA2_I2C_DeInit;
-  io_ctx256.ReadReg     = EEPRMA2_I2C_ReadReg;
-  io_ctx256.WriteReg    = EEPRMA2_I2C_WriteReg;
-  io_ctx256.ReadReg16   = EEPRMA2_I2C_ReadReg16;
-  io_ctx256.WriteReg16  = EEPRMA2_I2C_WriteReg16;
-  io_ctx256.Transmit    = EEPRMA2_I2C_Send;
-  io_ctx256.IsReady     = EEPRMA2_I2C_IsReady;	
-  io_ctx256.Delay       = EEPRMA2_M24_Delay;
+  io_ctx256.Init        = EEPRMA2_I2C_INIT;
+  io_ctx256.DeInit      = EEPRMA2_I2C_DEINIT;
+  io_ctx256.ReadReg     = EEPRMA2_I2C_READREG;
+  io_ctx256.WriteReg    = EEPRMA2_I2C_WRITEREG;
+  io_ctx256.ReadReg16   = EEPRMA2_I2C_READREG16;
+  io_ctx256.WriteReg16  = EEPRMA2_I2C_WRITEREG16;
+  io_ctx256.Transmit    = EEPRMA2_I2C_SEND;
+  io_ctx256.IsReady     = EEPRMA2_I2C_ISREADY;	
+  io_ctx256.Delay       = EEPRMA2_M24_DELAY;
   if (M24_RegisterBusIO(&M24256_obj_0, &io_ctx256) != M24_OK)
   {
     ret = BSP_ERROR_UNKNOWN_COMPONENT;
@@ -531,15 +531,15 @@ static int32_t M24M01_0_Probe(void)
   static M24_Object_t M24M01_obj_0;
   
   io_ctxm01.Address     = M24M01_I2C_ADDR;
-  io_ctxm01.Init        = EEPRMA2_I2C_Init;
-  io_ctxm01.DeInit      = EEPRMA2_I2C_DeInit;
-  io_ctxm01.ReadReg     = EEPRMA2_I2C_ReadReg;
-  io_ctxm01.WriteReg    = EEPRMA2_I2C_WriteReg;
-  io_ctxm01.ReadReg16   = EEPRMA2_I2C_ReadReg16;
-  io_ctxm01.WriteReg16  = EEPRMA2_I2C_WriteReg16;
-  io_ctxm01.Transmit    = EEPRMA2_I2C_Send;
-  io_ctxm01.IsReady     = EEPRMA2_I2C_IsReady;
-  io_ctxm01.Delay       = EEPRMA2_M24_Delay;
+  io_ctxm01.Init        = EEPRMA2_I2C_INIT;
+  io_ctxm01.DeInit      = EEPRMA2_I2C_DEINIT;
+  io_ctxm01.ReadReg     = EEPRMA2_I2C_READREG;
+  io_ctxm01.WriteReg    = EEPRMA2_I2C_WRITEREG;
+  io_ctxm01.ReadReg16   = EEPRMA2_I2C_READREG16;
+  io_ctxm01.WriteReg16  = EEPRMA2_I2C_WRITEREG16;
+  io_ctxm01.Transmit    = EEPRMA2_I2C_SEND;
+  io_ctxm01.IsReady     = EEPRMA2_I2C_ISREADY;
+  io_ctxm01.Delay       = EEPRMA2_M24_DELAY;
   if (M24_RegisterBusIO(&M24M01_obj_0, &io_ctxm01) != M24_OK)
   {
     ret = BSP_ERROR_UNKNOWN_COMPONENT;

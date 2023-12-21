@@ -1,5 +1,3 @@
-
-/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * File Name          : com_conf.h
@@ -16,7 +14,6 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __COM_CONF_H__
@@ -32,7 +29,7 @@ extern "C" {
 
 /* Private defines -----------------------------------------------------------*/
 
-#define USARTX_INTERRUPT				USART3_IRQn
+#define USARTX_INTERRUPT        USART3_IRQn
 
 /* USER CODE BEGIN Private defines */
 

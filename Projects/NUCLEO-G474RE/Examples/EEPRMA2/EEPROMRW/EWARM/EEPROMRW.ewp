@@ -1079,7 +1079,7 @@
         <group>
             <name>User</name>
             <file>
-                <name>$PROJ_DIR$\..\Src\app_x-cube-eeprma1.c</name>
+                <name>$PROJ_DIR$\..\Src\app_eepromrw.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\main.c</name>

@@ -517,7 +517,7 @@ static int32_t M95P32_Probe(void)
   
   io_ctxm95p32.Init                = SERIAL_COM_INIT;
   io_ctxm95p32.DeInit              = SERIAL_COM_DEINIT;
-  io_ctxm95p32.Delay               = PGEEZ1_M95_Delay;
+  io_ctxm95p32.Delay               = PGEEZ1_M95_DELAY;
   
 #ifdef USE_SPI
   io_ctxm95p32.Read                = SERIAL_COM_RECV;

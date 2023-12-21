@@ -22,7 +22,7 @@
 #define  __RTE_COMPONENTS_H__
 
 /* Defines ------------------------------------------------------------------*/
-/* STMicroelectronics.X-CUBE-EEPRMA1.4.2.0 */
+/* STMicroelectronics.X-CUBE-EEPRMA1.5.0.0 */
 #define PGEEZ1_EEPROMRW_DEMO
 #define USE_QUADSPI
 #define PGEEZ1

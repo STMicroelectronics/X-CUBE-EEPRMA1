@@ -485,7 +485,7 @@ int32_t EEPRMA2_SPI_ReadReg(uint8_t * pData, uint8_t Devaddr)
  EEPROMEX_CTRL_LOW( Devaddr & EEPROMEX_SPI_SLAVESEL );
  if ( EEPRMA2_M95_IOWrite( EEPROMEX_RDSR ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
-  if ( EEPRMA2_SPI_Recv( ( uint8_t * )pData, 1 ) != BSP_ERROR_NONE )
+  if ( EEPRMA2_SPI_RECV( ( uint8_t * )pData, 1 ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   EEPROMEX_CTRL_HIGH( Devaddr & EEPROMEX_SPI_SLAVESEL );
   return BSP_ERROR_NONE; 
@@ -508,7 +508,7 @@ int32_t EEPRMA2_SPI_RecvBuffer(uint8_t * pData, uint32_t TarAddr,
     return BSP_ERROR_COMPONENT_FAILURE;
   if (EEPRMA2_M95_WriteAddr(TarAddr, DevAddr) != BSP_ERROR_NONE ) 
     return BSP_ERROR_COMPONENT_FAILURE;
-  if (EEPRMA2_SPI_Recv( pData, Size ) != BSP_ERROR_NONE )
+  if (EEPRMA2_SPI_RECV( pData, Size ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   EEPROMEX_CTRL_HIGH( (uint8_t)DevAddr & EEPROMEX_SPI_SLAVESEL );
   return BSP_ERROR_NONE;
@@ -533,7 +533,7 @@ int32_t EEPRMA2_SPI_SendBuffer(uint8_t * pData,uint32_t TarAddr, uint32_t DevAdd
     return BSP_ERROR_COMPONENT_FAILURE;
   if ( EEPRMA2_M95_WriteAddr(TarAddr, DevAddr) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
-  if ( EEPRMA2_SPI_Send( pData, Size )!= BSP_ERROR_NONE )
+  if ( EEPRMA2_SPI_SEND( pData, Size )!= BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   EEPROMEX_CTRL_HIGH( (uint8_t)DevAddr & EEPROMEX_SPI_SLAVESEL );
   return BSP_ERROR_NONE;
@@ -573,7 +573,7 @@ int32_t EEPRMA2_M95_IsDeviceReady(uint8_t Devaddr)
   if ( EEPRMA2_M95_IOWrite( EEPROMEX_RDSR ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   do {
-    EEPRMA2_SPI_Recv( &status, 1 );
+    EEPRMA2_SPI_RECV( &status, 1 );
   } while ( (status & EEPROMEX_SPI_WIPFLAG) == 1U );
   EEPROMEX_CTRL_HIGH( Devaddr & EEPROMEX_SPI_SLAVESEL );
   return BSP_ERROR_NONE;
@@ -587,7 +587,7 @@ int32_t EEPRMA2_M95_IsDeviceReady(uint8_t Devaddr)
 int32_t EEPRMA2_M95_IOWrite(uint8_t TxData )
 {
   int32_t status = BSP_ERROR_NONE;
-  status = EEPRMA2_SPI_Send( &TxData, 1);
+  status = EEPRMA2_SPI_SEND( &TxData, 1);
   return status;
 }
 
@@ -601,7 +601,7 @@ int32_t EEPRMA2_M95_WriteCmd( uint8_t Cmd, uint8_t Devaddr)
 {
   int32_t status = BSP_ERROR_NONE; 
   EEPROMEX_CTRL_LOW( Devaddr & EEPROMEX_SPI_SLAVESEL );         /* For M95M04  0xCC & 0x03 = 0*/
-  status = EEPRMA2_SPI_Send( &Cmd, 1 );
+  status = EEPRMA2_SPI_SEND( &Cmd, 1 );
   EEPROMEX_CTRL_HIGH( Devaddr & EEPROMEX_SPI_SLAVESEL );
   return status;
 }
@@ -624,7 +624,7 @@ int32_t EEPRMA2_M95_WriteAddr( const uint32_t TarAddr, const uint32_t DevAddr)
     Addr[count - 1U] = temp;
     addrpacket = addrpacket >> 8U;
   }
-  return  EEPRMA2_SPI_Send( Addr, AddrSize );
+  return  EEPRMA2_SPI_SEND( Addr, AddrSize );
 }
 
 /**
@@ -637,14 +637,14 @@ static int32_t M95M04_0_Probe(void)
   int32_t ret = BSP_ERROR_NONE;
  static M95_Object_t M95M04_obj_0;
   io_ctxm04.Address        = M95M04_SPI_ADDR;
-  io_ctxm04.Init           = EEPRMA2_SPI_Init;
-  io_ctxm04.DeInit         = EEPRMA2_SPI_DeInit;
+  io_ctxm04.Init           = EEPRMA2_SPI_INIT;
+  io_ctxm04.DeInit         = EEPRMA2_SPI_DEINIT;
   io_ctxm04.Read           = EEPRMA2_SPI_ReadReg;
   io_ctxm04.Write          = EEPRMA2_SPI_WriteReg;
   io_ctxm04.WriteBuffer    = EEPRMA2_SPI_SendBuffer;
   io_ctxm04.ReadBuffer     = EEPRMA2_SPI_RecvBuffer;
   io_ctxm04.IsReady        = EEPRMA2_M95_IsDeviceReady;
-  io_ctxm04.Delay          = EEPRMA2_M95_Delay;
+  io_ctxm04.Delay          = EEPRMA2_M95_DELAY;
 
   if (M95_RegisterBusIO(&M95M04_obj_0,&io_ctxm04) != M95_OK)
   {
@@ -675,14 +675,14 @@ static int32_t M95256_0_Probe(void)
   int32_t ret = BSP_ERROR_NONE;
  static M95_Object_t M95256_obj_0;
   io_ctx256.Address        = M95256_SPI_ADDR;
-  io_ctx256.Init           = EEPRMA2_SPI_Init;
-  io_ctx256.DeInit         = EEPRMA2_SPI_DeInit;
+  io_ctx256.Init           = EEPRMA2_SPI_INIT;
+  io_ctx256.DeInit         = EEPRMA2_SPI_DEINIT;
   io_ctx256.Read           = EEPRMA2_SPI_ReadReg;
   io_ctx256.Write          = EEPRMA2_SPI_WriteReg;
   io_ctx256.WriteBuffer    = EEPRMA2_SPI_SendBuffer;
   io_ctx256.ReadBuffer     = EEPRMA2_SPI_RecvBuffer;
   io_ctx256.IsReady        = EEPRMA2_M95_IsDeviceReady;
-  io_ctx256.Delay          = EEPRMA2_M95_Delay;
+  io_ctx256.Delay          = EEPRMA2_M95_DELAY;
   
   if (M95_RegisterBusIO(&M95256_obj_0, &io_ctx256) != M95_OK)
   {
@@ -715,14 +715,14 @@ static int32_t M95040_0_Probe(void)
   static M95_Object_t M95040_obj_0;
   
   io_ctx040.Address        = M95040_SPI_ADDR;
-  io_ctx040.Init           = EEPRMA2_SPI_Init;
-  io_ctx040.DeInit         = EEPRMA2_SPI_DeInit;
+  io_ctx040.Init           = EEPRMA2_SPI_INIT;
+  io_ctx040.DeInit         = EEPRMA2_SPI_DEINIT;
   io_ctx040.Read           = EEPRMA2_SPI_ReadReg;
   io_ctx040.Write          = EEPRMA2_SPI_WriteReg;
   io_ctx040.WriteBuffer    = EEPRMA2_SPI_SendBuffer;
   io_ctx040.ReadBuffer     = EEPRMA2_SPI_RecvBuffer;
   io_ctx040.IsReady        = EEPRMA2_M95_IsDeviceReady;
-  io_ctx040.Delay          = EEPRMA2_M95_Delay;
+  io_ctx040.Delay          = EEPRMA2_M95_DELAY;
 
   if (M95_RegisterBusIO(&M95040_obj_0, &io_ctx040) != M95_OK)
   {

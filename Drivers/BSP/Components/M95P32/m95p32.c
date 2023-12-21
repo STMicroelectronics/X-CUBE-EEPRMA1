@@ -58,28 +58,28 @@ void EEPROMEX_CTRL_LOW(void)
   * @param  pObj : pointer to memory object
   * @retval None
   */ 
-void Transmit_Data_polling(M95_Object_t *pObj)
+int32_t Transmit_Data_polling(M95_Object_t *pObj)
 {
   /* read status register until WIP bit become 0 */
   int32_t ret;
   CmdBuff[0] = CMD_READ_STATUS_REG;
   EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  if(ret != M95_OK)
+  if(ret == M95_OK)
   {
-    Error_Handler();
-  }
-  RxCom[0] = 1;
-  while ((RxCom[0] & 0x01U) != 0U)
-  {
-    pObj->IO.Read(RxCom, INSTRUCTION_LEN_1_BYTE);
-    if(ret != M95_OK)
+    RxCom[0] = 1;
+    while ((RxCom[0] & 0x01U) != 0U)
     {
-      EEPROMEX_CTRL_HIGH();
-      Error_Handler();
+      ret = pObj->IO.Read(RxCom, INSTRUCTION_LEN_1_BYTE);
+      if(ret != M95_OK)
+      {
+        break;
+      }
     }
   }
+  
   EEPROMEX_CTRL_HIGH();
+  return ret;
 }
 #endif
 
@@ -715,7 +715,7 @@ int32_t Page_Erase(M95_Object_t *pObj, uint32_t TarAddr)
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   EEPROMEX_CTRL_HIGH();
   
-  Transmit_Data_polling(pObj);
+  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -759,7 +759,7 @@ int32_t Sector_Erase(M95_Object_t *pObj, uint32_t TarAddr)
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   EEPROMEX_CTRL_HIGH();
   
-  Transmit_Data_polling(pObj);
+  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -803,7 +803,7 @@ int32_t Block_Erase(M95_Object_t *pObj, uint32_t TarAddr)
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   EEPROMEX_CTRL_HIGH();
   
-  Transmit_Data_polling(pObj);
+  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -840,7 +840,7 @@ int32_t Chip_Erase(M95_Object_t *pObj)
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
   EEPROMEX_CTRL_HIGH();
   
-  Transmit_Data_polling(pObj);
+  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -1036,7 +1036,7 @@ int32_t WriteVolatileRegister(M95_Object_t *pObj, uint8_t regVal)
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_2_BYTE);
   EEPROMEX_CTRL_HIGH();
   
-  Transmit_Data_polling(pObj);
+  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 
 #else
@@ -1249,7 +1249,7 @@ int32_t Write_StatusConfigReg(M95_Object_t *pObj, uint8_t *pData, uint32_t Size)
   ret = pObj->IO.Write(CmdBuff, (Size + INSTRUCTION_LEN_1_BYTE));
   EEPROMEX_CTRL_HIGH();
   
-  Transmit_Data_polling(pObj);
+  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -1390,7 +1390,7 @@ int32_t Write_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t 
   ret = pObj->IO.Write(CmdBuff, (Size + INSTRUCTION_LEN_4_BYTE));
   EEPROMEX_CTRL_HIGH();
   
-  Transmit_Data_polling(pObj);
+  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
