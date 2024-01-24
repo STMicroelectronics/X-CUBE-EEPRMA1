@@ -19,9 +19,9 @@ SourceFiles=app_eepromrw.c;stm32l0xx_nucleo_bus.c;stm32l0xx_nucleo.c;stm32l0xx_i
 
 [ThirdPartyIp]
 ThirdPartyIpNumber=1
-ThirdPartyIpName#0=STMicroelectronics.X-CUBE-EEPRMA1.5.0.0
+ThirdPartyIpName#0=STMicroelectronics.X-CUBE-EEPRMA1.5.1.0
 
-[ThirdPartyIp#STMicroelectronics.X-CUBE-EEPRMA1.5.0.0]
+[ThirdPartyIp#STMicroelectronics.X-CUBE-EEPRMA1.5.1.0]
 header=..\Drivers\BSP\Components\M24256E\m24256e.h;..\Drivers\BSP\Components\M24M01E\m24m01e.h;..\Drivers\BSP\EEICA1\eeica1_m24256e.h;..\Drivers\BSP\EEICA1\eeica1_m24m01e.h;
 source=..\Drivers\BSP\Components\M24256E\m24256e.c;..\Drivers\BSP\Components\M24M01E\m24m01e.c;..\Drivers\BSP\EEICA1\eeica1_m24256e.c;..\Drivers\BSP\EEICA1\eeica1_m24m01e.c;
 

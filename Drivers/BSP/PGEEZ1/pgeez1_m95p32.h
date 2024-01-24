@@ -45,7 +45,6 @@
 #ifdef  USE_SPI
    void EEPROMEX_CTRL_HIGH(void);
    void EEPROMEX_CTRL_LOW(void);
-   int32_t Transmit_Data_polling(M95_Object_t *pObj);
 #endif
 
 int32_t M95P32_RegisterBusIO(M95_Object_t *pObj, M95_IO_t *pIO);
@@ -72,7 +71,6 @@ int32_t PGEEZ1_M95P32_DeepPowerDown(uint32_t Instance);
 int32_t PGEEZ1_M95P32_DeepPowerDownRel(uint32_t Instance);
 int32_t PGEEZ1_M95P32_VolRegRead(uint32_t Instance, uint8_t *pData);
 int32_t PGEEZ1_M95P32_VolRegWrite(uint32_t Instance, uint8_t regVal);
-int32_t PGEEZ1_M95P32_PageProgBuffer(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
 int32_t PGEEZ1_M95P32_ConfSafetyRegRead(uint32_t Instance, uint8_t *pData, uint8_t Size);
 int32_t PGEEZ1_M95P32_ClearSafetyFlag(uint32_t Instance);
 int32_t PGEEZ1_M95P32_SFDPRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -53,8 +53,8 @@ extern "C" {
 #define EEICA1_M24M01_WC2_PIN              GPIO_PIN_0
 #define EEICA1_M24M01_WC2_RCC              __HAL_RCC_GPIOB_CLK_ENABLE
 
-#define EEICA1_NUCELO_LED_PORT             GPIOA
-#define EEICA1_NUCELO_LED_PIN              GPIO_PIN_5
+#define EEICA1_NUCLEO_LED_PORT             GPIOA
+#define EEICA1_NUCLEO_LED_PIN              GPIO_PIN_5
 
 #ifdef __cplusplus
 }

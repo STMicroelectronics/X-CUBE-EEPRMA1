@@ -30,28 +30,6 @@ extern QSPI_HandleTypeDef QSPI_INSTANCE;
 #ifdef USE_SPI
 
 uint8_t CmdBuff[SIZE610];
-uint8_t RxCom[SIZE512]; 
-
-
-/**
-  * @brief  This function gives high on selected control pin
-  * @param  None
-  * @retval None
-  */  
-void EEPROMEX_CTRL_HIGH(void)
-{
-  HAL_GPIO_WritePin(M95P32_EEPROM_SPI_CS_PORT,M95P32_EEPROM_SPI_CS_PIN,GPIO_PIN_SET );
-}
-
-/**
-  * @brief  This function gives low on selected control pin
-  * @param  None
-  * @retval None
-  */  
-void EEPROMEX_CTRL_LOW(void)
-{
-  HAL_GPIO_WritePin(M95P32_EEPROM_SPI_CS_PORT,M95P32_EEPROM_SPI_CS_PIN,GPIO_PIN_RESET );
-}
 
 /**
   * @brief  This function polls WIP bit of status register
@@ -62,15 +40,16 @@ int32_t Transmit_Data_polling(M95_Object_t *pObj)
 {
   /* read status register until WIP bit become 0 */
   int32_t ret;
-  CmdBuff[0] = CMD_READ_STATUS_REG;
-  EEPROMEX_CTRL_LOW();
-  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+	uint8_t read_cmd = CMD_READ_STATUS_REG;
+	uint8_t reg_val;
+  
+  ret = pObj->IO.Write(&read_cmd, INSTRUCTION_LEN_1_BYTE);
   if(ret == M95_OK)
   {
-    RxCom[0] = 1;
-    while ((RxCom[0] & 0x01U) != 0U)
+    reg_val = 1;
+    while ((reg_val & 0x01U) != 0U)
     {
-      ret = pObj->IO.Read(RxCom, INSTRUCTION_LEN_1_BYTE);
+      ret = pObj->IO.Read(&reg_val, INSTRUCTION_LEN_1_BYTE);
       if(ret != M95_OK)
       {
         break;
@@ -78,9 +57,9 @@ int32_t Transmit_Data_polling(M95_Object_t *pObj)
     }
   }
   
-  EEPROMEX_CTRL_HIGH();
   return ret;
 }
+
 #endif
 
 
@@ -104,7 +83,6 @@ M95P32_Drv_t M95P32_spi_Drv =
   FAST_Read_ID,
   ReadVolatileReg,
   WriteVolatileRegister,
-  Page_Prog_BUFF,
   ReadConfigReg,
   Write_StatusConfigReg,
   ClearSafetyFlag,
@@ -190,10 +168,8 @@ int32_t WRITE_ENABLE(M95_Object_t *pObj)
   }
   
 #elif defined (USE_SPI)
-  EEPROMEX_CTRL_LOW();
   CmdBuff[0] = CMD_WREN;
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  EEPROMEX_CTRL_HIGH();
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
@@ -224,10 +200,8 @@ int32_t WRITE_DISABLE(M95_Object_t *pObj)
   }
   
 #elif defined (USE_SPI)
-  EEPROMEX_CTRL_LOW();
   CmdBuff[0] = CMD_WRDI;
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  EEPROMEX_CTRL_HIGH();
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -264,18 +238,15 @@ int32_t Read_StatusReg(M95_Object_t *pObj, uint8_t *pData)
   
   CmdBuff[0] = CMD_READ_STATUS_REG;
   
-  EEPROMEX_CTRL_LOW();
-  
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
   
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, INSTRUCTION_LEN_1_BYTE);
-    EEPROMEX_CTRL_HIGH();
   }
   
   /* Clear command buffer */
@@ -322,18 +293,15 @@ int32_t Single_Read(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
-  
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, Size);
-    EEPROMEX_CTRL_HIGH();
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
   
@@ -379,17 +347,15 @@ int32_t FAST_Read(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   CmdBuff[4] = DUMMY_DATA;
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_5_BYTE);
   
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, Size);
-    EEPROMEX_CTRL_HIGH();
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
   
@@ -431,12 +397,9 @@ int32_t FAST_DRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_
   }
 
 #elif defined (USE_SPI)
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(pData);
-  UNUSED(TarAddr);
-  UNUSED(Size);
+  /* Dual_Fast_Read supported in QUADSPI only */
 #else
-  /* Select SPI or QUADSPI interface */  
+  /* Select QUADSPI interface */  
 #endif
 
   return ret;
@@ -473,12 +436,9 @@ int32_t FAST_QRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_
   }
 
 #elif defined (USE_SPI)
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(pData);
-  UNUSED(TarAddr);
-  UNUSED(Size);
+  /* Dual_Fast_Read supported in QUADSPI only */
 #else
-  /* Select SPI or QUADSPI interface */  
+  /* Select QUADSPI interface */  
 #endif
   
   return ret;
@@ -497,87 +457,37 @@ int32_t FAST_QRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_
 int32_t Page_Write(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
   int32_t status = M95_OK;
-  uint32_t remainingSize = Size;
+  uint32_t bytesToWrite = Size;
   uint32_t targetAddress = TarAddr;
-  uint8_t statusReg = 0;
-  uint32_t bytesToWrite;
-  
-  /* Calculate the starting page and offset */
-  uint32_t startOffset = TarAddr % M95P32_PAGESIZE;
-  uint32_t offset = startOffset;
-  
-  
-  /* Check for invalid inputs */
-  if((pObj == NULL) || (pData == NULL) || (M95P32_PAGESIZE == 0U) || (remainingSize == 0U))
+    
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef ret = HAL_OK;
+  ret = QSPI_Write(&QSPI_INSTANCE, pData, targetAddress, bytesToWrite);
+  if( ret != HAL_OK)
   {
-    return M95_ERROR;
-  }    
-  
-  /* Check WIP status bit*/
-  do
-  {
-  Read_StatusReg(pObj, &statusReg);
-  }while((statusReg & 0x01U) != 0U);
-  
-  /* Iterate over the pages and write the data */
-  while(remainingSize > 0U) 
-  {
-    bytesToWrite = (remainingSize < (M95P32_PAGESIZE - offset)) ? remainingSize : (M95P32_PAGESIZE - offset);
-    
-    WRITE_ENABLE(pObj);
-    
-    #if defined (USE_QUADSPI)
-    HAL_StatusTypeDef ret = HAL_OK;
-    ret = QSPI_Write(&QSPI_INSTANCE, pData, targetAddress, bytesToWrite);
-    if( ret != HAL_OK)
-    {
-      status = M95_ERROR;
-    }
-    else
-    {
-      status = M95_OK;
-    }
-      
-    #elif defined (USE_SPI)
-    CmdBuff[0] = CMD_WRITE_PAGE;
-    CmdBuff[1] = (uint8_t)((targetAddress & MSK_BYTE3) >> SHIFT_16BIT);
-    CmdBuff[2] = (uint8_t)((targetAddress & MSK_BYTE2) >> SHIFT_8BIT);
-    CmdBuff[3] = (uint8_t)(targetAddress & MSK_BYTE1);
-    for(uint32_t loop = 0; loop < bytesToWrite; loop++)
-    {
-      CmdBuff[loop + 4U] = pData [loop];
-    }   
-    
-    EEPROMEX_CTRL_LOW();
-    status = pObj->IO.Write(CmdBuff, bytesToWrite + INSTRUCTION_LEN_4_BYTE);
-    EEPROMEX_CTRL_HIGH();
-    
-    #else
-    /* Select SPI or QUADSPI interface */      
-    #endif
-    
-    pObj->IO.Delay(5);
-    if(status == M95_OK)
-    {
-      /* Update the pointers and sizes for the next page */
-      pData += bytesToWrite;
-      remainingSize -= bytesToWrite;
-      targetAddress += bytesToWrite;
-      offset = targetAddress % M95P32_PAGESIZE;
-      
-      /* Check WIP status bit*/
-      do
-      {
-        Read_StatusReg(pObj, &statusReg);
-      }while((statusReg & 0x01U) != 0U);
-      
-    }
-    else
-    {
-      status = M95_ERROR;
-      break;
-    }
+    status = M95_ERROR;
   }
+  else
+  {
+    status = M95_OK;
+  }
+  
+#elif defined (USE_SPI)
+  CmdBuff[0] = CMD_WRITE_PAGE;
+  CmdBuff[1] = (uint8_t)((targetAddress & MSK_BYTE3) >> SHIFT_16BIT);
+  CmdBuff[2] = (uint8_t)((targetAddress & MSK_BYTE2) >> SHIFT_8BIT);
+  CmdBuff[3] = (uint8_t)(targetAddress & MSK_BYTE1);
+  for(uint32_t loop = 0; loop < bytesToWrite; loop++)
+  {
+    CmdBuff[loop + 4U] = pData [loop];
+  }   
+  
+  status = pObj->IO.Write(CmdBuff, bytesToWrite + INSTRUCTION_LEN_4_BYTE);
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+  
+#else
+  /* Select SPI or QUADSPI interface */      
+#endif
   
   return status;
   
@@ -595,88 +505,37 @@ int32_t Page_Write(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_
 int32_t Page_Prog(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
   int32_t status = M95_OK;
-  uint32_t remainingSize = Size;
+  uint32_t bytesToWrite = Size;
   uint32_t targetAddress = TarAddr;
-  uint8_t statusReg = 0;
-  uint32_t bytesToWrite;
-  
-  /* Calculate the starting page and offset */
-  uint32_t startOffset = TarAddr % M95P32_PAGESIZE;
-  uint32_t offset = startOffset;
-  
-  
-  /* Check for invalid inputs */
-  if((pObj == NULL) || (pData == NULL) || (M95P32_PAGESIZE == 0U) || (remainingSize == 0U))
+    
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef ret = HAL_OK;
+  ret = QSPI_Prog(&QSPI_INSTANCE, targetAddress, bytesToWrite, pData);
+  if( ret != HAL_OK)
   {
-    return M95_ERROR;
-  }    
-  
-  /* Check WIP status bit*/
-  do
-  {
-  Read_StatusReg(pObj, &statusReg);
-  }while((statusReg & 0x01U) != 0U);
-  
-  /* Iterate over the pages and write the data */
-  while(remainingSize > 0U) 
-  {
-    bytesToWrite = (remainingSize < (M95P32_PAGESIZE - offset)) ? remainingSize : (M95P32_PAGESIZE - offset);
-    
-    WRITE_ENABLE(pObj);
-    
-    #if defined (USE_QUADSPI)
-    HAL_StatusTypeDef ret = HAL_OK;
-    
-    ret = QSPI_Prog(&QSPI_INSTANCE, targetAddress, bytesToWrite, pData);
-    if( ret != HAL_OK)
-    {
-      status = M95_ERROR;
-    }
-    else
-    {
-      status = M95_OK;
-    }
-      
-    #elif defined (USE_SPI)
-    CmdBuff[0] = CMD_PROG_PAGE;
-    CmdBuff[1] = (uint8_t)((targetAddress & MSK_BYTE3) >> SHIFT_16BIT);
-    CmdBuff[2] = (uint8_t)((targetAddress & MSK_BYTE2) >> SHIFT_8BIT);
-    CmdBuff[3] = (uint8_t)(targetAddress & MSK_BYTE1);
-    for(uint32_t loop = 0; loop < bytesToWrite; loop++)
-    {
-      CmdBuff[loop + 4U] = pData [loop];
-    }   
-    
-    EEPROMEX_CTRL_LOW();
-    status = pObj->IO.Write(CmdBuff, bytesToWrite + INSTRUCTION_LEN_4_BYTE);
-    EEPROMEX_CTRL_HIGH();
-    
-    #else
-    /* Select SPI or QUADSPI interface */      
-    #endif
-    
-    pObj->IO.Delay(5);
-    if(status == M95_OK)
-    {
-      /* Update the pointers and sizes for the next page */
-      pData += bytesToWrite;
-      remainingSize -= bytesToWrite;
-      targetAddress += bytesToWrite;
-      offset = targetAddress % M95P32_PAGESIZE;
-      
-      /* Check WIP status bit*/
-      do
-      {
-        Read_StatusReg(pObj, &statusReg);
-      }while((statusReg & 0x01U) != 0U);
-      
-    }
-    else
-    {
-      status = M95_ERROR;
-      break;
-    }
+    status = M95_ERROR;
   }
+  else
+  {
+    status = M95_OK;
+  }
+  
+#elif defined (USE_SPI)
+  CmdBuff[0] = CMD_PROG_PAGE;
+  CmdBuff[1] = (uint8_t)((targetAddress & MSK_BYTE3) >> SHIFT_16BIT);
+  CmdBuff[2] = (uint8_t)((targetAddress & MSK_BYTE2) >> SHIFT_8BIT);
+  CmdBuff[3] = (uint8_t)(targetAddress & MSK_BYTE1);
+  for(uint32_t loop = 0; loop < bytesToWrite; loop++)
+  {
+    CmdBuff[loop + 4U] = pData [loop];
+  }   
+  
+  status = pObj->IO.Write(CmdBuff, bytesToWrite + INSTRUCTION_LEN_4_BYTE);
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+  
+#else
+  /* Select SPI or QUADSPI interface */      
+#endif
   
   return status;
 }
@@ -711,11 +570,8 @@ int32_t Page_Erase(M95_Object_t *pObj, uint32_t TarAddr)
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
-  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -755,11 +611,8 @@ int32_t Sector_Erase(M95_Object_t *pObj, uint32_t TarAddr)
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
-  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -799,11 +652,8 @@ int32_t Block_Erase(M95_Object_t *pObj, uint32_t TarAddr)
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
-  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -836,11 +686,9 @@ int32_t Chip_Erase(M95_Object_t *pObj)
 
 #elif defined (USE_SPI)
   CmdBuff[0] = CMD_ERASE_CHIP;
-  EEPROMEX_CTRL_LOW();
-  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
-  ret = Transmit_Data_polling(pObj);
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -881,17 +729,15 @@ int32_t Read_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t S
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, Size);
-    EEPROMEX_CTRL_HIGH();
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
@@ -936,17 +782,15 @@ int32_t FAST_Read_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint3
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   CmdBuff[4] = DUMMY_DATA;
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_5_BYTE);
   
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, Size);
-    EEPROMEX_CTRL_HIGH();
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
   
@@ -982,16 +826,14 @@ int32_t ReadVolatileReg(M95_Object_t *pObj, uint8_t *pData)
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_READ_VOLATILE_REG;
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, INSTRUCTION_LEN_1_BYTE);
-    EEPROMEX_CTRL_HIGH();
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
   
@@ -1032,11 +874,8 @@ int32_t WriteVolatileRegister(M95_Object_t *pObj, uint8_t regVal)
   CmdBuff[0] = CMD_WRITE_VOLATILE_REG;
   CmdBuff[1] = regVal;
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_2_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
-  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 
 #else
@@ -1044,121 +883,6 @@ int32_t WriteVolatileRegister(M95_Object_t *pObj, uint8_t regVal)
 #endif
   
   
-  return ret;
-}
-
-/**
-  * @brief   The Page program with buffer load allows one to 512 bytes data 
-  *               initially in the erased state (FFh) to be written and allows,
-  *               during a page program execution to load the buffer of 512 data
-  *               bytes for the next page program operation
-  * @param  pObj : pointer to memory object
-  * @param  pData : pointer to data buffer
-  * @param  TarAddr : Starting address of the write command
-  * @param  Size : Number of Bytes of data to be written
-  * @retval BSP status
-  */
-int32_t Page_Prog_BUFF(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
-{
-  int32_t ret = M95_OK;  
-  
-#if defined (USE_QUADSPI)
-  
-  uint32_t start_add = TarAddr ,temp;
-  uint32_t end_add = TarAddr + Size - 0x01U;
-  
-  HAL_StatusTypeDef status = HAL_OK;
-  
-  if((TarAddr % 0x200U) != 0U)
-  { 
-    temp = TarAddr %(0x200U);
-    status = QSPI_Prog(&QSPI_INSTANCE,TarAddr,(0x200U-temp),pData);
-    if(status != HAL_OK)
-    {
-      ret =  M95_ERROR;
-      return ret;
-    }
-    start_add = TarAddr + 0x200U - temp;
-  }
-  
-  if(((end_add % (0x1FFU))- (end_add/0x200U)) != 0U)
-  {	
-    temp = (end_add % 0x1FFU)- (end_add/0x200U);
-    end_add = end_add - temp;
-    status = QSPI_Prog(&QSPI_INSTANCE, end_add, temp + 1U, pData);
-    if(status != HAL_OK)
-    {
-      ret =  M95_ERROR;
-      return ret;
-    }
-  }
-  
-  while( start_add < end_add )
-  {
-    ReadVolatileReg(pObj, &VolatileRegVal);
-    
-    if( VolatileRegVal == 02U)
-    {
-      status = QSPI_Prog(&QSPI_INSTANCE,start_add,0x200,pData);
-      if(status != HAL_OK)
-      {
-        ret = M95_ERROR;
-        return ret;
-      }
-      start_add = start_add + 0x200U;
-    }
-  }
-  
-
-#elif defined (USE_SPI)
-  
-  uint32_t start_add = TarAddr ,temp;
-  uint32_t end_add = TarAddr + Size - 0x01U;
-  
-  int32_t status = M95_OK;
-  
-  if((TarAddr % 0x200U) != 0U)
-  { 
-    temp = TarAddr %(0x200U);
-    status = Page_Prog(pObj, pData, TarAddr, (0x200U-temp));
-    if(status != M95_OK)
-    {
-      ret = M95_ERROR;
-      return ret;
-    }
-    start_add = TarAddr + 0x200U - temp;
-  }
-  
-  if(((end_add % (0x1FFU)) - (end_add/0x200U)) != 0U)
-  {	
-    temp = (end_add % (0x1FFU)) - (end_add/0x200U);
-    end_add = end_add - temp;
-    status = Page_Prog(pObj, pData, end_add, temp+1U);
-    if(status != M95_OK)
-    {
-      ret = M95_ERROR;
-      return ret;
-    }
-  }
-  
-  while( start_add < end_add )
-  {
-    ReadVolatileReg(pObj, &VolatileRegVal);
-    if( VolatileRegVal == 02U)
-    {
-      status = Page_Prog(pObj, pData, start_add, 0x200U);
-      if(status != M95_OK)
-      {
-        ret = M95_ERROR;
-        return ret;
-      }
-      start_add = start_add + 0x200U;
-    }
-  }
-  
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
   return ret;
 }
 
@@ -1189,18 +913,16 @@ int32_t ReadConfigReg(M95_Object_t *pObj, uint8_t *pData, uint32_t Size)
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_READ_CONF_SAFETY_REG;
-  EEPROMEX_CTRL_LOW();
   
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
   
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, Size);
-    EEPROMEX_CTRL_HIGH();
   }
   
 #else
@@ -1245,11 +967,8 @@ int32_t Write_StatusConfigReg(M95_Object_t *pObj, uint8_t *pData, uint32_t Size)
     CmdBuff[loop + 1U] = pData [loop];
   }
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, (Size + INSTRUCTION_LEN_1_BYTE));
-  EEPROMEX_CTRL_HIGH();
   
-  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -1282,10 +1001,8 @@ int32_t ClearSafetyFlag(M95_Object_t *pObj)
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_CLEAR_SAFETY_REG;
-  
-  EEPROMEX_CTRL_LOW();
+
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
@@ -1327,16 +1044,14 @@ int32_t Read_SFDP(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   CmdBuff[4] = DUMMY_DATA;
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_5_BYTE);
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, Size);
-    EEPROMEX_CTRL_HIGH();
   }
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
@@ -1386,11 +1101,8 @@ int32_t Write_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t 
     CmdBuff[loop + 4U] = pData [loop];
   }
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, (Size + INSTRUCTION_LEN_4_BYTE));
-  EEPROMEX_CTRL_HIGH();
   
-  ret = Transmit_Data_polling(pObj);
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
@@ -1426,9 +1138,7 @@ int32_t Deep_Power_Down(M95_Object_t *pObj)
   
   CmdBuff[0] = CMD_DEEP_POWER_DOWN;
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
@@ -1464,9 +1174,7 @@ int32_t Deep_Power_Down_Release(M95_Object_t *pObj)
   
   CmdBuff[0] = CMD_DEEP_POWER_DOWN_RELEASE;
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
@@ -1503,17 +1211,15 @@ int32_t Read_JEDEC(M95_Object_t *pObj, uint8_t *pData, uint32_t Size)
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_READ_JEDEC;
-  
-  EEPROMEX_CTRL_LOW();
+
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
   if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
     ret = pObj->IO.Read(pData, Size);
-    EEPROMEX_CTRL_HIGH();
   }
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
@@ -1550,9 +1256,7 @@ int32_t Reset_Enable(M95_Object_t *pObj)
   
   CmdBuff[0] = CMD_ENABLE_RESET;
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  EEPROMEX_CTRL_HIGH();
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
@@ -1587,10 +1291,8 @@ int32_t Soft_Reset(M95_Object_t *pObj)
   
   CmdBuff[0] = CMD_SOFT_RESET;
   
-  EEPROMEX_CTRL_LOW();
   ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
-  EEPROMEX_CTRL_HIGH();
-  
+    
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  

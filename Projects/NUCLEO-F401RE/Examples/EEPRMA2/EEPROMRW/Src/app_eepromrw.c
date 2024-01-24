@@ -2,11 +2,11 @@
   ******************************************************************************
   * @file           : app_eepromrw.c
   * @brief          : This file provides code for the configuration
-  *       of the STMicroelectronics.X-CUBE-EEPRMA1.5.0.0 instances.
+  *       of the STMicroelectronics.X-CUBE-EEPRMA1.5.1.0 instances.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file

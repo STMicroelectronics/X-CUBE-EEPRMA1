@@ -1,4 +1,4 @@
-## <b>EEPROMRW application for X-NUCLEO-EEICA1 Expansion Board based on M24256E-F and M24M01E-F serial I2C bus EEPROM and STM32 Nucleo Boards</b>
+## <b>EEPROMRW application for X-NUCLEO-EEICA1 Expansion Board based on M24256E-F and M24M01E-F serial I2C bus EEPROM and STM32 Nucleo Boards Example Description</b>
 
 The X-NUCLEO-EEICA1 expansion board is designed for M24256E-F and M24M01E-F serial I2C bus EEPROM for data reading and writing
 

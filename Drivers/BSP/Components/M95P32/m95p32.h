@@ -27,8 +27,8 @@ extern "C" {
 #endif
   
   /* Includes ------------------------------------------------------------------*/
-#include <stdint.h>
 #include "pgeez1_conf.h"
+#include <stdint.h>
   
 /** @addtogroup BSP
   * @{
@@ -133,6 +133,10 @@ typedef struct
 {
   M95_IO_t        IO;
 } M95_Object_t;
+
+#ifdef  USE_SPI
+   int32_t Transmit_Data_polling(M95_Object_t *pObj);
+#endif
   
 /**
   * @brief  EEPROMEX COMMON driver structure definition
@@ -157,7 +161,6 @@ typedef struct
   int32_t       (*FastReadID)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
   int32_t       (*VolRegRead)(M95_Object_t *, uint8_t * );
   int32_t       (*VolRegWrite)(M95_Object_t *, uint8_t );
-  int32_t       (*PageProgBuffer)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
   int32_t       (*ConfSafetyRegRead)(M95_Object_t * , uint8_t *, uint32_t );
   int32_t       (*StatusConfigRegWrite)(M95_Object_t * , uint8_t *, uint32_t );
   int32_t       (*ClearSafetyFlag)(M95_Object_t *);
@@ -196,7 +199,6 @@ typedef struct
   int32_t       (*FastReadID)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
   int32_t       (*VolRegRead)(M95_Object_t *, uint8_t * );
   int32_t       (*VolRegWrite)(M95_Object_t *, uint8_t );
-  int32_t       (*PageProgBuffer)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
   int32_t       (*ConfSafetyRegRead)(M95_Object_t *, uint8_t *, uint32_t );
   int32_t       (*StatusConfigRegWrite)(M95_Object_t *, uint8_t *, uint32_t );
   int32_t       (*ClearSafetyFlag)(M95_Object_t *);
@@ -224,7 +226,6 @@ int32_t FAST_DRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_
 int32_t FAST_QRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
 int32_t Page_Write(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
 int32_t Page_Prog(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t Page_Prog_BUFF(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
 int32_t Page_Erase(M95_Object_t *pObj, uint32_t Add);
 int32_t Sector_Erase(M95_Object_t *pObj, uint32_t Add);
 int32_t Block_Erase(M95_Object_t *pObj, uint32_t Add);

@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -30,7 +30,6 @@ extern "C" {
 void MX_EEPROM_Init(void);
 void MX_EEPROM_Process(void);
 
-#include "stm32l0xx_nucleo.h"
 #include "eeica1_m24256e.h"
 #include "eeica1_m24m01e.h"
 #include "eeica1_conf.h"

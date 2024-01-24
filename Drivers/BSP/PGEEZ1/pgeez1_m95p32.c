@@ -28,6 +28,29 @@ static M95P32_PGEEZ1_CommonDrv_t *M95P32Drv[PGEEZ1_M95P32_INSTANCES_NBR];
 void *M95P32CompObj[PGEEZ1_M95P32_INSTANCES_NBR];
 static int32_t M95P32_Probe(void);
 
+#ifdef USE_SPI
+/**
+  * @brief  This function gives high on selected control pin
+  * @param  None
+  * @retval None
+  */  
+void EEPROMEX_CTRL_HIGH(void)
+{
+  HAL_GPIO_WritePin(M95P32_EEPROM_SPI_CS_PORT,M95P32_EEPROM_SPI_CS_PIN,GPIO_PIN_SET );
+}
+
+/**
+  * @brief  This function gives low on selected control pin
+  * @param  None
+  * @retval None
+  */  
+void EEPROMEX_CTRL_LOW(void)
+{
+  HAL_GPIO_WritePin(M95P32_EEPROM_SPI_CS_PORT,M95P32_EEPROM_SPI_CS_PIN,GPIO_PIN_RESET );
+}
+
+#endif /* USE_SPI */
+
 /**
   * @brief  Initializes the SPI EEPROMs
   * @param  Instance : SPI EEPROMs instance to be used
@@ -48,7 +71,7 @@ int32_t PGEEZ1_M95P32_Init(uint32_t Instance)
   default:
     ret = M95_ERROR;
     break;
-  }   
+  }
   
   return ret;  
 }
@@ -62,7 +85,15 @@ int32_t PGEEZ1_M95P32_WriteEnable(uint32_t Instance)
 {
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif 
+  
   ret = (M95P32Drv[Instance]->WriteEnable(M95P32CompObj[Instance]));
+
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret; 
 }
@@ -75,8 +106,16 @@ int32_t PGEEZ1_M95P32_WriteEnable(uint32_t Instance)
 int32_t PGEEZ1_M95P32_WriteDisable(uint32_t Instance)
 {
   int32_t ret = M95_OK;
+
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
   
   ret = (M95P32Drv[Instance]->WriteDisable(M95P32CompObj[Instance]));
+
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret; 
 }
@@ -91,7 +130,15 @@ int32_t PGEEZ1_M95P32_StatusRegRead(uint32_t Instance, uint8_t * pData)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->StatusRegRead(M95P32CompObj[Instance], pData));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret; 
   
@@ -108,7 +155,20 @@ int32_t PGEEZ1_M95P32_StatusConfigRegWrite(uint32_t Instance, uint8_t * pData, u
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->StatusConfigRegWrite(M95P32CompObj[Instance], pData, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
+  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif 
   
   return ret; 
 }
@@ -125,7 +185,15 @@ int32_t PGEEZ1_M95P32_ReadPage(uint32_t Instance, uint8_t * pData, uint32_t TarA
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->ReadPage(M95P32CompObj[Instance], pData, TarAddr, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif  
   
   return ret;
 }
@@ -142,7 +210,15 @@ int32_t PGEEZ1_M95P32_FastRead(uint32_t Instance, uint8_t *pData, uint32_t TarAd
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->FastRead(M95P32CompObj[Instance], pData, TarAddr, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
 }
@@ -182,24 +258,6 @@ int32_t PGEEZ1_M95P32_FastQRead(uint32_t Instance, uint8_t *pData, uint32_t TarA
 }
 
 /**
-  * @brief  Function pointer to Page_Prog_BUFF function in PGEEZ1 driver structure
-  * @param  Instance : SPI EEPROMs instance to be used
-  * @param  pData : pointer to the data to write
-  * @param  TarAddr : starting address to write
-  * @param  Size : number of bytes to write           
-  * @retval BSP status
-  */
-int32_t PGEEZ1_M95P32_PageProgBuffer(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
-{ 
-  int32_t ret = M95_OK;
-  
-  ret = (M95P32Drv[Instance]->PageProgBuffer(M95P32CompObj[Instance], pData, TarAddr, Size));
-  
-  return ret;
-  
-}
-
-/**
   * @brief  Function pointer to Page_Write function in PGEEZ1 driver structure
   * @param  Instance : SPI EEPROMs instance to be used
   * @param  pData : pointer to the data to write
@@ -208,14 +266,101 @@ int32_t PGEEZ1_M95P32_PageProgBuffer(uint32_t Instance, uint8_t *pData, uint32_t
   * @retval BSP status
   */
 int32_t PGEEZ1_M95P32_WritePage(uint32_t Instance, uint8_t * pData, uint32_t TarAddr, uint32_t Size)
-{ 
+{
   int32_t ret = M95_OK;
+  uint32_t remainingSize = Size;
+  uint32_t targetAddress = TarAddr;
+  uint8_t statusReg = 0;
+  uint32_t bytesToWrite;
+      
+  /* Calculate the starting page and offset */
+  uint32_t startOffset = TarAddr % M95P32_PAGESIZE;
+  uint32_t offset = startOffset;
+      
+      
+  /* Check for invalid inputs */
+  if((M95P32CompObj[Instance] == NULL) || (pData == NULL) || (M95P32_PAGESIZE == 0U) || (remainingSize == 0U))
+  {
+    return M95_ERROR;
+  }
+      
+  /* Check WIP status bit*/
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+      
+  do
+  {
+    ret = (M95P32Drv[Instance]->StatusRegRead(M95P32CompObj[Instance], &statusReg));
+  }while((statusReg & 0x01U) != 0U);
+      
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+#endif  
+      
+  /* Iterate over the pages and write the data */
+  while(remainingSize > 0U) 
+  {
+    bytesToWrite = (remainingSize < (M95P32_PAGESIZE - offset)) ? remainingSize : (M95P32_PAGESIZE - offset);
+        
+#ifdef USE_SPI
+    EEPROMEX_CTRL_LOW();
+#endif
+	
+    ret = (M95P32Drv[Instance]->WriteEnable(M95P32CompObj[Instance]));
+    
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+#endif    
+
+#ifdef USE_SPI
+    EEPROMEX_CTRL_LOW();
+#endif
+    
+    ret = (M95P32Drv[Instance]->WritePage(M95P32CompObj[Instance], pData, targetAddress, bytesToWrite));
+
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
   
-  ret = (M95P32Drv[Instance]->WritePage(M95P32CompObj[Instance], pData, TarAddr, Size));
-  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif 
+
+    if(ret == M95_OK)
+    {
+      /* Update the pointers and sizes for the next page */
+      pData += bytesToWrite;
+      remainingSize -= bytesToWrite;
+      targetAddress += bytesToWrite;
+      offset = targetAddress % M95P32_PAGESIZE;
+          
+      /* Check WIP status bit*/
+#ifdef USE_SPI
+      EEPROMEX_CTRL_LOW();
+#endif
+          
+      do
+      {
+        ret = (M95P32Drv[Instance]->StatusRegRead(M95P32CompObj[Instance], &statusReg));
+      }while((statusReg & 0x01U) != 0U);
+          
+#ifdef USE_SPI
+      EEPROMEX_CTRL_HIGH();
+#endif
+    }
+    else
+    {
+      ret = M95_ERROR;
+      break;
+    }	
+        
+  }
+      
   return ret; 
 }
-
+    
 /**
   * @brief  Function pointer to Page_Prog function in PGEEZ1 driver structure
   * @param  Instance : SPI EEPROMs instance to be used
@@ -227,9 +372,96 @@ int32_t PGEEZ1_M95P32_WritePage(uint32_t Instance, uint8_t * pData, uint32_t Tar
 int32_t PGEEZ1_M95P32_ProgramPage(uint32_t Instance, uint8_t * pData, uint32_t TarAddr, uint32_t Size)
 { 
   int32_t ret = M95_OK;
+  uint32_t remainingSize = Size;
+  uint32_t targetAddress = TarAddr;
+  uint8_t statusReg = 0;
+  uint32_t bytesToWrite;
+      
+  /* Calculate the starting page and offset */
+  uint32_t startOffset = TarAddr % M95P32_PAGESIZE;
+  uint32_t offset = startOffset;
+      
+      
+  /* Check for invalid inputs */
+  if((M95P32CompObj[Instance] == NULL) || (pData == NULL) || (M95P32_PAGESIZE == 0U) || (remainingSize == 0U))
+  {
+    return M95_ERROR;
+  }
+      
+  /* Check WIP status bit*/
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+      
+  do
+  {
+    ret = (M95P32Drv[Instance]->StatusRegRead(M95P32CompObj[Instance], &statusReg));
+  }while((statusReg & 0x01U) != 0U);
+      
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+#endif  
+      
+  /* Iterate over the pages and write the data */
+  while(remainingSize > 0U) 
+  {
+    bytesToWrite = (remainingSize < (M95P32_PAGESIZE - offset)) ? remainingSize : (M95P32_PAGESIZE - offset);
+        
+#ifdef USE_SPI
+    EEPROMEX_CTRL_LOW();
+#endif
+	
+    ret = (M95P32Drv[Instance]->WriteEnable(M95P32CompObj[Instance]));
+    
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+#endif    
+
+#ifdef USE_SPI
+    EEPROMEX_CTRL_LOW();
+#endif
+    
+    ret = (M95P32Drv[Instance]->ProgramPage(M95P32CompObj[Instance], pData, targetAddress, bytesToWrite));
+
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
   
-  ret = (M95P32Drv[Instance]->ProgramPage(M95P32CompObj[Instance], pData, TarAddr, Size));
-  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif 
+
+    if(ret == M95_OK)
+    {
+      /* Update the pointers and sizes for the next page */
+      pData += bytesToWrite;
+      remainingSize -= bytesToWrite;
+      targetAddress += bytesToWrite;
+      offset = targetAddress % M95P32_PAGESIZE;
+          
+      /* Check WIP status bit*/
+#ifdef USE_SPI
+      EEPROMEX_CTRL_LOW();
+#endif
+          
+      do
+      {
+        ret = (M95P32Drv[Instance]->StatusRegRead(M95P32CompObj[Instance], &statusReg));
+      }while((statusReg & 0x01U) != 0U);
+          
+#ifdef USE_SPI
+      EEPROMEX_CTRL_HIGH();
+#endif
+    }
+    else
+    {
+      ret = M95_ERROR;
+      break;
+    }	
+        
+  }
+      
   return ret; 
 }
 
@@ -243,7 +475,20 @@ int32_t PGEEZ1_M95P32_ErasePage(uint32_t Instance, uint32_t TarAddr)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->ErasePage(M95P32CompObj[Instance], TarAddr));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
+  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif   
   
   return ret;
 }
@@ -258,7 +503,20 @@ int32_t PGEEZ1_M95P32_EraseSector(uint32_t Instance, uint32_t TarAddr)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->EraseSector(M95P32CompObj[Instance], TarAddr));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
+  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif 
   
   return ret;
 }
@@ -272,8 +530,19 @@ int32_t PGEEZ1_M95P32_EraseSector(uint32_t Instance, uint32_t TarAddr)
 int32_t PGEEZ1_M95P32_EraseBlock(uint32_t Instance, uint32_t TarAddr)
 {  
   int32_t ret = M95_OK;
-  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif  
   ret = (M95P32Drv[Instance]->EraseBlock(M95P32CompObj[Instance], TarAddr));
+
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
+  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif 
   
   return ret;
 }
@@ -287,7 +556,20 @@ int32_t PGEEZ1_M95P32_EraseChip(uint32_t Instance)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->EraseChip(M95P32CompObj[Instance]));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
+  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif 
   
   return ret;
 }
@@ -304,7 +586,15 @@ int32_t PGEEZ1_M95P32_ReadID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->ReadID(M95P32CompObj[Instance], pData, TarAddr, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -322,7 +612,15 @@ int32_t PGEEZ1_M95P32_FastReadID(uint32_t Instance, uint8_t *pData, uint32_t Tar
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->FastReadID(M95P32CompObj[Instance], pData, TarAddr, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -340,7 +638,20 @@ int32_t PGEEZ1_M95P32_WriteID(uint32_t Instance, uint8_t *pData, uint32_t TarAdd
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->WriteID(M95P32CompObj[Instance], pData, TarAddr, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
+  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif 
   
   return ret;
   
@@ -355,7 +666,15 @@ int32_t PGEEZ1_M95P32_DeepPowerDown(uint32_t Instance)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->DeepPowerDown(M95P32CompObj[Instance]));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -370,7 +689,15 @@ int32_t PGEEZ1_M95P32_DeepPowerDownRel(uint32_t Instance)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->DeepPowerDownRel(M95P32CompObj[Instance]));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -387,7 +714,15 @@ int32_t PGEEZ1_M95P32_JEDECRead(uint32_t Instance, uint8_t *pData, uint32_t Size
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->JEDECRead(M95P32CompObj[Instance], pData, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -404,7 +739,15 @@ int32_t PGEEZ1_M95P32_ConfSafetyRegRead(uint32_t Instance, uint8_t *pData, uint8
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->ConfSafetyRegRead(M95P32CompObj[Instance], pData, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -420,7 +763,15 @@ int32_t PGEEZ1_M95P32_VolRegRead(uint32_t Instance, uint8_t *pData)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->VolRegRead(M95P32CompObj[Instance], pData));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
 }
@@ -435,7 +786,20 @@ int32_t PGEEZ1_M95P32_VolRegWrite(uint32_t Instance, uint8_t regVal)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->VolRegWrite(M95P32CompObj[Instance], regVal));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();
+  HAL_Delay(5);
+  
+  EEPROMEX_CTRL_LOW();
+  ret = Transmit_Data_polling(M95P32CompObj[Instance]);
+  EEPROMEX_CTRL_HIGH();
+#endif 
   
   return ret;
 }
@@ -450,7 +814,15 @@ int32_t PGEEZ1_M95P32_ClearSafetyFlag(uint32_t Instance)
   
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->ClearSafetyFlag(M95P32CompObj[Instance]));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -468,7 +840,15 @@ int32_t PGEEZ1_M95P32_SFDPRead(uint32_t Instance, uint8_t *pData, uint32_t TarAd
 { 
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->SFDPRegRead(M95P32CompObj[Instance], pData, TarAddr, Size));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -483,7 +863,15 @@ int32_t PGEEZ1_M95P32_EnableReset(uint32_t Instance)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->EnableReset(M95P32CompObj[Instance]));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   
@@ -498,7 +886,15 @@ int32_t PGEEZ1_M95P32_SoftReset(uint32_t Instance)
 {  
   int32_t ret = M95_OK;
   
+#ifdef USE_SPI
+  EEPROMEX_CTRL_LOW();
+#endif
+  
   ret = (M95P32Drv[Instance]->SoftReset(M95P32CompObj[Instance]));
+  
+#ifdef USE_SPI
+  EEPROMEX_CTRL_HIGH();  
+#endif
   
   return ret;
   

@@ -2,11 +2,11 @@
   ******************************************************************************
   * @file           : app_eepromrw.c
   * @brief          : This file provides code for the configuration
-  *       of the STMicroelectronics.X-CUBE-EEPRMA1.5.0.0 instances.
+  *       of the STMicroelectronics.X-CUBE-EEPRMA1.5.1.0 instances.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -59,6 +59,7 @@ extern "C" {
 
 /* Private variables ---------------------------------------------------------*/
 uint8_t ReceiveBuff[SIZE1024] = {0};
+uint8_t data_buff[SIZE1024] = {0};
 uint8_t pData[SIZE600];
 
 #ifdef USE_QUADSPI
@@ -66,13 +67,12 @@ uint8_t Data[1040] = {0};
 extern QSPI_HandleTypeDef QSPI_INSTANCE;
 #endif /* USE_QUADSPI */
 
-uint8_t SampleData[SIZE200] = {0};
 uint8_t ReadBuff[SIZE200] = {0};
 
 __IO ITStatus UartReady = RESET;
 unsigned int add = 0x00;
 uint8_t Buff[SIZE256] = {0};
-unsigned int CmdParam[SIZE520] = {0};
+unsigned int CmdParam[SIZE100] = {0};
 
 volatile uint8_t IT_receive = 0;
 uint8_t User_Choice = 0;
@@ -370,7 +370,7 @@ void MX_EEPROM_RW_Process()
           else
           {
             printf("Prog Page in Buffer Mode Add:  0x%6.6x \r\n", CmdParam[1]);
-            PGEEZ1_M95P32_PageProgBuffer(PGEEZ1_M95P32_0, pData, add, index);
+            PageProgram_with_BufferLoad(PGEEZ1_M95P32_0, pData, add, index);
           }
         }
         else
@@ -752,7 +752,7 @@ void MX_EEPROM_RW_Process()
       User_Choice = 1;
     }
 
-    memset(&CmdParam, 0x00, SIZE520 * sizeof(CmdParam[0]));
+    memset(&CmdParam, 0x00, SIZE100 * sizeof(CmdParam[0]));
 
     UartReady = SET;
     HAL_NVIC_EnableIRQ(USARTX_INTERRUPT);
@@ -1167,6 +1167,7 @@ int32_t M95P32_TestPage(void)
   */
 
   unsigned int index;
+  uint8_t SampleData[SIZE200] = {0};
 
   memset(&SampleData, 0x0F, SIZE100);
 
@@ -1399,6 +1400,7 @@ int32_t M95P32_TestSectorErase(void)
 
   uint32_t index;
   uint8_t a_rcvbuff_sector_erase[SIZE200] = {0};
+  uint8_t SampleData[SIZE200] = {0};
 
   PGEEZ1_M95P32_WriteEnable(PGEEZ1_M95P32_0);
   PRINTF_APPLI("\n *Sector_ERASE* at Address 0x00 \r\n");
@@ -1453,6 +1455,7 @@ int32_t M95P32_TestBlockErase(void)
 
   uint32_t index;
   uint8_t a_rcvbuff_block_erase[SIZE200] = {0};
+  uint8_t SampleData[SIZE200] = {0};
 
   PGEEZ1_M95P32_WriteEnable(PGEEZ1_M95P32_0);
   PRINTF_APPLI(" *Block_ERASE* at Address 0x00 \r\n");
@@ -2036,7 +2039,7 @@ void M95P32_16Word_align()
   printf("Data at address 0x101 is: 0x%X \r\n", ReceiveBuff[0]);
   if (ReceiveBuff[0] == 0x55)
   {
-    printf("Page Programed. Error.\r\n");
+    printf("Page Programmed. Error.\r\n");
   }
   else
   {
@@ -2476,22 +2479,16 @@ int32_t M95P32_TestBufferMode(void)
 
   uint32_t index;
 
-  PGEEZ1_M95P32_WriteEnable(PGEEZ1_M95P32_0);
-  PRINTF_APPLI(" *Write Volatile Register to enter Buffer Mode* \r\n");
-  PGEEZ1_M95P32_VolRegWrite(PGEEZ1_M95P32_0, SET_BUFEN_BIT);
+  memset(&data_buff, 0x09, SIZE1024);
+  PageProgram_with_BufferLoad(PGEEZ1_M95P32_0, data_buff,  0x00,  SIZE1024);
 
-  memset(&ReceiveBuff, 0x09, SIZE1024);
-  PGEEZ1_M95P32_WriteEnable(PGEEZ1_M95P32_0);
-  PGEEZ1_M95P32_PageProgBuffer(PGEEZ1_M95P32_0, ReceiveBuff, 0x00, SIZE1024);
-  PGEEZ1_M95P32_VolRegWrite(PGEEZ1_M95P32_0, SET_BUFLD_BIT);
-
-  memset(&ReceiveBuff, 0x00, SIZE1024);
-  PGEEZ1_M95P32_ReadPage(PGEEZ1_M95P32_0, ReceiveBuff, 0x00, SIZE1024);
+  memset(&data_buff, 0x00, SIZE1024);
+  PGEEZ1_M95P32_ReadPage(PGEEZ1_M95P32_0, data_buff, 0x00, SIZE1024);
 
   for (index = 0x00; index < SIZE1024; index++)
   {
 
-    if (ReceiveBuff[index] != 0x09U)
+    if (data_buff[index] != 0x09U)
     {
       return M95_ERROR;
     }
@@ -2499,7 +2496,7 @@ int32_t M95P32_TestBufferMode(void)
   printf(" \nData after Programming 1024 bytes starting from address 0x00 in buffer mode \r\n");
   for (index = 0x100U; index < 0x300U; index++)
   {
-    printf("  %2.2x", ReceiveBuff[index]);
+    printf("  %2.2x", data_buff[index]);
   }
 
   PGEEZ1_M95P32_WriteEnable(PGEEZ1_M95P32_0);

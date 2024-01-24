@@ -2,11 +2,11 @@
   ******************************************************************************
   * @file           : app_eepromrw.c
   * @brief          : This file provides code for the configuration
-  *       of the STMicroelectronics.X-CUBE-EEPRMA1.5.0.0 instances.
+  *       of the STMicroelectronics.X-CUBE-EEPRMA1.5.1.0 instances.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -23,6 +23,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 
 #include "app_eepromrw.h"
+#include "main.h"
 
 /** @defgroup EEPROM_NUCLEO
   * @{
@@ -149,7 +150,7 @@ void MX_EEPROM_RW_Init(void)
 
   /* TURN NUCLEO LED ON only if all test cases pass,  else toggle LED and break*/
   printf("\nAll test cases passed successfully ! \r\n");
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(EEICA1_NUCLEO_LED_PORT, EEICA1_NUCLEO_LED_PIN, GPIO_PIN_SET);
 
 }
 
@@ -1102,7 +1103,7 @@ void App_Error_Handler(void)
 {
   while (1)
   {
-    HAL_GPIO_TogglePin(EEICA1_NUCELO_LED_PORT, EEICA1_NUCELO_LED_PIN);
+    HAL_GPIO_TogglePin(EEICA1_NUCLEO_LED_PORT, EEICA1_NUCLEO_LED_PIN);
     HAL_Delay(200);
   }
 }
