@@ -7,7 +7,7 @@
 ******************************************************************************
 * @attention
 *
-* Copyright (c) 2022 STMicroelectronics.
+* Copyright (c) 2023 STMicroelectronics.
 * All rights reserved.
 *
 * This software is licensed under terms that can be found in the LICENSE file
@@ -27,8 +27,8 @@ extern "C" {
 #endif
   
   /* Includes ------------------------------------------------------------------*/
+#include "pgeez1_conf.h"
 #include <stdint.h>
-#include "main.h"
   
 /** @addtogroup BSP
   * @{
@@ -40,6 +40,9 @@ extern "C" {
   
   
 /* Exported types ------------------------------------------------------------*/
+/**
+* @brief  EEPROM structure definition
+*/
   
 /* Exported constants --------------------------------------------------------*/
 /** @defgroup M95_Exported_Constants
@@ -55,7 +58,6 @@ extern "C" {
 #define INSTRUCTION_LEN_2_BYTE          2U
 #define INSTRUCTION_LEN_4_BYTE          4U
 #define INSTRUCTION_LEN_5_BYTE          5U
-#define NO_INSTANCE                     0U
 #define DUMMY_DATA                      0xFFU
 #define M95P32_PAGESIZE                 512U
     
@@ -110,68 +112,65 @@ extern "C" {
   
 
 typedef int32_t     (*M95_Init_Func)(void);   
-typedef int32_t     (*M95_DeInit_Func)(void); 
-typedef int32_t     (*M95_Write_Func)(uint8_t, uint32_t);
-typedef int32_t     (*M95_Transmit_Func)(uint8_t *, uint32_t, uint32_t , 
-                                           uint16_t , uint8_t);
-typedef int32_t     (*M95_Receive_Func)( uint8_t *, uint32_t, uint32_t , 
-                                          uint16_t , uint8_t);
-typedef int32_t     (*M95_Read_Func) (uint8_t* , uint8_t);
-typedef int32_t     (*M95_IsReady_Func) (uint8_t);
+typedef int32_t     (*M95_DeInit_Func)(void);
+typedef int32_t     (*M95_Read_Func) (uint8_t* , uint16_t);
+typedef int32_t     (*M95_Write_Func)(uint8_t*, uint16_t);
+typedef int32_t     (*M95_SendRecv_Func)( uint8_t *, uint8_t *, uint16_t );
 typedef void        (*M95_Delay)(uint32_t );   
   
 typedef struct
 {
-  M95_Init_Func            Init;
-  M95_DeInit_Func          DeInit;
-  M95_Read_Func		   Read;
-  M95_Write_Func           Write;
-  M95_Transmit_Func        WriteBuffer;
-  M95_Receive_Func         ReadBuffer;
-  M95_IsReady_Func         IsReady;
-  M95_Delay                Delay;
-  uint8_t                  Address;
+  M95_Init_Func                 Init;
+  M95_DeInit_Func               DeInit;
+  M95_Read_Func		        Read;
+  M95_Write_Func                Write;
+  M95_SendRecv_Func             SendRecv;
+  M95_Delay                     Delay;
+  uint8_t                       Address;
 } M95_IO_t;
   
 typedef struct
 {
   M95_IO_t        IO;
 } M95_Object_t;
+
+#ifdef  USE_SPI
+   int32_t Transmit_Data_polling(M95_Object_t *pObj);
+#endif
   
 /**
   * @brief  EEPROMEX COMMON driver structure definition
   */
 typedef struct
 {
-  int32_t       (*Init)( M95_Object_t *);
-  int32_t       (*WriteEnable)(void);
-  int32_t       (*WriteDisable)(void);
-  int32_t       (*StatusRegRead)(uint8_t *);
-  int32_t       (*ReadPage)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*FastRead)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*FastDRead)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*FastQRead)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*WritePage)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*ProgramPage)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*ErasePage)(uint32_t );
-  int32_t       (*EraseSector)(uint32_t );
-  int32_t       (*EraseBlock)(uint32_t );
-  int32_t       (*EraseChip)(void );
-  int32_t       (*ReadID)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*FastReadID)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*VolRegRead)(uint8_t * );
-  int32_t       (*VolRegWrite)(uint8_t );
-  int32_t       (*PageProgBuffer)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*ConfSafetyRegRead)(uint32_t , uint8_t *, uint32_t );
-  int32_t       (*StatusConfigRegWrite)(uint32_t , uint8_t *, uint32_t );
-  int32_t       (*ClearSafetyFlag)(void);
-  int32_t       (*SFDPRegRead)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*WriteID)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*DeepPowerDown)(void);
-  int32_t       (*DeepPowerDownRel)(void);
-  int32_t       (*JEDECRead)(uint32_t , uint8_t *, uint32_t );
-  int32_t       (*EnableReset)(void);
-  int32_t       (*SoftReset)(void);
+  int32_t       (*Init)(M95_Object_t *);
+  int32_t       (*WriteEnable)(M95_Object_t *);
+  int32_t       (*WriteDisable)(M95_Object_t *);
+  int32_t       (*StatusRegRead)(M95_Object_t *, uint8_t *);
+  int32_t       (*ReadPage)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*FastRead)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*FastDRead)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*FastQRead)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*WritePage)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*ProgramPage)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*ErasePage)(M95_Object_t *, uint32_t );
+  int32_t       (*EraseSector)(M95_Object_t *, uint32_t );
+  int32_t       (*EraseBlock)(M95_Object_t *, uint32_t );
+  int32_t       (*EraseChip)(M95_Object_t * );
+  int32_t       (*ReadID)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*FastReadID)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*VolRegRead)(M95_Object_t *, uint8_t * );
+  int32_t       (*VolRegWrite)(M95_Object_t *, uint8_t );
+  int32_t       (*ConfSafetyRegRead)(M95_Object_t * , uint8_t *, uint32_t );
+  int32_t       (*StatusConfigRegWrite)(M95_Object_t * , uint8_t *, uint32_t );
+  int32_t       (*ClearSafetyFlag)(M95_Object_t *);
+  int32_t       (*SFDPRegRead)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*WriteID)(M95_Object_t * , uint8_t *, uint32_t , uint32_t );
+  int32_t       (*DeepPowerDown)(M95_Object_t *);
+  int32_t       (*DeepPowerDownRel)(M95_Object_t *);
+  int32_t       (*JEDECRead)(M95_Object_t * , uint8_t *, uint32_t );
+  int32_t       (*EnableReset)(M95_Object_t *);
+  int32_t       (*SoftReset)(M95_Object_t *);
   
 } M95P32_PGEEZ1_CommonDrv_t;
   
@@ -182,35 +181,34 @@ typedef struct
   */
 typedef struct
 {
-  int32_t       (*Init)( M95_Object_t *);
-  int32_t       (*WriteEnable)(void);
-  int32_t       (*WriteDisable)(void);
-  int32_t       (*StatusRegRead)(uint8_t *);
-  int32_t       (*ReadPage)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*FastRead)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*FastDRead)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*FastQRead)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*WritePage)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*ProgramPage)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*ErasePage)(uint32_t );
-  int32_t       (*EraseSector)(uint32_t );
-  int32_t       (*EraseBlock)(uint32_t );
-  int32_t       (*EraseChip)(void );
-  int32_t       (*ReadID)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*FastReadID)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*VolRegRead)(uint8_t * );
-  int32_t       (*VolRegWrite)(uint8_t );
-  int32_t       (*PageProgBuffer)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*ConfSafetyRegRead)(uint32_t , uint8_t *, uint32_t );
-  int32_t       (*StatusConfigRegWrite)(uint32_t , uint8_t *, uint32_t );
-  int32_t       (*ClearSafetyFlag)(void);
-  int32_t       (*SFDPRegRead)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*WriteID)(uint32_t , uint8_t *, uint32_t , uint32_t );
-  int32_t       (*DeepPowerDown)(void);
-  int32_t       (*DeepPowerDownRel)(void);
-  int32_t       (*JEDECRead)(uint32_t , uint8_t *, uint32_t );
-  int32_t       (*EnableReset)(void);
-  int32_t       (*SoftReset)(void);
+  int32_t       (*Init)(M95_Object_t *);
+  int32_t       (*WriteEnable)(M95_Object_t *);
+  int32_t       (*WriteDisable)(M95_Object_t *);
+  int32_t       (*StatusRegRead)(M95_Object_t *, uint8_t *);
+  int32_t       (*ReadPage)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*FastRead)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*FastDRead)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*FastQRead)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*WritePage)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*ProgramPage)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*ErasePage)(M95_Object_t *, uint32_t );
+  int32_t       (*EraseSector)(M95_Object_t *, uint32_t );
+  int32_t       (*EraseBlock)(M95_Object_t *, uint32_t );
+  int32_t       (*EraseChip)(M95_Object_t * );
+  int32_t       (*ReadID)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*FastReadID)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*VolRegRead)(M95_Object_t *, uint8_t * );
+  int32_t       (*VolRegWrite)(M95_Object_t *, uint8_t );
+  int32_t       (*ConfSafetyRegRead)(M95_Object_t *, uint8_t *, uint32_t );
+  int32_t       (*StatusConfigRegWrite)(M95_Object_t *, uint8_t *, uint32_t );
+  int32_t       (*ClearSafetyFlag)(M95_Object_t *);
+  int32_t       (*SFDPRegRead)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*WriteID)(M95_Object_t *, uint8_t *, uint32_t , uint32_t );
+  int32_t       (*DeepPowerDown)(M95_Object_t *);
+  int32_t       (*DeepPowerDownRel)(M95_Object_t *);
+  int32_t       (*JEDECRead)(M95_Object_t *, uint8_t *, uint32_t );
+  int32_t       (*EnableReset)(M95_Object_t *);
+  int32_t       (*SoftReset)(M95_Object_t *);
   
 } M95P32_Drv_t;
   
@@ -218,34 +216,33 @@ extern M95P32_Drv_t M95P32_spi_Drv;
 
 int32_t M95P32_spi_Init( M95_Object_t *pObj );
 int32_t M95P32_spi_DeInit( M95_Object_t *pObj );
-int32_t WRITE_ENABLE(void);
-int32_t WRITE_DISABLE(void);
-int32_t Read_StatusReg(uint8_t *pData);
-int32_t Write_StatusConfigReg(uint32_t Instance, uint8_t *pData, uint32_t Size);
-int32_t Single_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t FAST_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr,uint32_t Size);
-int32_t FAST_DRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t FAST_QRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t Page_Write(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t Page_Prog(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t Page_Prog_BUFF(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t Page_Erase(uint32_t Add);
-int32_t Sector_Erase(uint32_t Add);
-int32_t Block_Erase(uint32_t Add);
-int32_t Chip_Erase(void);
-int32_t Read_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t FAST_Read_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t Write_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t Deep_Power_Down(void);
-int32_t Deep_Power_Down_Release(void);
-int32_t Read_JEDEC(uint32_t Instance, uint8_t *pData, uint32_t Size);
-int32_t ReadConfigReg(uint32_t Instance, uint8_t *pData, uint32_t Size);
-int32_t ReadVolatileReg(uint8_t *pData);
-int32_t WriteVolatileRegister(uint8_t regVal);
-int32_t ClearSafetyFlag(void);
-int32_t Read_SFDP(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
-int32_t Reset_Enable(void);
-int32_t Soft_Reset(void);
+int32_t WRITE_ENABLE(M95_Object_t *pObj);
+int32_t WRITE_DISABLE(M95_Object_t *pObj);
+int32_t Read_StatusReg(M95_Object_t *pObj, uint8_t *pData);
+int32_t Write_StatusConfigReg(M95_Object_t *pObj, uint8_t *pData, uint32_t Size);
+int32_t Single_Read(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t FAST_Read(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr,uint32_t Size);
+int32_t FAST_DRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t FAST_QRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t Page_Write(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t Page_Prog(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t Page_Erase(M95_Object_t *pObj, uint32_t Add);
+int32_t Sector_Erase(M95_Object_t *pObj, uint32_t Add);
+int32_t Block_Erase(M95_Object_t *pObj, uint32_t Add);
+int32_t Chip_Erase(M95_Object_t *pObj);
+int32_t Read_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t FAST_Read_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t Write_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t Deep_Power_Down(M95_Object_t *pObj);
+int32_t Deep_Power_Down_Release(M95_Object_t *pObj);
+int32_t Read_JEDEC(M95_Object_t *pObj, uint8_t *pData, uint32_t Size);
+int32_t ReadConfigReg(M95_Object_t *pObj, uint8_t *pData, uint32_t Size);
+int32_t ReadVolatileReg(M95_Object_t *pObj, uint8_t *pData);
+int32_t WriteVolatileRegister(M95_Object_t *pObj, uint8_t regVal);
+int32_t ClearSafetyFlag(M95_Object_t *pObj);
+int32_t Read_SFDP(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size);
+int32_t Reset_Enable(M95_Object_t *pObj);
+int32_t Soft_Reset(M95_Object_t *pObj);
   
   
 /** @addtogroup M95xx_Private_Functions

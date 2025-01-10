@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -109,7 +109,7 @@ int32_t M24_RegisterBusIO(M24_Object_t *pObj, M24_IO_t *pIO)
 }
 /**
   * @brief  Set M24 eeprom Initialization
-  * @param  None
+  * @param  pObj : pointer to memory object
   * @retval EEPROMEX enum status
   */
 int32_t M24_i2c_Init( M24_Object_t *pObj )
@@ -122,6 +122,11 @@ int32_t M24_i2c_Init( M24_Object_t *pObj )
   return M24_OK;
 }
 
+/**
+  * @brief  Set M24 eeprom De-Initialization
+  * @param  pObj : pointer to memory object
+  * @retval EEPROMEX enum status
+  */
 int32_t M24_i2c_DeInit( M24_Object_t *pObj )
 { 
  if (pObj->IO.DeInit()< 0)
@@ -134,6 +139,7 @@ int32_t M24_i2c_DeInit( M24_Object_t *pObj )
 
 /**
   * @brief  Check M24 availability
+  * @param  pObj : pointer to memory object
   * @param  Trials : number of max tentative tried
   * @retval EEPROMEX enum status
   */
@@ -145,10 +151,9 @@ int32_t M24_i2c_IsDeviceReady(M24_Object_t *pObj, const uint32_t Trials )
 
 /**
   * @brief  Read N bytes starting from specified I2C address
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to store
   * @param  TarAddr : I2C data memory address to read
-  * @param  TargetName : Device Address of selected memory    
-  * @param  NbByte : number of bytes to read
   * @retval EEPROMEX enum status
   */
 int32_t M24_i2c_ReadByte( M24_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr)
@@ -159,7 +164,7 @@ int32_t M24_i2c_ReadByte( M24_Object_t *pObj, uint8_t * pData, const uint32_t Ta
       return M24_TIMEOUT;
     }  
   
-  if (pObj->IO.Address == 0xA8)
+  if (pObj->IO.Address == 0xA8U)
     return pObj->IO.ReadReg(pObj->IO.Address, TarAddr, pData, 1);
   else
     return pObj->IO.ReadReg16(pObj->IO.Address, TarAddr, pData, 1);
@@ -167,9 +172,10 @@ int32_t M24_i2c_ReadByte( M24_Object_t *pObj, uint8_t * pData, const uint32_t Ta
 
 /**
   * @brief  Read N bytes starting from specified I2C address
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to store
   * @param  TarAddr : I2C data memory address to read
-  * @param  NbByte : number of bytes to read
+  * @param  PageSize : memory page size
   * @retval EEPROMEX enum status
   */
 int32_t M24_i2c_ReadPage( M24_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr, const uint16_t PageSize )
@@ -180,7 +186,7 @@ int32_t M24_i2c_ReadPage( M24_Object_t *pObj, uint8_t * pData, const uint32_t Ta
       return M24_TIMEOUT;
     }
   
-  if (pObj->IO.Address == 0xA8)
+  if (pObj->IO.Address == 0xA8U)
     return pObj->IO.ReadReg(pObj->IO.Address, TarAddr, pData, PageSize );
   else
     return pObj->IO.ReadReg16(pObj->IO.Address, TarAddr, pData, PageSize );
@@ -188,9 +194,9 @@ int32_t M24_i2c_ReadPage( M24_Object_t *pObj, uint8_t * pData, const uint32_t Ta
 
 /**
   * @brief  Read N bytes starting from specified I2C address
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to store
   * @param  TarAddr : I2C data memory address to read
-  * @param  DeviceAddr : Device Address of selected memory
   * @param  NbByte : number of bytes to read
   * @retval EEPROMEX enum status
   */
@@ -203,7 +209,7 @@ int32_t M24_i2c_ReadData(M24_Object_t *pObj, uint8_t * pData, const uint32_t Tar
     return M24_TIMEOUT;
     }
   
-  if (pObj->IO.Address == 0xA8)
+  if (pObj->IO.Address == 0xA8U)
     return pObj->IO.ReadReg(pObj->IO.Address, TarAddr, pData, NbByte );
   else
     return pObj->IO.ReadReg16(pObj->IO.Address, TarAddr, pData, NbByte );
@@ -211,9 +217,9 @@ int32_t M24_i2c_ReadData(M24_Object_t *pObj, uint8_t * pData, const uint32_t Tar
 
 /**
   * @brief  Write a single byte to a specified address of I2C memory
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to write
   * @param  TarAddr : I2C data memory address to write
-  * @param  DeviceAddr : Device Address of selected memory
   * @retval EEPROMEX enum status
 */
 int32_t M24_i2c_WriteByte( M24_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr)
@@ -224,7 +230,7 @@ int32_t M24_i2c_WriteByte( M24_Object_t *pObj, uint8_t * pData, const uint32_t T
       return M24_TIMEOUT;
     }
   
-  if (pObj->IO.Address == 0xA8)
+  if (pObj->IO.Address == 0xA8U)
     status = pObj->IO.WriteReg(pObj->IO.Address, TarAddr, pData, 1 );
   else
     status = pObj->IO.WriteReg16(pObj->IO.Address, TarAddr, pData, 1 );
@@ -235,9 +241,9 @@ int32_t M24_i2c_WriteByte( M24_Object_t *pObj, uint8_t * pData, const uint32_t T
 
 /**
   * @brief  Write Page
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to write
   * @param  TarAddr : I2C data memory address to write
-  * @param  DeviceAddr : Device Address of selected memory
   * @param  PageSize : Size of the page of selected memory
   * @param  NbByte : number of bytes to write
   * @retval EEPROMEX enum status
@@ -252,7 +258,7 @@ int32_t M24_i2c_WritePage(M24_Object_t *pObj, uint8_t * pData, const uint32_t Ta
   }    
   
   
-  if (pObj->IO.Address == 0xA8)
+  if (pObj->IO.Address == 0xA8U)
     status = pObj->IO.WriteReg(pObj->IO.Address, TarAddr, pData, PageSize);
   else
     status = pObj->IO.WriteReg16(pObj->IO.Address, TarAddr, pData, PageSize);
@@ -264,108 +270,75 @@ int32_t M24_i2c_WritePage(M24_Object_t *pObj, uint8_t * pData, const uint32_t Ta
 
 /**
   * @brief  Write N data bytes starting from specified I2C Address
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to write
   * @param  TarAddr : I2C data memory address to write
-  * @param  DeviceAddr : Device Address of selected memory
   * @param  PageSize : Size of the page of selected memory
-  * @param  NbByte : number of bytes to write
+  * @param  Size : number of bytes to write
   * @retval EEPROMEX enum status
   */
 
-int32_t M24_i2c_WriteData(M24_Object_t *pObj, uint8_t * pData, const uint32_t TarAddr,
-                                          const uint16_t PageSize, const uint16_t Size )
+int32_t M24_i2c_WriteData(M24_Object_t *pObj, uint8_t *pData, const uint32_t TarAddr,
+                          const uint16_t PageSize, const uint16_t Size)
 {
-  
- uint32_t iNumberOfPage;
-  int32_t status = M24_OK;
-  uint32_t targetAddress = TarAddr;
-  /*to handle dynamically start writing address*/
-  if (targetAddress >= PageSize)
-    {
-     iNumberOfPage =  Size / PageSize;
-    if ((targetAddress % PageSize) > 0)
-      {
-      iNumberOfPage += 1;
-      } 
-    }
-  else  
-    {
-    iNumberOfPage = ( targetAddress + Size ) / PageSize;
-    }
-  
-  uint32_t iRemainder = ( targetAddress + Size ) % PageSize;
-  uint8_t * pageIndex = pData;
+    int32_t status = M24_OK;
     
- if (iRemainder>0)
-  {
-    iNumberOfPage += 1;
-  }
-  
-  if (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK )
-  {
-    return M24_TIMEOUT;
-  }  
-  
-  if (targetAddress == 0)       /*If target address from which read/write will be done starts from 0*/  
-  {
-    for (int index = 0;index < iNumberOfPage;index++)
-    {   
-       uint32_t iSize = PageSize;
-       if (index+1 == iNumberOfPage)     /*For aligning last page of eeprom*/
-        iSize = iRemainder;
-          
-       
-       if (pObj->IO.Address == 0xA8)
-        status = pObj->IO.WriteReg(pObj->IO.Address, targetAddress,  pageIndex, iSize );
-       else
-         status = pObj->IO.WriteReg16(pObj->IO.Address, targetAddress,  pageIndex, iSize );
-       
-        pObj->IO.Delay(6);
-        targetAddress += iSize;
-        pageIndex += iSize;
-        while (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK ) {}; 
-        
-     }
-     return status;    
-  }
-  else
-  {
-    for(int index = 0;index < iNumberOfPage;index++)
+    uint32_t targetAddress = TarAddr;
+    uint32_t remainingSize = Size;
+    
+    /* Check for invalid inputs */
+    if ((pObj == NULL) || (pData == NULL) || (PageSize == 0U) || (remainingSize == 0U)) 
     {
-        uint32_t iSize = PageSize;
-       if (index == 0) /*For aligning first page*/
-        { 
-          if (targetAddress <= PageSize)
-            iSize = (PageSize - targetAddress)>0? (PageSize - targetAddress) : PageSize;
-          else
-            iSize = PageSize - (targetAddress % PageSize); 
-        }
-          
-        if (index+1 == iNumberOfPage) /*For aligning last page of eeprom*/
-          iSize = iRemainder;
-         
-       if (pObj->IO.Address == 0xA8)
-    	   status = pObj->IO.WriteReg(pObj->IO.Address, targetAddress,  pageIndex, iSize );
-       else
-    	   status = pObj->IO.WriteReg16(pObj->IO.Address, targetAddress,  pageIndex, iSize );
-       
-        pObj->IO.Delay(6);
-        targetAddress += iSize;
-        pageIndex += iSize;
-                   
-        while (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK ) {}; 
+        return M24_ERROR;  /* Return an error code indicating invalid inputs */
+    }
+    
+    /* Calculate the starting page and offset */
+    uint32_t startOffset = TarAddr % PageSize;
+    uint32_t offset = startOffset;
+    
+    if (pObj->IO.IsReady(pObj->IO.Address, MIN_TRIALS) != M24_OK)
+    {
+        return M24_TIMEOUT;
+    }
+    
+    /* Iterate over the pages and write the data */
+    while (remainingSize > 0U) 
+    {
+        uint32_t bytesToWrite = (remainingSize < (PageSize - offset)) ? remainingSize : (PageSize - offset);
         
-     }
-     return status;     
-  }  
+        /* Perform the write operation using the appropriate I2C write function */
+        if (pObj->IO.Address == 0xA8U)
+        {
+            status = pObj->IO.WriteReg(pObj->IO.Address, targetAddress, pData, bytesToWrite);
+        }
+        else
+        {
+            status = pObj->IO.WriteReg16(pObj->IO.Address, targetAddress, pData, bytesToWrite);
+        }
+
+        pObj->IO.Delay(6);
+        
+        /* Update the pointers and sizes for the next page */
+        pData += bytesToWrite;
+        targetAddress += bytesToWrite;
+        remainingSize -= bytesToWrite;
+        offset = targetAddress % PageSize;
+        
+        /* Wait for the I2C interface to be ready before proceeding to the next page */
+        while (pObj->IO.IsReady(pObj->IO.Address, MIN_TRIALS) != M24_OK)
+        {
+        }
+    }
+
+    return status;
 }
 
 /**
   * @brief  Write Identification Page
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to write
   * @param  TarAddr : I2C data memory address to write
   * @param  PageSize : Size of the page of selected memory
-  * @param  DeviceAddr : Device Address of selected memory
   * @param  NbByte : number of bytes to write
   * @retval EEPROMEX enum status
   */
@@ -377,7 +350,14 @@ int32_t M24_i2c_WriteID(M24_Object_t *pObj, uint8_t * pData, const uint32_t TarA
   uint16_t  count;
   uint16_t temp;
   uint16_t  bitcount;
-  uint16_t mask = 0 ;
+  uint16_t mask = 0U ;
+  
+  /* Check for invalid inputs */
+  if (PageSize == 0U) 
+  {
+    return M24_ERROR;  /* Return an error code indicating invalid inputs */
+  }
+    
   if (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK )
   {
     return M24_TIMEOUT;
@@ -387,15 +367,15 @@ int32_t M24_i2c_WriteID(M24_Object_t *pObj, uint8_t * pData, const uint32_t TarA
   bitcount = BITCOUNT;
   temp = PageSize;
   mem_addr = ( uint16_t )TarAddr;
-  Devaddr |= 1 << IDMASK;                  /* Set fifth bit of Device address */
-  while ( temp / ( 1 << bitcount ) != 0 ){  /* Generate mask for address*/
-   mask |= ( 1 << (bitcount - 1) );
+  Devaddr |= 1U << IDMASK;                  /* Set fifth bit of Device address */
+  while ( (uint16_t)(temp / ( (uint16_t)1U << bitcount )) != 0U ){  /* Generate mask for address*/
+   mask |= ( (uint16_t)1U << (bitcount - 1U) );
    bitcount++;
   }
   mem_addr &= mask;                        /* Mask address address according to pagesize*/  
-  count = PageSize - mem_addr % PageSize;  /* Calculate available space in the ID page */
+  count = PageSize - (mem_addr % PageSize);  /* Calculate available space in the ID page */
   if ( NbByte <= count ){  /* Address byte is not aligned with page and no byte must be less than available byte in ID page*/
-    if (pObj->IO.Address == 0xA8)
+    if (pObj->IO.Address == 0xA8U)
         status = pObj->IO.WriteReg(Devaddr, mem_addr,  pdata_index, NbByte );
     else
         status = pObj->IO.WriteReg16(Devaddr, mem_addr,  pdata_index, NbByte );
@@ -407,11 +387,11 @@ int32_t M24_i2c_WriteID(M24_Object_t *pObj, uint8_t * pData, const uint32_t TarA
 }
 
 /**
-  * @brief  Read Identification Page 
+  * @brief  Read Identification Page
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to store
   * @param  TarAddr : I2C data memory address to write
   * @param  PageSize : Size of the page of selected memory
-  * @param  DeviceAddr : Device Address of selected memory
   * @param  NbByte : number of bytes to read
   * @retval EEPROMEX enum status
   */
@@ -422,30 +402,39 @@ int32_t M24_i2c_ReadID(M24_Object_t *pObj, uint8_t * pData, const uint32_t TarAd
   uint16_t mem_addr;
   uint16_t count;
   uint16_t temp;
-  uint8_t bitcount;
+  uint16_t bitcount;
   uint16_t mask;
-  if (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS )!= M24_OK )
+  
+  /* Check for invalid inputs */
+  if (PageSize == 0U) 
+  {
+    return M24_ERROR;  /* Return an error code indicating invalid inputs */
+  }
+  
+  if ( pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK)
+  {
     return M24_TIMEOUT;
+  }
   mem_addr = ( uint16_t )TarAddr;
   Devaddr = pObj->IO.Address;
-  mask = 0;
+  mask = 0U;
   bitcount = BITCOUNT;
   temp = PageSize;
-  Devaddr |= 1 << IDMASK ;
-  while ( temp / ( 1 << bitcount ) != 0 )
+  Devaddr |= 1U << IDMASK ;
+  while ( (temp / ( (uint16_t)1U << bitcount )) != 0U )
   {
-   mask |= ( 1 << (bitcount - 1) );
+   mask |= ( (uint16_t)1U << (bitcount - 1U) );
    bitcount++;
   }
   mem_addr &= mask;
-  count = PageSize - mem_addr % PageSize;
+  count = PageSize - (mem_addr % PageSize);
   if (NbByte <= count)
-    if (pObj->IO.Address == 0xA8)
+    if (pObj->IO.Address == 0xA8U)
       return pObj->IO.ReadReg( Devaddr, TarAddr, pData, NbByte);
     else
       return pObj->IO.ReadReg16( Devaddr, TarAddr, pData, NbByte);
   else
-    if (pObj->IO.Address == 0xA8)
+    if (pObj->IO.Address == 0xA8U)
       return pObj->IO.ReadReg(Devaddr, TarAddr,  pData, count);
     else
       return pObj->IO.ReadReg16(Devaddr, TarAddr,  pData, count);
@@ -453,20 +442,20 @@ int32_t M24_i2c_ReadID(M24_Object_t *pObj, uint8_t * pData, const uint32_t TarAd
 
 /**
   * @brief  Permanentaly lock identification page of memory 
-  * @param  DeviceAddr : Device Address of selected memory
+  * @param  pObj : pointer to memory object
   * @retval BSP status
   */
 int32_t M24_i2c_LockID( M24_Object_t *pObj )
 {  
   int32_t status = M24_OK;
-  uint8_t  Devaddr = pObj->IO.Address | 1 << IDMASK;
+  uint8_t  Devaddr = pObj->IO.Address | (1U << IDMASK);
   uint8_t lid_cmd = LOCKID;
   if (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK )
   {
     return M24_TIMEOUT;
   }
   
-  if (pObj->IO.Address == 0xA8)
+  if (pObj->IO.Address == 0xA8U)
     status = pObj->IO.WriteReg(Devaddr, ADDRLID_16, &lid_cmd, 1 );
   else
     status = pObj->IO.WriteReg16(Devaddr, ADDRLID_16, &lid_cmd, 1 );
@@ -478,14 +467,14 @@ int32_t M24_i2c_LockID( M24_Object_t *pObj )
 
 /**
   * @brief  Reads the lock status
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer of the data to read
-  * @param  DeviceAddr : DeviceAddress of the selected memory
   * @retval EEPROMEX enum status
   */
 int32_t M24_i2c_LockStatus(M24_Object_t *pObj, uint8_t * pData )
 {
   uint8_t dummybyte = 0xAA;
-  uint8_t  Devaddr = pObj->IO.Address | 1 << IDMASK;
+  uint8_t  Devaddr = pObj->IO.Address | (1U << IDMASK);
   if (  pObj->IO.IsReady( pObj->IO.Address, MIN_TRIALS ) != M24_OK )
   {
     return M24_TIMEOUT;

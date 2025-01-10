@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __M_95XX_H
-#define __M_95XX_H
+#ifndef __M95XX_H
+#define __M95XX_H
 
 #ifdef __cplusplus
   extern "C" {
@@ -235,5 +235,5 @@ int32_t M95_spi_LockStatus( M95_Object_t *pObj,uint8_t * pData);
 #ifdef __cplusplus
   }
 #endif
-#endif /* __M95_XX_H */
+#endif /* __M95XX_H */
 

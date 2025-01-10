@@ -36,9 +36,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/EEPROMRW.ioc</locationURI>
 		</link>
 		<link>
-			<name>Application/User/app_x-cube-eeprma1.c</name>
+			<name>Application/User/app_eepromrw.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/app_x-cube-eeprma1.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/app_eepromrw.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/main.c</name>

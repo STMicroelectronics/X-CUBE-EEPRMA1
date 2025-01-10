@@ -22,7 +22,7 @@
 <div class="col-sm-12 col-lg-4">
 <center>
 <h1 id="release-notes-for-s2-lp-component-driver">Release Notes for <mark>M95P32 Based EEPROM Series Driver</mark></h1>
-<p>Copyright © <span style="background-color: yellow;">2022</span> STMicroelectronics<br />
+<p>Copyright © <span style="background-color: yellow;">2024</span> STMicroelectronics<br />
 </p>
 <a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
@@ -35,6 +35,118 @@
 </div>
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section5" checked aria-hidden="true"> <label for="collapse-section5" aria-hidden="true"><strong>V2.2.0 / January 2024</strong></label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<ul>
+<li>Removed EEPROMEX_CTRL_HIGH and EEPROMEX_CTRL_LOW functions from component driver
+<ul>
+</ul></li>
+</ul>
+<ul>
+<li>Removed Page_Prog_BUFF functions from component driver, specific API for buffer mode implemented in user application
+<ul>
+</ul></li>
+</ul>
+<ul>
+<li>Comply with BSPv2 rules
+<ul>
+</ul></li>
+</ul>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR System Workbench v9.20.1</li>
+<li>ARM Keil v5.37.0.0</li>
+<li>STM32CubeIDE v1.14.0</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>X-NUCLEO-F401RE </li>
+<li>X-NUCLEO-G474RE </li>
+<li>X-NUCLEO-L053R8 </li>
+<li>X-NUCLEO-H743ZI </li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section4" checked aria-hidden="true"> <label for="collapse-section4" aria-hidden="true"><strong>V2.1.0 / November 2023</strong></label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<ul>
+<li>Removed application dependency from drivers
+<ul>
+</ul></li>
+</ul>
+<ul>
+<li>Comply with BSPv2 rules
+<ul>
+</ul></li>
+</ul>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR System Workbench v9.20.1</li>
+<li>ARM Keil v5.37.0.0</li>
+<li>STM32CubeIDE v1.13.2</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>X-NUCLEO-F401RE </li>
+<li>X-NUCLEO-G474RE </li>
+<li>X-NUCLEO-L053R8 </li>
+<li>X-NUCLEO-H743ZI </li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true"><strong>V2.0.0 / October 2023</strong></label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<ul>
+<li>Optimized Page_Write and Page_Prog routines for SPI mode
+<ul>
+</ul></li>
+</ul>
+<ul>
+<li>Comply with BSPv2 rules
+<ul>
+</ul></li>
+</ul>
+<ul>
+<li>Updated mask configuration for AutoPolling routine for QUADSPI
+<ul>
+</ul></li>
+</ul>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR System Workbench v9.20.1</li>
+<li>ARM Keil v5.37.0.0</li>
+<li>STM32CubeIDE v1.13.2</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>X-NUCLEO-F401RE </li>
+<li>X-NUCLEO-G474RE </li>
+<li>X-NUCLEO-L053R8 </li>
+<li>X-NUCLEO-H743ZI </li>
+</ul>
+</div>
+</div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 / November 2022</strong></label>
 <div>
@@ -65,7 +177,7 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true"><strong>V1.0.0 / August 2022</strong></label>
+<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section1" aria-hidden="true"><strong>V1.0.0 / August 2022</strong></label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="product-update">Product update</h3>
