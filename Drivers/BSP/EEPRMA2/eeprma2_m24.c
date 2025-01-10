@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -48,7 +48,7 @@ uint64_t M24MemorySize = 0; /*in bytes*/
 
 /**
  * @brief  Initializes the I2C EEPROM
- * @param  Instance I2C EEPROM instance to be used
+ * @param  Instance : I2C EEPROM instance to be used
  * @retval BSP status
  */
 int32_t EEPRMA2_M24_Init(uint32_t Instance)
@@ -89,7 +89,7 @@ int32_t EEPRMA2_M24_Init(uint32_t Instance)
 
 /**
  * @brief  Deinitialize environmental sensor
- * @param  Instance environmental sensor instance to be used
+ * @param  Instance : I2C EEPROM instance to be used
  * @retval BSP status
  */
 int32_t EEPRMA2_M24_DeInit(uint32_t Instance)
@@ -112,9 +112,9 @@ int32_t EEPRMA2_M24_DeInit(uint32_t Instance)
   return ret;
 }
 
-
 /**
   * @brief  Checks if the memory is available
+  * @param  Instance : I2C EEPROM instance to be used
   * @param  Trials : Number of trials
   * @retval BSP status
   */
@@ -135,9 +135,9 @@ int32_t EEPRMA2_M24_IsDeviceReady( uint32_t Instance, const uint32_t Trials )
 
 /**
   * @brief  Reads data in identification page of the memory at specific address
+  * @param  Instance : I2C EEPROM instance to be used
   * @param  pData   : pointer to the data to read
   * @param  TarAddr : memory address to read
-  * @param  Instance the device instance
   * @retval BSP status
   */
 int32_t EEPRMA2_M24_ReadByte(uint32_t Instance, uint8_t * const pData, const uint32_t TarAddr)
@@ -159,10 +159,10 @@ int32_t EEPRMA2_M24_ReadByte(uint32_t Instance, uint8_t * const pData, const uin
 
 /**
   * @brief  Reads data in the memory at specific address
-  * @param  pData   : pointer to the data to write
+  * @param  Instance : I2C EEPROM instance to be used
+  * @param  pData : pointer to the data to write
   * @param  TarAddr : memory address to write
-  * @param  Instance the device instance
-  * @param  Size    : Size in bytes of the value to be written
+  * @param  Size : Size in bytes of the value to be written
   * @retval BSP status
   */
 int32_t EEPRMA2_M24_ReadData(uint32_t Instance, uint8_t * const pData, const uint32_t TarAddr, const uint16_t Size)
@@ -183,30 +183,33 @@ int32_t EEPRMA2_M24_ReadData(uint32_t Instance, uint8_t * const pData, const uin
 
 /**
   * @brief  Reads complete page from the memory at page start address
-  * @param  pData   : pointer to the data to read       
+  * @param  Instance : I2C EEPROM instance to be used
+  * @param  pData : pointer to the data to read       
   * @param  TarAddr : starting page address to read
-  * @param  Instance the device instance
+  * @param  Size : Size in bytes of the value to be read
   * @retval BSP status
  */
 int32_t EEPRMA2_M24_ReadPage(uint32_t Instance, uint8_t * const pData, const uint32_t TarAddr, const uint16_t Size)
 {
-  int32_t ret;
+  int32_t ret = BSP_ERROR_NONE;
   EEPRMA2_M24MemorySizeLocator(Instance);
   
-  if ((TarAddr + Size)> M24MemorySize)
+  if ((((uint64_t)TarAddr + (uint64_t)Size) > M24MemorySize) || (M24PageSize == 0U))
+  {
       return BSP_ERROR_WRONG_PARAM;
+  }
   
    uint32_t iNumberOfPage = (TarAddr + Size) / M24PageSize;
    uint32_t iRemainder = (TarAddr + Size) % M24PageSize;
    
    uint32_t PageAddress = TarAddr * M24PageSize;        
    uint32_t iPageNumber = TarAddr;
-   if (iRemainder!=0)
+   if (iRemainder != 0U)
    { 
-     iNumberOfPage+=1;   
+     iNumberOfPage += 1U;   
    }
    
-   if (iNumberOfPage<=1)
+   if (iNumberOfPage <= 1U)
    {
      if (M24Drv[Instance]->ReadPage(M24CompObj[Instance], pData, PageAddress,M24PageSize) != BSP_ERROR_NONE)
      {
@@ -222,7 +225,7 @@ int32_t EEPRMA2_M24_ReadPage(uint32_t Instance, uint8_t * const pData, const uin
      for (uint32_t iCounter=0; iCounter<iNumberOfPage; iCounter++)
      {
        uint32_t iPageAddress = iPageNumber * M24PageSize;
-       ret = M24Drv[Instance]->ReadPage(M24CompObj[Instance], &pData[0+iCounter*M24PageSize], iPageAddress,M24PageSize);     
+       ret = M24Drv[Instance]->ReadPage(M24CompObj[Instance], &pData[0U + (iCounter*M24PageSize)], iPageAddress, M24PageSize);     
        iPageNumber++;
        HAL_Delay(5);  
      }
@@ -231,10 +234,9 @@ int32_t EEPRMA2_M24_ReadPage(uint32_t Instance, uint8_t * const pData, const uin
   return ret; 
 }
 
-
 /**
   * @brief  Write Byte in the memory at specific address
-  * @param  Instance the device instance
+  * @param  Instance : I2C EEPROM instance to be used
   * @param  pData : pointer to the data to write
   * @param  TarAddr : I2C data memory address to write
   * @retval BSP status
@@ -258,10 +260,9 @@ int32_t EEPRMA2_M24_WriteByte (uint32_t Instance, uint8_t * const pData, const u
   
 }
 
-
 /**
   * @brief  Write Data in the memory at specific address
-  * @param  Instance the device instance
+  * @param  Instance : I2C EEPROM instance to be used
   * @param  pData : pointer to the data to write
   * @param  TarAddr : I2C data memory address to write
   * @param  Size : Size in bytes of the value to be written
@@ -272,7 +273,7 @@ int32_t EEPRMA2_M24_WriteData(uint32_t Instance, uint8_t * const pData, const ui
   int32_t ret;
   EEPRMA2_M24MemorySizeLocator(Instance);
   
-  if ((TarAddr + Size)> M24MemorySize)
+  if (((uint64_t)TarAddr + (uint64_t)Size)> M24MemorySize)
       return BSP_ERROR_WRONG_PARAM;
   
   
@@ -287,9 +288,10 @@ int32_t EEPRMA2_M24_WriteData(uint32_t Instance, uint8_t * const pData, const ui
   return ret; 
   
 }
+
 /**
   * @brief  Write Data in the memory at specific address
-  * @param  Instance the device instance
+  * @param  Instance : I2C EEPROM instance to be used
   * @param  pData : pointer to the data to write
   * @param  TarAddr : I2C data memory address to write
   * @param  Size : Size in bytes of the value to be written
@@ -297,23 +299,25 @@ int32_t EEPRMA2_M24_WriteData(uint32_t Instance, uint8_t * const pData, const ui
   */
 int32_t EEPRMA2_M24_WritePage(uint32_t Instance, uint8_t * pData, const uint32_t TarAddr, const uint16_t Size)
 {
-  int32_t ret;
+  int32_t ret = BSP_ERROR_NONE;
   EEPRMA2_M24MemorySizeLocator(Instance);
   
-  if ((TarAddr + Size)> M24MemorySize)
+  if ((((uint64_t)TarAddr + (uint64_t)Size) > M24MemorySize) || (M24PageSize == 0U))
+  {
     return BSP_ERROR_WRONG_PARAM;
+  }
   
   /*Target Address set in pagewrite function is basically the page number */ 
   uint32_t iPageNumber = TarAddr;  
-  uint32_t iNumberOfPage = (Size) / M24PageSize;
-  uint32_t iRemainder = (Size) % M24PageSize;
+  uint16_t iNumberOfPage = (Size) / M24PageSize;
+  uint16_t iRemainder = (Size) % M24PageSize;
   /* PageWrite function should be begin at starting address of the page */
-  if (iRemainder!=0)  
+  if (iRemainder != 0U)  
   {
-    iNumberOfPage +=1;
+    iNumberOfPage += 1U;
   }
   
-  if (iNumberOfPage<=1)
+  if (iNumberOfPage <= 1U)
   {
     /* Absolute address to write, depending on the page number(TarAddr is the pagenumber)  */
     uint32_t iPageAddress = TarAddr * M24PageSize;
@@ -331,7 +335,7 @@ int32_t EEPRMA2_M24_WritePage(uint32_t Instance, uint8_t * pData, const uint32_t
     for (uint32_t iCounter=0; iCounter<iNumberOfPage; iCounter++)
     {
       uint32_t iPageAddress = iPageNumber * M24PageSize;
-      ret = M24Drv[Instance]->WritePage(M24CompObj[Instance], &pData[0+iCounter*M24PageSize], iPageAddress,M24PageSize, Size);     
+      ret = M24Drv[Instance]->WritePage(M24CompObj[Instance], &pData[0U + (iCounter*M24PageSize)], iPageAddress, M24PageSize, Size);     
       iPageNumber++;
       HAL_Delay(5);  
     }
@@ -343,9 +347,10 @@ int32_t EEPRMA2_M24_WritePage(uint32_t Instance, uint8_t * pData, const uint32_t
 
 /**
   * @brief  Writes data in identification page of the memory at specific address
-  * @param  Instance the device instance
+  * @param  Instance : I2C EEPROM instance to be used
   * @param  pData : pointer to the data to write
   * @param  TarAddr : I2C data memory address to write
+  * @param  Size : Size in bytes of the value to be written
   * @retval BSP status
   */
 int32_t EEPRMA2_M24_WriteID(uint32_t Instance, uint8_t * pData, const uint32_t TarAddr, const uint16_t Size )
@@ -368,7 +373,7 @@ int32_t EEPRMA2_M24_WriteID(uint32_t Instance, uint8_t * pData, const uint32_t T
 
 /**
   * @brief  Reads data in identification page of the memory at specific address
-  * @param  Instance the device instance
+  * @param  Instance : I2C EEPROM instance to be used
   * @param  pData   : pointer to the data to write
   * @param  TarAddr : memory address to write
   * @param  Size    : Size in bytes of the value to be written
@@ -394,8 +399,8 @@ int32_t EEPRMA2_M24_ReadID(uint32_t Instance, uint8_t * pData, const uint32_t Ta
 
 /**
   * @brief  Lock status of the memory at specific address
-  * @param  pData   : pointer to the data to write
-  * @param  Instance : memory name to write
+  * @param  Instance : I2C EEPROM instance to be used
+  * @param  pData : pointer to the data to write
   * @retval BSP status
   */
 int32_t EEPRMA2_M24_LockStatus( uint32_t Instance, uint8_t * pData)
@@ -414,9 +419,10 @@ int32_t EEPRMA2_M24_LockStatus( uint32_t Instance, uint8_t * pData)
   
   return ret; 
 }
+
 /**
   * @brief  Lock identification page of the memory
-  * @param  Instance : memory name to write
+  * @param  Instance : I2C EEPROM instance to be used
   * @retval BSP status
   */
 int32_t EEPRMA2_M24_LockID( uint32_t Instance)
@@ -435,6 +441,7 @@ int32_t EEPRMA2_M24_LockID( uint32_t Instance)
   
   return ret; 
 }
+
 /**
  * @brief  Register Bus IOs for instance M24C02 if component ID is OK
  * @retval BSP status
@@ -446,15 +453,15 @@ static int32_t M24C02_0_Probe(void)
   static M24_Object_t M24C02_obj_0;
   
   io_ctxc02.Address     = M24C02_I2C_ADDR;
-  io_ctxc02.Init        = EEPRMA2_I2C_Init;
-  io_ctxc02.DeInit      = EEPRMA2_I2C_DeInit;
-  io_ctxc02.ReadReg     = EEPRMA2_I2C_ReadReg;
-  io_ctxc02.WriteReg    = EEPRMA2_I2C_WriteReg;
-  io_ctxc02.ReadReg16   = EEPRMA2_I2C_ReadReg16;
-  io_ctxc02.WriteReg16  = EEPRMA2_I2C_WriteReg16;
-  io_ctxc02.Transmit    = EEPRMA2_I2C_Send;
-  io_ctxc02.IsReady     = EEPRMA2_I2C_IsReady;	
-  io_ctxc02.Delay       = EEPRMA2_M24_Delay;
+  io_ctxc02.Init        = EEPRMA2_I2C_INIT;
+  io_ctxc02.DeInit      = EEPRMA2_I2C_DEINIT;
+  io_ctxc02.ReadReg     = EEPRMA2_I2C_READREG;
+  io_ctxc02.WriteReg    = EEPRMA2_I2C_WRITEREG;
+  io_ctxc02.ReadReg16   = EEPRMA2_I2C_READREG16;
+  io_ctxc02.WriteReg16  = EEPRMA2_I2C_WRITEREG16;
+  io_ctxc02.Transmit    = EEPRMA2_I2C_SEND;
+  io_ctxc02.IsReady     = EEPRMA2_I2C_ISREADY;	
+  io_ctxc02.Delay       = EEPRMA2_M24_DELAY;
   if (M24_RegisterBusIO(&M24C02_obj_0, &io_ctxc02) != M24_OK)
   {
     ret = BSP_ERROR_UNKNOWN_COMPONENT;
@@ -485,15 +492,15 @@ static int32_t M24256_0_Probe(void)
   static M24_Object_t M24256_obj_0;
   
   io_ctx256.Address     = M24256_I2C_ADDR;
-  io_ctx256.Init        = EEPRMA2_I2C_Init;
-  io_ctx256.DeInit      = EEPRMA2_I2C_DeInit;
-  io_ctx256.ReadReg     = EEPRMA2_I2C_ReadReg;
-  io_ctx256.WriteReg    = EEPRMA2_I2C_WriteReg;
-  io_ctx256.ReadReg16   = EEPRMA2_I2C_ReadReg16;
-  io_ctx256.WriteReg16  = EEPRMA2_I2C_WriteReg16;
-  io_ctx256.Transmit    = EEPRMA2_I2C_Send;
-  io_ctx256.IsReady     = EEPRMA2_I2C_IsReady;	
-  io_ctx256.Delay       = EEPRMA2_M24_Delay;
+  io_ctx256.Init        = EEPRMA2_I2C_INIT;
+  io_ctx256.DeInit      = EEPRMA2_I2C_DEINIT;
+  io_ctx256.ReadReg     = EEPRMA2_I2C_READREG;
+  io_ctx256.WriteReg    = EEPRMA2_I2C_WRITEREG;
+  io_ctx256.ReadReg16   = EEPRMA2_I2C_READREG16;
+  io_ctx256.WriteReg16  = EEPRMA2_I2C_WRITEREG16;
+  io_ctx256.Transmit    = EEPRMA2_I2C_SEND;
+  io_ctx256.IsReady     = EEPRMA2_I2C_ISREADY;	
+  io_ctx256.Delay       = EEPRMA2_M24_DELAY;
   if (M24_RegisterBusIO(&M24256_obj_0, &io_ctx256) != M24_OK)
   {
     ret = BSP_ERROR_UNKNOWN_COMPONENT;
@@ -524,15 +531,15 @@ static int32_t M24M01_0_Probe(void)
   static M24_Object_t M24M01_obj_0;
   
   io_ctxm01.Address     = M24M01_I2C_ADDR;
-  io_ctxm01.Init        = EEPRMA2_I2C_Init;
-  io_ctxm01.DeInit      = EEPRMA2_I2C_DeInit;
-  io_ctxm01.ReadReg     = EEPRMA2_I2C_ReadReg;
-  io_ctxm01.WriteReg    = EEPRMA2_I2C_WriteReg;
-  io_ctxm01.ReadReg16   = EEPRMA2_I2C_ReadReg16;
-  io_ctxm01.WriteReg16  = EEPRMA2_I2C_WriteReg16;
-  io_ctxm01.Transmit    = EEPRMA2_I2C_Send;
-  io_ctxm01.IsReady     = EEPRMA2_I2C_IsReady;
-  io_ctxm01.Delay       = EEPRMA2_M24_Delay;
+  io_ctxm01.Init        = EEPRMA2_I2C_INIT;
+  io_ctxm01.DeInit      = EEPRMA2_I2C_DEINIT;
+  io_ctxm01.ReadReg     = EEPRMA2_I2C_READREG;
+  io_ctxm01.WriteReg    = EEPRMA2_I2C_WRITEREG;
+  io_ctxm01.ReadReg16   = EEPRMA2_I2C_READREG16;
+  io_ctxm01.WriteReg16  = EEPRMA2_I2C_WRITEREG16;
+  io_ctxm01.Transmit    = EEPRMA2_I2C_SEND;
+  io_ctxm01.IsReady     = EEPRMA2_I2C_ISREADY;
+  io_ctxm01.Delay       = EEPRMA2_M24_DELAY;
   if (M24_RegisterBusIO(&M24M01_obj_0, &io_ctxm01) != M24_OK)
   {
     ret = BSP_ERROR_UNKNOWN_COMPONENT;

@@ -10,12 +10,14 @@
 | BSP STM32G4xx_Nucleo								   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP STM32H7xx_Nucleo								   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP STM32L0xx_Nucleo								   | STMicroelectronics				  | BSD-3-Clause	 |
-| BSP EEPRMA1										   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP EEPRMA2										   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP PGEEZ1										   | STMicroelectronics				  | BSD-3-Clause	 |
+| BSP EEICA1										   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP M24xx Components								   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP M95xx Components								   | STMicroelectronics				  | BSD-3-Clause	 |
 | BSP M95P32 Components								   | STMicroelectronics				  | BSD-3-Clause	 |
+| BSP M24256E Components							   | STMicroelectronics				  | BSD-3-Clause	 |
+| BSP M24M01E Components							   | STMicroelectronics				  | BSD-3-Clause	 |
 | Nucleo-F401RE Project Examples					   | STMicroelectronics				  | BSD-3-Clause	 |
 | Nucleo-G474RE Project Examples					   | STMicroelectronics				  | BSD-3-Clause	 |
 | Nucleo-H743ZI Project Examples					   | STMicroelectronics				  | BSD-3-Clause	 |

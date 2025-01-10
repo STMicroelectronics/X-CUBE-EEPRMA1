@@ -7,7 +7,7 @@
 ******************************************************************************
 * @attention
 *
-* Copyright (c) 2022 STMicroelectronics.
+* Copyright (c) 2023 STMicroelectronics.
 * All rights reserved.
 *
 * This software is licensed under terms that can be found in the LICENSE file
@@ -28,58 +28,38 @@ extern QSPI_HandleTypeDef QSPI_INSTANCE;
 #endif
 
 #ifdef USE_SPI
+
 uint8_t CmdBuff[SIZE610];
-uint8_t RxCom[SIZE512]; 
-
-
-/**
-  * @brief  This function gives high on selected control pin
-  * @param  None
-  * @retval None
-  */  
-void EEPROMEX_CTRL_HIGH(void)
-{
-  HAL_GPIO_WritePin(M95P32_EEPROM_SPI_CS_PORT,M95P32_EEPROM_SPI_CS_PIN,GPIO_PIN_SET );
-}
-
-/**
-  * @brief  This function gives low on selected control pin
-  * @param  None
-  * @retval None
-  */  
-void EEPROMEX_CTRL_LOW(void)
-{
-  HAL_GPIO_WritePin(M95P32_EEPROM_SPI_CS_PORT,M95P32_EEPROM_SPI_CS_PIN,GPIO_PIN_RESET );
-}
 
 /**
   * @brief  This function polls WIP bit of status register
-  * @param  None
+  * @param  pObj : pointer to memory object
   * @retval None
   */ 
-void Transmit_Data_polling(void)
+int32_t Transmit_Data_polling(M95_Object_t *pObj)
 {
   /* read status register until WIP bit become 0 */
-  HAL_StatusTypeDef  Rep;
-  CmdBuff[0] = CMD_READ_STATUS_REG;
-  EEPROMEX_CTRL_LOW();
-  Rep = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  if(Rep != HAL_OK)
+  int32_t ret;
+	uint8_t read_cmd = CMD_READ_STATUS_REG;
+	uint8_t reg_val;
+  
+  ret = pObj->IO.Write(&read_cmd, INSTRUCTION_LEN_1_BYTE);
+  if(ret == M95_OK)
   {
-    Error_Handler();
-  }
-  RxCom[0] = 1;
-  while ((RxCom[0] & 0x01U) != 0U)
-  {
-    Rep = HAL_SPI_Receive(&SPI_INSTANCE, RxCom, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-    if(Rep != HAL_OK)
+    reg_val = 1;
+    while ((reg_val & 0x01U) != 0U)
     {
-      EEPROMEX_CTRL_HIGH();
-      Error_Handler();
+      ret = pObj->IO.Read(&reg_val, INSTRUCTION_LEN_1_BYTE);
+      if(ret != M95_OK)
+      {
+        break;
+      }
     }
   }
-  EEPROMEX_CTRL_HIGH();
+  
+  return ret;
 }
+
 #endif
 
 
@@ -103,7 +83,6 @@ M95P32_Drv_t M95P32_spi_Drv =
   FAST_Read_ID,
   ReadVolatileReg,
   WriteVolatileRegister,
-  Page_Prog_BUFF,
   ReadConfigReg,
   Write_StatusConfigReg,
   ClearSafetyFlag,
@@ -120,14 +99,10 @@ M95P32_Drv_t M95P32_spi_Drv =
 
 int32_t M95P32_RegisterBusIO(M95_Object_t *pObj, M95_IO_t *pIO)
 {
-  pObj->IO.Address         = pIO->Address;
   pObj->IO.Init            = pIO->Init;
   pObj->IO.DeInit          = pIO->DeInit;
   pObj->IO.Read 	   = pIO->Read;
   pObj->IO.Write           = pIO->Write;
-  pObj->IO.WriteBuffer     = pIO->WriteBuffer;
-  pObj->IO.ReadBuffer      = pIO->ReadBuffer;
-  pObj->IO.IsReady         = pIO->IsReady;
   pObj->IO.Delay           = pIO->Delay;
   
   
@@ -140,8 +115,8 @@ int32_t M95P32_RegisterBusIO(M95_Object_t *pObj, M95_IO_t *pIO)
 
 /**
   * @brief  Set M95 eeprom Initialization
-  * @param  None
-  * @retval M95 status
+  * @param  pObj : pointer to memory object
+  * @retval M95 : status
   */
 int32_t M95P32_spi_Init(M95_Object_t *pObj) 
 {
@@ -156,7 +131,7 @@ int32_t M95P32_spi_Init(M95_Object_t *pObj)
 
 /**
   * @brief  Set M95 eeprom De-initialization
-  * @param  None
+  * @param  pObj : pointer to memory object
   * @retval M95 status
   */
 int32_t M95P32_spi_DeInit( M95_Object_t *pObj )
@@ -172,25 +147,16 @@ int32_t M95P32_spi_DeInit( M95_Object_t *pObj )
 /**
   * @brief  Write enable sets the write enable latch (WEL) bit in the Status 
   *               register to a 1
-  * @param  None
+  * @param  pObj : pointer to memory object
   * @retval BSP status
   */
-int32_t WRITE_ENABLE(void)
+int32_t WRITE_ENABLE(M95_Object_t *pObj)
 {
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_WriteEnable(&QSPI_INSTANCE);
-  
-#elif defined (USE_SPI)
-  EEPROMEX_CTRL_LOW();
-  CmdBuff[0] = CMD_WREN;
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
   
   if( status != HAL_OK)
   {
@@ -200,33 +166,30 @@ int32_t WRITE_ENABLE(void)
   {
     ret = M95_OK;
   }
+  
+#elif defined (USE_SPI)
+  CmdBuff[0] = CMD_WREN;
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+#else
+  /* Select SPI or QUADSPI interface */  
+#endif
+  
   return ret;
 }
 
 /**
   * @brief  Write disable resets the write enable latch (WEL) bit in the Status
   *               register to a 0
-  * @param  None
+  * @param  pObj : pointer to memory object
   * @retval BSP status
   */
-int32_t WRITE_DISABLE(void)
+int32_t WRITE_DISABLE(M95_Object_t *pObj)
 {
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_WriteDisable(&QSPI_INSTANCE);
-  
-#elif defined (USE_SPI)
-  EEPROMEX_CTRL_LOW();
-  CmdBuff[0] = CMD_WRDI;
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
-  memset(&CmdBuff, 0, sizeof(CmdBuff));
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
-  
   if( status != HAL_OK)
   {
     ret = M95_ERROR;
@@ -235,39 +198,55 @@ int32_t WRITE_DISABLE(void)
   {
     ret = M95_OK;
   }
+  
+#elif defined (USE_SPI)
+  CmdBuff[0] = CMD_WRDI;
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+#else
+  /* Select SPI or QUADSPI interface */  
+#endif  
+
   return ret;
 }
 
 /**
   * @brief  Read status register allow the 8-bit Status registers to be read
+  * @param  pObj : pointer to memory object
   * @param  pData : pointer to data buffer
   * @retval BSP status
   */
-int32_t Read_StatusReg(uint8_t *pData)
+int32_t Read_StatusReg(M95_Object_t *pObj, uint8_t *pData)
 {
   
-  HAL_StatusTypeDef status = HAL_OK;
+  
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status =  QSPI_ReadSatusReg(&QSPI_INSTANCE, pData);
+  if( status != HAL_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = M95_OK;
+  }
 
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_READ_STATUS_REG;
   
-  EEPROMEX_CTRL_LOW();
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
   
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  
-  if(status != HAL_OK)
+  if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
+    ret = pObj->IO.Read(pData, INSTRUCTION_LEN_1_BYTE);
   }
   
   /* Clear command buffer */
@@ -277,7 +256,28 @@ int32_t Read_StatusReg(uint8_t *pData)
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
+  return ret;
+}
+
+/**
+  * @brief  Read data allows one or more data bytes to be sequentially read from
+  *               the memory
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the read command
+  * @param  Size : Number of Bytes of data to be read
+  * @retval BSP status
+  */
+  
+int32_t Single_Read(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+{
+  int32_t ret = M95_OK;
+  
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_Read(&QSPI_INSTANCE, pData, TarAddr, Size);
+  
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -285,30 +285,6 @@ int32_t Read_StatusReg(uint8_t *pData)
   {
     ret = M95_OK;
   }
-  return ret;
-}
-
-/**
-  * @brief  Read data allows one or more data bytes to be sequentially read from
-  *               the memory
-  * @param  Instance : memory name to write
-  * @param  pData : pointer to data buffer
-  * @param  TarAddr : Starting address of the read command
-  * @param  Size : Number of Bytes of data to be read
-  * @retval BSP status
-  */
-
-int32_t Single_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
-{
-  
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  
-#if defined (USE_QUADSPI)
-  status = QSPI_Read(&QSPI_INSTANCE, pData, TarAddr, Size);
 
 #elif defined (USE_SPI)
   
@@ -317,18 +293,15 @@ int32_t Single_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
-  
-  if(status != HAL_OK)
+  if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, (uint16_t)Size, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
+    ret = pObj->IO.Read(pData, Size);
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
   
@@ -336,14 +309,6 @@ int32_t Single_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
   return ret;
 }
 
@@ -351,22 +316,28 @@ int32_t Single_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_
   * @brief  Fast_Read allows one or more data bytes to be sequentially read from
   *               the memory but addition of eight dummy clocks after the 24-bit
   *               address it can operate at the highest possible frequency
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the read command
-  * @param  Size Number of Bytes of data to be read
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the read command
+  * @param  Size : Number of Bytes of data to be read
   * @retval BSP status
   */
-int32_t FAST_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+int32_t FAST_Read(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
-  status = QSPI_FAST_Read(&QSPI_INSTANCE, pData, TarAddr, Size );
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_FAST_Read(&QSPI_INSTANCE, pData, TarAddr, Size);
+  
+  if(status != HAL_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = M95_OK;
+  }
 
 #elif defined (USE_SPI)
   
@@ -376,32 +347,22 @@ int32_t FAST_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t 
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   CmdBuff[4] = DUMMY_DATA;
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_5_BYTE, SPI_DATA_TIMEOUT);
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_5_BYTE);
   
-  if(status != HAL_OK)
+  if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, (uint16_t)Size, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
+    ret = pObj->IO.Read(pData, Size);
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
   
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
-  
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
+
   return ret;
 }
 
@@ -410,16 +371,14 @@ int32_t FAST_Read(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t 
   *               from the memory but addition of eight dummy clocks after the 
   *               24-bit address it can operate at the highest possible frequency. 
   *               The data is output on pins DQ0 and DQ1
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the read command
-  * @param  Size Number of Bytes of data to be read
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the read command
+  * @param  Size : Number of Bytes of data to be read
   * @retval BSP status
   */
-int32_t FAST_DRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+int32_t FAST_DRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
@@ -428,7 +387,7 @@ int32_t FAST_DRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t
   
   status = QSPI_DRead(&QSPI_INSTANCE, pData, TarAddr, Size );
   
-  if( status != HAL_OK)
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -438,12 +397,9 @@ int32_t FAST_DRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t
   }
 
 #elif defined (USE_SPI)
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(pData);
-  UNUSED(TarAddr);
-  UNUSED(Size);
+  /* Dual_Fast_Read supported in QUADSPI only */
 #else
-  /* Select SPI or QUADSPI interface */  
+  /* Select QUADSPI interface */  
 #endif
 
   return ret;
@@ -454,16 +410,14 @@ int32_t FAST_DRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t
   *               from the memory but addition of eight dummy clocks after the 
   *               24-bit address it can operate at the highest possible frequency. 
   *               The data is output on four pins (DQ0, DQ1, DQ2 and DQ3)
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the read command
-  * @param  Size Number of Bytes of data to be read
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the read command
+  * @param  Size : Number of Bytes of data to be read
   * @retval BSP status
   */
-int32_t FAST_QRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+int32_t FAST_QRead(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
   int32_t ret = M95_OK;
   
   #if defined (USE_QUADSPI)
@@ -482,12 +436,9 @@ int32_t FAST_QRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t
   }
 
 #elif defined (USE_SPI)
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(pData);
-  UNUSED(TarAddr);
-  UNUSED(Size);
+  /* Dual_Fast_Read supported in QUADSPI only */
 #else
-  /* Select SPI or QUADSPI interface */  
+  /* Select QUADSPI interface */  
 #endif
   
   return ret;
@@ -497,578 +448,113 @@ int32_t FAST_QRead(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t
   * @brief   Page write allows data to be written in a 
   *               single instruction (auto erase + program) leaving the other
   *               bytes of the page unchanged
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the write command
-  * @param  Size Number of Bytes of data to be written
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the write command
+  * @param  Size : Number of Bytes of data to be written
   * @retval BSP status
   */
-int32_t Page_Write(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+int32_t Page_Write(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  uint32_t temp_TarAddr = TarAddr;
-  uint32_t temp_Size = Size;
-  uint32_t page_count = 0;
-  
-  #if defined (USE_SPI)
-  uint32_t loop = 0;
-  uint32_t data_loop = 0;
-  #endif
-  
-  #if defined (USE_QUADSPI)
-  uint8_t *temp_pData = pData;
-  #endif
-  
-  if(temp_TarAddr == 0x00U)
-  {
-    if(temp_Size <= M95P32_PAGESIZE)
-    {
-      /* Only Page 0 to be written */
-      WRITE_ENABLE();
-      
-      #if defined (USE_QUADSPI)
-      status = QSPI_Write(&QSPI_INSTANCE, temp_pData, temp_TarAddr, temp_Size);
-      
-      #elif defined (USE_SPI)
-      
-      CmdBuff[0] = CMD_WRITE_PAGE;
-      CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-      CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-      CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-      for(loop = 0; loop < temp_Size; loop++)
-      {
-        CmdBuff[loop + 4U] = pData [loop];
-      }
-      EEPROMEX_CTRL_LOW();
-      status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-      EEPROMEX_CTRL_HIGH();
-      
-      Transmit_Data_polling();
-      memset(&CmdBuff, 0, sizeof(CmdBuff));
-      #else
-      /* Select SPI or QUADSPI interface */  
-      #endif
-      
-    }
+  int32_t status = M95_OK;
+  uint32_t bytesToWrite = Size;
+  uint32_t targetAddress = TarAddr;
     
-    else
-    {
-      /* Multiple pages to be written from Page 0 */
-      page_count = (temp_TarAddr + temp_Size) / M95P32_PAGESIZE;
-      
-      for(uint32_t current_page = 0; current_page <= page_count; current_page++)
-      {
-                
-        if(current_page != page_count)
-        {
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Write(&QSPI_INSTANCE, temp_pData, temp_TarAddr, M95P32_PAGESIZE);
-          temp_pData = temp_pData + M95P32_PAGESIZE;
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_WRITE_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < M95P32_PAGESIZE; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, M95P32_PAGESIZE + INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-          temp_TarAddr = temp_TarAddr + M95P32_PAGESIZE;
-        }
-        else
-        {
-          /* At last page */
-          temp_Size = (TarAddr + temp_Size) % M95P32_PAGESIZE;
-          
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Write(&QSPI_INSTANCE, temp_pData, temp_TarAddr, temp_Size);
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_WRITE_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < temp_Size; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-        }
-      }
-    }
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef ret = HAL_OK;
+  ret = QSPI_Write(&QSPI_INSTANCE, pData, targetAddress, bytesToWrite);
+  if( ret != HAL_OK)
+  {
+    status = M95_ERROR;
   }
   else
   {
-    /* Target address != 0 */    
-    
-    uint32_t start_page = (temp_TarAddr / M95P32_PAGESIZE);
-    uint32_t last_page = (temp_TarAddr + temp_Size) / M95P32_PAGESIZE;
-    
-    if(start_page == last_page)
-    {
-      /* Writing within a page only */
-      
-      WRITE_ENABLE();
-      
-      #if defined (USE_QUADSPI)
-      status = QSPI_Write(&QSPI_INSTANCE, temp_pData, temp_TarAddr, temp_Size);
-      
-      #elif defined (USE_SPI)
-      
-      CmdBuff[0] = CMD_WRITE_PAGE;
-      CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-      CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-      CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-      for(loop = 0; loop < temp_Size; loop++)
-      {
-        CmdBuff[loop + 4U] = pData [loop];
-      }
-      EEPROMEX_CTRL_LOW();
-      status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-      EEPROMEX_CTRL_HIGH();
-      
-      Transmit_Data_polling();
-      memset(&CmdBuff, 0, sizeof(CmdBuff));
-      #else
-      /* Select SPI or QUADSPI interface */  
-      #endif
-      
-    }
-    
-    if(last_page > start_page)
-    {
-      /* Write over multiple pages */
-      
-      for(uint32_t current_page = start_page; current_page <= last_page; current_page++)
-      {
-        if(current_page == start_page)
-        {
-          temp_Size = ((current_page + 1U) * M95P32_PAGESIZE) - TarAddr;
-          
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Write(&QSPI_INSTANCE, temp_pData, temp_TarAddr, temp_Size);
-          temp_pData = temp_pData + temp_Size;
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_WRITE_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < temp_Size; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-          temp_TarAddr = temp_TarAddr + temp_Size;
-          
-        }
-        
-        else if(current_page == last_page)
-        {
-          temp_Size = ((TarAddr + Size) % M95P32_PAGESIZE);
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Write(&QSPI_INSTANCE, temp_pData, temp_TarAddr, temp_Size);
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_WRITE_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < temp_Size; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-        }
-        
-        else
-        {
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Write(&QSPI_INSTANCE, temp_pData, temp_TarAddr, M95P32_PAGESIZE);
-          temp_pData = temp_pData + M95P32_PAGESIZE;
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_WRITE_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < M95P32_PAGESIZE; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, M95P32_PAGESIZE + INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-          temp_TarAddr = temp_TarAddr + M95P32_PAGESIZE;
-          
-        }
-      }
-    }
+    status = M95_OK;
   }
-  if( status != HAL_OK)
+  
+#elif defined (USE_SPI)
+  CmdBuff[0] = CMD_WRITE_PAGE;
+  CmdBuff[1] = (uint8_t)((targetAddress & MSK_BYTE3) >> SHIFT_16BIT);
+  CmdBuff[2] = (uint8_t)((targetAddress & MSK_BYTE2) >> SHIFT_8BIT);
+  CmdBuff[3] = (uint8_t)(targetAddress & MSK_BYTE1);
+  for(uint32_t loop = 0; loop < bytesToWrite; loop++)
   {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
-  return ret;    
+    CmdBuff[loop + 4U] = pData [loop];
+  }   
+  
+  status = pObj->IO.Write(CmdBuff, bytesToWrite + INSTRUCTION_LEN_4_BYTE);
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+  
+#else
+  /* Select SPI or QUADSPI interface */      
+#endif
+  
+  return status;
   
 }
 
 /**
   * @brief   The Page program allows data initially in the 
   *               erased state (FFh), to be written
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the write command
-  * @param  Size Number of Bytes of data to be written
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the write command
+  * @param  Size : Number of Bytes of data to be written
   * @retval BSP status
   */
-int32_t Page_Prog(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+int32_t Page_Prog(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  uint32_t temp_TarAddr = TarAddr;
-  uint32_t temp_Size = Size;
-  uint32_t page_count = 0;
-  
-  #if defined (USE_SPI)
-  uint32_t loop = 0;
-  uint32_t data_loop = 0;
-  #endif
-  
-  #if defined (USE_QUADSPI)
-  uint8_t *temp_pData = pData;
-  #endif
-  
-  if(temp_TarAddr == 0x00U)
-  {
-    if(temp_Size <= M95P32_PAGESIZE)
-    {
-      /* Only Page 0 to be written */
-      WRITE_ENABLE();
-      
-      #if defined (USE_QUADSPI)
-      status = QSPI_Prog(&QSPI_INSTANCE, temp_TarAddr, temp_Size, temp_pData);
-      
-      #elif defined (USE_SPI)
-      
-      CmdBuff[0] = CMD_PROG_PAGE;
-      CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-      CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-      CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-      for(loop = 0; loop < temp_Size; loop++)
-      {
-        CmdBuff[loop + 4U] = pData [loop];
-      }
-      EEPROMEX_CTRL_LOW();
-      status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-      EEPROMEX_CTRL_HIGH();
-      
-      Transmit_Data_polling();
-      memset(&CmdBuff, 0, sizeof(CmdBuff));
-      #else
-      /* Select SPI or QUADSPI interface */  
-      #endif
-      
-    }
+  int32_t status = M95_OK;
+  uint32_t bytesToWrite = Size;
+  uint32_t targetAddress = TarAddr;
     
-    else
-    {
-      /* Multiple pages to be written from Page 0 */
-      page_count = (temp_TarAddr + temp_Size) / M95P32_PAGESIZE;
-      
-      for(uint32_t current_page = 0; current_page <= page_count; current_page++)
-      {
-                
-        if(current_page != page_count)
-        {
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Prog(&QSPI_INSTANCE, temp_TarAddr, M95P32_PAGESIZE, temp_pData);
-          temp_pData = temp_pData + M95P32_PAGESIZE;
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_PROG_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < M95P32_PAGESIZE; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, M95P32_PAGESIZE + INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-          temp_TarAddr = temp_TarAddr + M95P32_PAGESIZE;
-          
-          
-        }
-        else
-        {
-          /* At last page */
-          temp_Size = (TarAddr + temp_Size) % M95P32_PAGESIZE;
-          
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Prog(&QSPI_INSTANCE, temp_TarAddr, temp_Size, temp_pData);
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_PROG_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < temp_Size; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-        }
-      }
-    }
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef ret = HAL_OK;
+  ret = QSPI_Prog(&QSPI_INSTANCE, targetAddress, bytesToWrite, pData);
+  if( ret != HAL_OK)
+  {
+    status = M95_ERROR;
   }
   else
   {
-    /* Target address != 0 */    
-    
-    uint32_t start_page = (temp_TarAddr / M95P32_PAGESIZE);
-    uint32_t last_page = (temp_TarAddr + temp_Size) / M95P32_PAGESIZE;
-    
-    if(start_page == last_page)
-    {
-      /* Writing within a page only */
-      
-      WRITE_ENABLE();
-      
-      #if defined (USE_QUADSPI)
-      status = QSPI_Prog(&QSPI_INSTANCE, temp_TarAddr, temp_Size, temp_pData);
-      
-      #elif defined (USE_SPI)
-      
-      CmdBuff[0] = CMD_PROG_PAGE;
-      CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-      CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-      CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-      for(loop = 0; loop < temp_Size; loop++)
-      {
-        CmdBuff[loop + 4U] = pData [loop];
-      }
-      EEPROMEX_CTRL_LOW();
-      status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-      EEPROMEX_CTRL_HIGH();
-      
-      Transmit_Data_polling();
-      memset(&CmdBuff, 0, sizeof(CmdBuff));
-      #else
-      /* Select SPI or QUADSPI interface */  
-      #endif
-      
-    }
-    
-    if(last_page > start_page)
-    {
-      /* Write over multiple pages */
-      
-      for(uint32_t current_page = start_page; current_page <= last_page; current_page++)
-      {
-        if(current_page == start_page)
-        {
-          temp_Size = ((current_page + 1U) * M95P32_PAGESIZE) - TarAddr;
-          
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Prog(&QSPI_INSTANCE, temp_TarAddr, temp_Size, temp_pData);
-          temp_pData = temp_pData + temp_Size;
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_PROG_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < temp_Size; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-          temp_TarAddr = temp_TarAddr + temp_Size;
-          
-        }
-        
-        else if(current_page == last_page)
-        {
-          temp_Size = ((TarAddr + Size) % M95P32_PAGESIZE);
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Prog(&QSPI_INSTANCE, temp_TarAddr, temp_Size, temp_pData);
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_PROG_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < temp_Size; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(temp_Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-        }
-        
-        else
-        {
-          WRITE_ENABLE();
-          
-          #if defined (USE_QUADSPI)
-          status = QSPI_Prog(&QSPI_INSTANCE, temp_TarAddr, M95P32_PAGESIZE, temp_pData);
-          temp_pData = temp_pData + M95P32_PAGESIZE;
-          
-          #elif defined (USE_SPI)
-          
-          CmdBuff[0] = CMD_PROG_PAGE;
-          CmdBuff[1] = (uint8_t)((temp_TarAddr & MSK_BYTE3) >> SHIFT_16BIT);
-          CmdBuff[2] = (uint8_t)((temp_TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
-          CmdBuff[3] = (uint8_t)(temp_TarAddr & MSK_BYTE1);
-          for(loop = 0; loop < M95P32_PAGESIZE; loop++)
-          {
-            CmdBuff[loop + 4U] = pData [data_loop];
-            data_loop++;
-          }
-          EEPROMEX_CTRL_LOW();
-          status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, M95P32_PAGESIZE + INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
-          EEPROMEX_CTRL_HIGH();
-          
-          Transmit_Data_polling();
-          memset(&CmdBuff, 0, sizeof(CmdBuff));
-          #else
-          /* Select SPI or QUADSPI interface */  
-          #endif
-          
-          temp_TarAddr = temp_TarAddr + M95P32_PAGESIZE;
-          
-        }
-      }
-    }
+    status = M95_OK;
   }
-  if( status != HAL_OK)
+  
+#elif defined (USE_SPI)
+  CmdBuff[0] = CMD_PROG_PAGE;
+  CmdBuff[1] = (uint8_t)((targetAddress & MSK_BYTE3) >> SHIFT_16BIT);
+  CmdBuff[2] = (uint8_t)((targetAddress & MSK_BYTE2) >> SHIFT_8BIT);
+  CmdBuff[3] = (uint8_t)(targetAddress & MSK_BYTE1);
+  for(uint32_t loop = 0; loop < bytesToWrite; loop++)
+  {
+    CmdBuff[loop + 4U] = pData [loop];
+  }   
+  
+  status = pObj->IO.Write(CmdBuff, bytesToWrite + INSTRUCTION_LEN_4_BYTE);
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+  
+#else
+  /* Select SPI or QUADSPI interface */      
+#endif
+  
+  return status;
+}
+
+/**
+  * @brief   Page erase sets a page of 512 bytes within the device to the
+  *               erased state of all 1s (FFh)
+  * @param  pObj : pointer to memory object
+  * @param  TarAddr : Starting address of the erase command
+  * @retval BSP status
+  */
+int32_t Page_Erase(M95_Object_t *pObj, uint32_t TarAddr)
+{
+  int32_t ret = M95_OK;
+  
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_PageErase(&QSPI_INSTANCE,TarAddr);
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1076,23 +562,6 @@ int32_t Page_Prog(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t 
   {
     ret = M95_OK;
   }
-  return ret;    
-  
-}
-
-/**
-  * @brief   Page erase sets a page of 512 bytes within the device to the
-  *               erased state of all 1s (FFh)
-  * @param  TarAddr Starting address of the erase command
-  * @retval BSP status
-  */
-int32_t Page_Erase(uint32_t TarAddr)
-{
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  
-#if defined (USE_QUADSPI)
-  status = QSPI_PageErase(&QSPI_INSTANCE,TarAddr);
 
 #elif defined (USE_SPI)
   
@@ -1101,17 +570,32 @@ int32_t Page_Erase(uint32_t TarAddr)
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   
-  Transmit_Data_polling();
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
+  return ret;
+}
+
+/**
+  * @brief  Sector erase sets all memory bits within a specified sector 
+  *               (4 Kbytes) to the erased state of all 1s(FFh)
+  * @param  pObj : pointer to memory object
+  * @param  TarAddr : Starting address of the erase command
+  * @retval BSP status
+  */
+int32_t Sector_Erase(M95_Object_t *pObj, uint32_t TarAddr)
+{
+  int32_t ret = M95_OK;
+  
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_SectorErase(&QSPI_INSTANCE,TarAddr);
+  
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1119,22 +603,6 @@ int32_t Page_Erase(uint32_t TarAddr)
   {
     ret = M95_OK;
   }
-  return ret;
-}
-
-/**
-  * @brief  Sector erase sets all memory bits within a specified sector 
-  *               (4 Kbytes) to the erased state of all 1s(FFh)
-  * @param  TarAddr Starting address of the erase command
-  * @retval BSP status
-  */
-int32_t Sector_Erase(uint32_t TarAddr)
-{  
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  
-#if defined (USE_QUADSPI)
-  status = QSPI_SectorErase(&QSPI_INSTANCE,TarAddr);
 
 #elif defined (USE_SPI)
   
@@ -1143,17 +611,32 @@ int32_t Sector_Erase(uint32_t TarAddr)
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   
-  Transmit_Data_polling();
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
+  return ret;
+}
+
+/**
+  * @brief  Block erase sets all memory bits within a specified block 
+  *               (64 Kbytes) to the erased state of all 1s(FFh)
+  * @param  pObj : pointer to memory object
+  * @param  TarAddr : Starting address of the erase command
+  * @retval BSP status
+  */
+int32_t Block_Erase(M95_Object_t *pObj, uint32_t TarAddr)
+{
+  int32_t ret = M95_OK;
+  
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_BlockErase(&QSPI_INSTANCE,TarAddr);
+  
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1161,22 +644,6 @@ int32_t Sector_Erase(uint32_t TarAddr)
   {
     ret = M95_OK;
   }
-  return ret;
-}
-
-/**
-  * @brief  Block erase sets all memory bits within a specified block 
-  *               (64 Kbytes) to the erased state of all 1s(FFh) 
-  * @param  TarAddr Starting address of the erase command
-  * @retval BSP status
-  */
-int32_t Block_Erase(uint32_t TarAddr)
-{
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  
-#if defined (USE_QUADSPI)
-  status = QSPI_BlockErase(&QSPI_INSTANCE,TarAddr);
 
 #elif defined (USE_SPI)
   
@@ -1185,54 +652,30 @@ int32_t Block_Erase(uint32_t TarAddr)
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   
-  Transmit_Data_polling();
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
   return ret;
 }
   
 /**
   * @brief  Chip erase sets all memory bits within the device to the erased 
   *               state of all 1s(FFh)
-  * @param  Add Starting address of the erase command
+  * @param  pObj : pointer to memory object
   * @retval BSP status
   */
-int32_t Chip_Erase(void)
+int32_t Chip_Erase(M95_Object_t *pObj)
 {
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_ChipErase(&QSPI_INSTANCE);
-
-#elif defined (USE_SPI)
-  CmdBuff[0] = CMD_ERASE_CHIP;
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
-  
-  Transmit_Data_polling();
-  memset(&CmdBuff, 0, sizeof(CmdBuff));
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
-  
-  if( status != HAL_OK)
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1240,28 +683,44 @@ int32_t Chip_Erase(void)
   {
     ret = M95_OK;
   }
+
+#elif defined (USE_SPI)
+  CmdBuff[0] = CMD_ERASE_CHIP;
+  
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+#else
+  /* Select SPI or QUADSPI interface */  
+#endif
+  
   return ret;
 }
 
 /**
   * @brief   Read identification allows one or more data bytes in the two 
   *               identification pages (512 bytes each) to be sequentially read
-  * @param  Instance : memory name to write.
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the read command
-  * @param  Size Number of Bytes of data to be read
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the read command
+  * @param  Size : Number of Bytes of data to be read
   * @retval BSP status
   */
-int32_t Read_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+int32_t Read_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_Read_ID(&QSPI_INSTANCE, TarAddr, Size, pData);
+  if(status != HAL_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = M95_OK;
+  }
 
 #elif defined (USE_SPI)
   
@@ -1270,31 +729,21 @@ int32_t Read_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Si
   CmdBuff[2] = (uint8_t)((TarAddr & MSK_BYTE2) >> SHIFT_8BIT);
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_4_BYTE, SPI_DATA_TIMEOUT);
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_4_BYTE);
   
-  if(status != HAL_OK)
+  if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, (uint16_t)Size, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
+    ret = pObj->IO.Read(pData, Size);
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
   return ret;
 }
 
@@ -1303,22 +752,27 @@ int32_t Read_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Si
   *               identification pages to be sequentially read but by addition 
   *               of eight dummy clocks after the 24-bit address it can operate
   *               at the highest possible frequency
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the read command
-  * @param  Size Number of Bytes of data to be read
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the read command
+  * @param  Size : Number of Bytes of data to be read
   * @retval BSP status
   */
-int32_t FAST_Read_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+int32_t FAST_Read_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_FAST_Read_ID(&QSPI_INSTANCE,TarAddr,Size,pData);
+  if(status != HAL_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = M95_OK;
+  }
 
 #elif defined (USE_SPI)
   
@@ -1328,17 +782,15 @@ int32_t FAST_Read_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   CmdBuff[4] = DUMMY_DATA;
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_5_BYTE, SPI_DATA_TIMEOUT);
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_5_BYTE);
   
-  if(status != HAL_OK)
+  if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, (uint16_t)Size, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
+    ret = pObj->IO.Read(pData, Size);
   }
   memset(&CmdBuff, 0, sizeof(CmdBuff));
   
@@ -1346,52 +798,24 @@ int32_t FAST_Read_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
   return ret;
 }
 
 /**
   * @brief   The Read Volatile register allow the 8-bit Volatile register to be
   *               read
-  * @param  pData pointer to data buffer
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
   * @retval BSP status
   */
-int32_t ReadVolatileReg(uint8_t *pData)
-{
-  HAL_StatusTypeDef status = HAL_OK;
+int32_t ReadVolatileReg(M95_Object_t *pObj, uint8_t *pData)
+{ 
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
-  status =  QSPI_ReadVolatileReg(&QSPI_INSTANCE, pData);		
-
-#elif defined (USE_SPI)
-  
-  CmdBuff[0] = CMD_READ_VOLATILE_REG;
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
+  HAL_StatusTypeDef status = HAL_OK;
+  status =  QSPI_ReadVolatileReg(&QSPI_INSTANCE, pData);
   if(status != HAL_OK)
-  {
-    EEPROMEX_CTRL_HIGH();
-  }
-  else
-  {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
-  }
-  memset(&CmdBuff, 0, sizeof(CmdBuff));
-  
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
-  
-  if( status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1399,6 +823,25 @@ int32_t ReadVolatileReg(uint8_t *pData)
   {
     ret = M95_OK;
   }
+#elif defined (USE_SPI)
+  
+  CmdBuff[0] = CMD_READ_VOLATILE_REG;
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  if(ret != M95_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = pObj->IO.Read(pData, INSTRUCTION_LEN_1_BYTE);
+  }
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+  
+#else
+  /* Select SPI or QUADSPI interface */  
+#endif
+  
+  
   return ret;
 }
 
@@ -1406,203 +849,59 @@ int32_t ReadVolatileReg(uint8_t *pData)
   * @brief   The Write volatile register allows the volatile register to be
   *               written. The writable volatile register bits include BUFEN 
   *               and BUFLD
-  * @param  regVal Value to be written in volatile register
+  * @param  pObj : pointer to memory object
+  * @param  regVal : Value to be written in volatile register
   * @retval BSP status
   */
-int32_t WriteVolatileRegister(uint8_t regVal)
-{
-  HAL_StatusTypeDef status = HAL_OK;
+int32_t WriteVolatileRegister(M95_Object_t *pObj, uint8_t regVal)
+{ 
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_WriteVolatileRegister(&QSPI_INSTANCE,regVal);
+  if(status != HAL_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = M95_OK;
+  }
 
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_WRITE_VOLATILE_REG;
   CmdBuff[1] = regVal;
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_2_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_2_BYTE);
   
-  Transmit_Data_polling();
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
-  return ret;
-}
-
-/**
-  * @brief   The Page program with buffer load allows one to 512 bytes data 
-  *               initially in the erased state (FFh) to be written and allows,
-  *               during a page program execution to load the buffer of 512 data
-  *               bytes for the next page program operation
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the write command
-  * @param  Size Number of Bytes of data to be written
-  * @retval BSP status
-  */
-int32_t Page_Prog_BUFF(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
   
-  int32_t ret = M95_OK;  
-  
-#if defined (USE_QUADSPI)
-  
-  uint32_t start_add = TarAddr ,temp;
-  uint32_t end_add = TarAddr + Size - 0x01U;
-  
-  HAL_StatusTypeDef status = HAL_OK;
-  
-  if((TarAddr % 0x200U) != 0U)
-  { 
-    temp = TarAddr %(0x200U);
-    status = QSPI_Prog(&QSPI_INSTANCE,TarAddr,(0x200U-temp),pData);
-    if(status != HAL_OK)
-    {
-      ret =  M95_ERROR;
-      return ret;
-    }
-    start_add = TarAddr + 0x200U - temp;
-  }
-  
-  if(((end_add % (0x1FFU))- (end_add/0x200U)) != 0U)
-  {	
-    temp = (end_add % 0x1FFU)- (end_add/0x200U);
-    end_add = end_add - temp;
-    status = QSPI_Prog(&QSPI_INSTANCE, end_add, temp + 1U, pData);
-    if(status != HAL_OK)
-    {
-      ret =  M95_ERROR;
-      return ret;
-    }
-  }
-  
-  while( start_add < end_add )
-  {
-    ReadVolatileReg(&VolatileRegVal);
-    
-    if( VolatileRegVal == 02U)
-    {
-      status = QSPI_Prog(&QSPI_INSTANCE,start_add,0x200,pData);
-      if(status != HAL_OK)
-      {
-        ret = M95_ERROR;
-        return ret;
-      }
-      start_add = start_add + 0x200U;
-    }
-  }
-  
-
-#elif defined (USE_SPI)
-  
-  uint32_t start_add = TarAddr ,temp;
-  uint32_t end_add = TarAddr + Size - 0x01U;
-  
-  int32_t status = M95_OK;
-  
-  if((TarAddr % 0x200U) != 0U)
-  { 
-    temp = TarAddr %(0x200U);
-    status = Page_Prog(NO_INSTANCE, pData, TarAddr, (0x200U-temp));
-    if(status != M95_OK)
-    {
-      ret = M95_ERROR;
-      return ret;
-    }
-    start_add = TarAddr + 0x200U - temp;
-  }
-  
-  if(((end_add % (0x1FFU)) - (end_add/0x200U)) != 0U)
-  {	
-    temp = (end_add % (0x1FFU)) - (end_add/0x200U);
-    end_add = end_add - temp;
-    status = Page_Prog(NO_INSTANCE, pData, end_add, temp+1U);
-    if(status != M95_OK)
-    {
-      ret = M95_ERROR;
-      return ret;
-    }
-  }
-  
-  while( start_add < end_add )
-  {
-    ReadVolatileReg(&VolatileRegVal);
-    if( VolatileRegVal == 02U)
-    {
-      status = Page_Prog(NO_INSTANCE, pData, start_add, 0x200U);
-      if(status != M95_OK)
-      {
-        ret = M95_ERROR;
-        return ret;
-      }
-      start_add = start_add + 0x200U;
-    }
-  }
-  
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
   return ret;
 }
 
 /**
   * @brief   The RDCR reads the two bytes of Configuration and Safety registers 
   *               (one for each register)
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  Size Number of Bytes of data to be written
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  Size : Number of Bytes of data to be written
   * @retval BSP status
   */
-int32_t ReadConfigReg(uint32_t Instance, uint8_t *pData, uint32_t Size)
+int32_t ReadConfigReg(M95_Object_t *pObj, uint8_t *pData, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_ReadConfigReg(&QSPI_INSTANCE, (uint8_t)Size, pData);
-
-#elif defined (USE_SPI)
-  
-  CmdBuff[0] = CMD_READ_CONF_SAFETY_REG;
-  EEPROMEX_CTRL_LOW();
-  
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  
   if(status != HAL_OK)
-  {
-    EEPROMEX_CTRL_HIGH();
-  }
-  else
-  {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, (uint16_t)Size, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
-  }
-  
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
-  
-  if( status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1610,27 +909,52 @@ int32_t ReadConfigReg(uint32_t Instance, uint8_t *pData, uint32_t Size)
   {
     ret = M95_OK;
   }
+
+#elif defined (USE_SPI)
+  
+  CmdBuff[0] = CMD_READ_CONF_SAFETY_REG;
+  
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  
+  if(ret != M95_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = pObj->IO.Read(pData, Size);
+  }
+  
+#else
+  /* Select SPI or QUADSPI interface */  
+#endif
+  
   return ret;
 }
 
 /**
   * @brief  Write status register allows the status and configuration register 
   *               to be written
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  Size Number of Bytes of data to be read
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  Size : Number of Bytes of data to be read
   * @retval BSP status
   */
-int32_t Write_StatusConfigReg(uint32_t Instance, uint8_t *pData, uint32_t Size)
+int32_t Write_StatusConfigReg(M95_Object_t *pObj, uint8_t *pData, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
-  status = QSPI_WriteStatusConfigRegister(&QSPI_INSTANCE, pData, Size);	
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_WriteStatusConfigRegister(&QSPI_INSTANCE, pData, Size);
+  if(status != HAL_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = M95_OK;
+  }
 
 #elif defined (USE_SPI)
   
@@ -1643,54 +967,29 @@ int32_t Write_StatusConfigReg(uint32_t Instance, uint8_t *pData, uint32_t Size)
     CmdBuff[loop + 1U] = pData [loop];
   }
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(Size + INSTRUCTION_LEN_1_BYTE), SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
+  ret = pObj->IO.Write(CmdBuff, (Size + INSTRUCTION_LEN_1_BYTE));
   
-  Transmit_Data_polling();
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
   return ret;
 }
 
 /**
   * @brief  The Clear Safety register resets all the bits of the Safety register
-  * @param  None
+  * @param  pObj : pointer to memory object
   * @retval BSP status
   */
-int32_t ClearSafetyFlag(void)
+int32_t ClearSafetyFlag(M95_Object_t *pObj)
 {
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_ClearSafetyFlag(&QSPI_INSTANCE);
-
-#elif defined (USE_SPI)
-  
-  CmdBuff[0] = CMD_CLEAR_SAFETY_REG;
-  
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
-  
-  memset(&CmdBuff, 0, sizeof(CmdBuff));
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
-  
-  if( status != HAL_OK)
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1698,27 +997,44 @@ int32_t ClearSafetyFlag(void)
   {
     ret = M95_OK;
   }
+
+#elif defined (USE_SPI)
+  
+  CmdBuff[0] = CMD_CLEAR_SAFETY_REG;
+
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+#else
+  /* Select SPI or QUADSPI interface */  
+#endif
+  
   return ret;
 }
 
 /**
   * @brief   The Read SFDP allows the SFDP register format to be read
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the write command
-  * @param  Size Number of Bytes of data to be read
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the write command
+  * @param  Size : Number of Bytes of data to be read
   * @retval BSP status
   */
-int32_t Read_SFDP(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+int32_t Read_SFDP(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_Read_SFDP(&QSPI_INSTANCE, TarAddr, Size, pData);
+  if(status != HAL_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = M95_OK;
+  }
 
 #elif defined (USE_SPI)
   
@@ -1728,16 +1044,14 @@ int32_t Read_SFDP(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t 
   CmdBuff[3] = (uint8_t)(TarAddr & MSK_BYTE1);
   CmdBuff[4] = DUMMY_DATA;
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_5_BYTE, SPI_DATA_TIMEOUT);
-  if(status != HAL_OK)
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_5_BYTE);
+  if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, (uint16_t)Size, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
+    ret = pObj->IO.Read(pData, Size);
   }
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
@@ -1745,7 +1059,26 @@ int32_t Read_SFDP(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t 
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
+  return ret;
+}
+
+/**
+  * @brief   Write identification page instruction (WRID) allows the 
+  *               identification page to be written
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  TarAddr : Starting address of the read command
+  * @param  Size : Number of Bytes of data to be written
+  * @retval BSP status
+  */
+int32_t Write_ID(M95_Object_t *pObj, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
+{
+  int32_t ret = M95_OK;
+  
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_Write_ID(&QSPI_INSTANCE, TarAddr, Size, pData);
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1753,28 +1086,6 @@ int32_t Read_SFDP(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t 
   {
     ret = M95_OK;
   }
-  return ret;
-}
-
-/**
-  * @brief   Write identification page instruction (WRID) allows the 
-  *               identification page to be written
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  TarAddr Starting address of the read command
-  * @param  Size Number of Bytes of data to be written
-  * @retval BSP status
-  */
-int32_t Write_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t Size)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  
-#if defined (USE_QUADSPI)
-  status = QSPI_Write_ID(&QSPI_INSTANCE, TarAddr, Size, pData);
 
 #elif defined (USE_SPI)
   
@@ -1790,24 +1101,13 @@ int32_t Write_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t S
     CmdBuff[loop + 4U] = pData [loop];
   }
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, (uint16_t)(Size + INSTRUCTION_LEN_4_BYTE), SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
+  ret = pObj->IO.Write(CmdBuff, (Size + INSTRUCTION_LEN_4_BYTE));
   
-  Transmit_Data_polling();
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
   return ret;
 }
 
@@ -1815,31 +1115,17 @@ int32_t Write_ID(uint32_t Instance, uint8_t *pData, uint32_t TarAddr, uint32_t S
   * @brief  The deep power-down enter allows to put the device in a very low 
   *         consumption state in which a limited number of commands are 
   *         available
-  * @param  None
+  * @param  pObj : pointer to memory object
   * @retval BSP status
   */
-int32_t Deep_Power_Down(void)
+int32_t Deep_Power_Down(M95_Object_t *pObj)
 {
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_Deep_Power_Down(&QSPI_INSTANCE);
-
-#elif defined (USE_SPI)
-  
-  CmdBuff[0] = CMD_DEEP_POWER_DOWN;
-  
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
-  
-  memset(&CmdBuff, 0, sizeof(CmdBuff));
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
-  
-  if( status != HAL_OK)
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1847,37 +1133,35 @@ int32_t Deep_Power_Down(void)
   {
     ret = M95_OK;
   }
+
+#elif defined (USE_SPI)
+  
+  CmdBuff[0] = CMD_DEEP_POWER_DOWN;
+  
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+#else
+  /* Select SPI or QUADSPI interface */  
+#endif
+  
   return ret;
 }
 
 /**
   * @brief  The deep power-down release allows to release the device from the 
   *         deep power-down state to a standby-mode state
-  * @param  None
+  * @param  pObj : pointer to memory object
   * @retval BSP status
   */
-int32_t Deep_Power_Down_Release(void)
+int32_t Deep_Power_Down_Release(M95_Object_t *pObj)
 {
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_Deep_Power_Down_Release(&QSPI_INSTANCE);
-
-#elif defined (USE_SPI)
-  
-  CmdBuff[0] = CMD_DEEP_POWER_DOWN_RELEASE;
-  
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
-  
-  memset(&CmdBuff, 0, sizeof(CmdBuff));
-#else
-  /* Select SPI or QUADSPI interface */  
-#endif
-  
-  if( status != HAL_OK)
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1885,42 +1169,57 @@ int32_t Deep_Power_Down_Release(void)
   {
     ret = M95_OK;
   }
+
+#elif defined (USE_SPI)
+  
+  CmdBuff[0] = CMD_DEEP_POWER_DOWN_RELEASE;
+  
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  
+  memset(&CmdBuff, 0, sizeof(CmdBuff));
+#else
+  /* Select SPI or QUADSPI interface */  
+#endif
+  
   return ret;
 }
 
 /**
   * @brief   The JEDEC identification allows to read in loop mode the three 
   *               device identification bytes in loop mode
-  * @param  Instance : memory name to write
-  * @param  pData pointer to data buffer
-  * @param  Size Number of Bytes of data to be read
+  * @param  pObj : pointer to memory object
+  * @param  pData : pointer to data buffer
+  * @param  Size : Number of Bytes of data to be read
   * @retval BSP status
   */
-int32_t Read_JEDEC(uint32_t Instance, uint8_t *pData, uint32_t Size)
+int32_t Read_JEDEC(M95_Object_t *pObj, uint8_t *pData, uint32_t Size)
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
-  
-  HAL_StatusTypeDef status = HAL_OK;
   int32_t ret = M95_OK;
   
 #if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
   status = QSPI_Read_JEDEC(&QSPI_INSTANCE, (uint8_t)Size, pData);
+  if(status != HAL_OK)
+  {
+    ret = M95_ERROR;
+  }
+  else
+  {
+    ret = M95_OK;
+  }
 
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_READ_JEDEC;
-  
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  if(status != HAL_OK)
+
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+  if(ret != M95_OK)
   {
-    EEPROMEX_CTRL_HIGH();
+    ret = M95_ERROR;
   }
   else
   {
-    status = HAL_SPI_Receive(&SPI_INSTANCE, pData, (uint16_t)Size, SPI_DATA_TIMEOUT);
-    EEPROMEX_CTRL_HIGH();
+    ret = pObj->IO.Read(pData, Size);
   }
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
@@ -1929,7 +1228,22 @@ int32_t Read_JEDEC(uint32_t Instance, uint8_t *pData, uint32_t Size)
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
+  return ret;
+}
+
+/**
+  * @brief   The enable reset initiate the reset the device
+  * @param  pObj : pointer to memory object
+  * @retval BSP status
+  */
+int32_t Reset_Enable(M95_Object_t *pObj)
+{
+  int32_t ret = M95_OK;
+  
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_Reset_Enable(&QSPI_INSTANCE);
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1937,37 +1251,34 @@ int32_t Read_JEDEC(uint32_t Instance, uint8_t *pData, uint32_t Size)
   {
     ret = M95_OK;
   }
-  return ret;
-}
-
-
-/**
-  * @brief   The enable reset initiate the reset the device
-  * @param  None
-  * @retval BSP status
-  */
-int32_t Reset_Enable(void)
-{
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  
-#if defined (USE_QUADSPI)
-  status = QSPI_Reset_Enable(&QSPI_INSTANCE);
 
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_ENABLE_RESET;
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
   
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
+  return ret;
+}
+
+/**
+  * @brief   The Software reset initiate the reset the device
+  * @param  pObj : pointer to memory object
+  * @retval BSP status
+  */
+int32_t Soft_Reset(M95_Object_t *pObj)
+{
+  int32_t ret = M95_OK;
+  
+#if defined (USE_QUADSPI)
+  HAL_StatusTypeDef status = HAL_OK;
+  status = QSPI_Soft_Reset(&QSPI_INSTANCE);
+  if(status != HAL_OK)
   {
     ret = M95_ERROR;
   }
@@ -1975,44 +1286,18 @@ int32_t Reset_Enable(void)
   {
     ret = M95_OK;
   }
-  return ret;
-}
-
-
-/**
-  * @brief   The Software reset initiate the reset the device
-  * @param  None
-  * @retval BSP status
-  */
-int32_t Soft_Reset(void)
-{
-  HAL_StatusTypeDef status = HAL_OK;
-  int32_t ret = M95_OK;
-  
-#if defined (USE_QUADSPI)
-  status = QSPI_Soft_Reset(&QSPI_INSTANCE);
 
 #elif defined (USE_SPI)
   
   CmdBuff[0] = CMD_SOFT_RESET;
   
-  EEPROMEX_CTRL_LOW();
-  status = HAL_SPI_Transmit(&SPI_INSTANCE, CmdBuff, INSTRUCTION_LEN_1_BYTE, SPI_DATA_TIMEOUT);
-  EEPROMEX_CTRL_HIGH();
-  
+  ret = pObj->IO.Write(CmdBuff, INSTRUCTION_LEN_1_BYTE);
+    
   memset(&CmdBuff, 0, sizeof(CmdBuff));
 #else
   /* Select SPI or QUADSPI interface */  
 #endif
   
-  if( status != HAL_OK)
-  {
-    ret = M95_ERROR;
-  }
-  else
-  {
-    ret = M95_OK;
-  }
   return ret;
 }
 
@@ -2174,7 +1459,7 @@ HAL_StatusTypeDef QSPI_WriteStatusConfigRegister(QSPI_HandleTypeDef *local_hqspi
   { 
     /* Configure automatic polling mode to wait for write enabling ---- */
     sConfig.Match           = 0x00;
-    sConfig.Mask            = 0x03;
+    sConfig.Mask            = 0x01;
     sConfig.MatchMode       = QSPI_MATCH_MODE_AND;
     sConfig.StatusBytesSize = 1;
     sConfig.Interval        = 0x10;
@@ -2412,9 +1697,9 @@ HAL_StatusTypeDef QSPI_Write(QSPI_HandleTypeDef *local_hqspi, uint8_t *pData, ui
   }
   else
   {
-    /* Configure automatic po lling mode to wait for write enabling ---- */
+    /* Configure automatic polling mode to wait for write enabling ---- */
     sConfig.Match           = 0x00;
-    sConfig.Mask            = 0x03;
+    sConfig.Mask            = 0x01;
     sConfig.MatchMode       = QSPI_MATCH_MODE_AND;
     sConfig.StatusBytesSize = 1;
     sConfig.Interval        = 0x10;
@@ -2532,7 +1817,7 @@ HAL_StatusTypeDef QSPI_PageErase(QSPI_HandleTypeDef *local_hqspi,uint32_t Add)
   {
     /* Configure automatic polling mode to wait for write enabling ---- */
     sConfig.Match           = 0x00;
-    sConfig.Mask            = 0x03;
+    sConfig.Mask            = 0x01;
     sConfig.MatchMode       = QSPI_MATCH_MODE_AND;
     sConfig.StatusBytesSize = 1;
     sConfig.Interval        = 0x10;
@@ -2585,7 +1870,7 @@ HAL_StatusTypeDef QSPI_SectorErase(QSPI_HandleTypeDef *local_hqspi,uint32_t Add)
   {
     /* Configure automatic polling mode to wait for write enabling ---- */
     sConfig.Match           = 0x00;
-    sConfig.Mask            = 0x03;
+    sConfig.Mask            = 0x01;
     sConfig.MatchMode       = QSPI_MATCH_MODE_AND;
     sConfig.StatusBytesSize = 1;
     sConfig.Interval        = 0x10;
@@ -2638,7 +1923,7 @@ HAL_StatusTypeDef QSPI_BlockErase(QSPI_HandleTypeDef *local_hqspi,uint32_t Add)
   {
     /* Configure automatic polling mode to wait for write enabling ---- */
     sConfig.Match           = 0x00;
-    sConfig.Mask            = 0x03;
+    sConfig.Mask            = 0x01;
     sConfig.MatchMode       = QSPI_MATCH_MODE_AND;
     sConfig.StatusBytesSize = 1;
     sConfig.Interval        = 0x10;
@@ -2687,7 +1972,7 @@ HAL_StatusTypeDef QSPI_ChipErase(QSPI_HandleTypeDef *local_hqspi)
   {
     /* Configure automatic polling mode to wait for write enabling ---- */
     sConfig.Match           = 0x00;
-    sConfig.Mask            = 0x03;
+    sConfig.Mask            = 0x01;
     sConfig.MatchMode       = QSPI_MATCH_MODE_AND;
     sConfig.StatusBytesSize = 1;
     sConfig.Interval        = 0x10;
@@ -2835,7 +2120,7 @@ HAL_StatusTypeDef QSPI_Write_ID(QSPI_HandleTypeDef *local_hqspi,uint32_t add,uin
   {
     /* Configure automatic polling mode to wait for write enabling ---- */
     sConfig.Match           = 0x00;
-    sConfig.Mask            = 0x03;
+    sConfig.Mask            = 0x01;
     sConfig.MatchMode       = QSPI_MATCH_MODE_AND;
     sConfig.StatusBytesSize = 1;
     sConfig.Interval        = 0x10;

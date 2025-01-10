@@ -48,7 +48,7 @@ uint64_t M95MemorySize = 0; /*in bytes*/
 
 /**
  * @brief  Initializes the SPI EEPROMs
- * @param  Instance SPI EEPROMs instance to be used
+ * @param  Instance : SPI EEPROMs instance to be used
  * @retval BSP status
  */
 int32_t EEPRMA2_M95_Init(uint32_t Instance)
@@ -89,7 +89,7 @@ int32_t EEPRMA2_M95_Init(uint32_t Instance)
 
 /**
  * @brief  Deinitialize environmental sensor
- * @param  Instance environmental sensor instance to be used
+ * @param  Instance : SPI EEPROMs instance to be used
  * @retval BSP status
  */
 int32_t EEPRMA2_M95_DeInit(uint32_t Instance)
@@ -136,8 +136,8 @@ void EEPROMEX_CTRL_LOW(const uint8_t pin)
 
 /**
   * @brief  Read resgister from memory
-  * @param  pData   : pointer to the register to read
-  * @param  Instance : memory name to read
+  * @param  Instance : SPI EEPROMs instance to be used
+  * @param  pData : pointer to the register to read
   * @retval BSP status
   */
 int32_t EEPRMA2_M95_ReadReg(uint32_t Instance, uint8_t * pData)
@@ -159,8 +159,8 @@ int32_t EEPRMA2_M95_ReadReg(uint32_t Instance, uint8_t * pData)
 
 /**
   * @brief  Write resgister to memory
+  * @param  Instance : SPI EEPROMs instance to be used
   * @param  pData   : pointer to the register to write
-  * @param  Instance : memory name to write
   * @retval BSP status
   */
 int32_t EEPRMA2_M95_WriteReg(uint32_t Instance, uint8_t pData)
@@ -181,9 +181,9 @@ int32_t EEPRMA2_M95_WriteReg(uint32_t Instance, uint8_t pData)
 
 /**
   * @brief  Reads byte from the  memory at specific address
-  * @param  pData   : pointer to the data to read
+  * @param  Instance : SPI EEPROMs instance to be used
+  * @param  pData : pointer to the data to read
   * @param  TarAddr : memory address to read
-  * @param  Instance : memory name to read
   * @retval BSP status
   */
 int32_t EEPRMA2_M95_ReadByte(uint32_t Instance, uint8_t * pData, const uint32_t TarAddr)
@@ -204,30 +204,33 @@ int32_t EEPRMA2_M95_ReadByte(uint32_t Instance, uint8_t * pData, const uint32_t 
 
 /**
   * @brief  Reads complete page from the memory at page start address
-  * @param  Instance : memory name to read
-  * @param  pData   : pointer to the data to read       
+  * @param  Instance : SPI EEPROMs instance to be used
+  * @param  pData : pointer to the data to read       
   * @param  TarAddr : starting page address to read
+  * @param  Size : Size in bytes of the value to be Read
   * @retval BSP status
   */
 int32_t EEPRMA2_M95_ReadPage(uint32_t Instance, uint8_t * pData, const uint32_t TarAddr, const uint16_t Size)
 {
-   int32_t ret;
+   int32_t ret = BSP_ERROR_NONE;
   EEPRMA2_M95MemorySizeLocator(Instance);
-  if ((TarAddr + Size)>M95MemorySize)
-      return BSP_ERROR_WRONG_PARAM;
+  if ((((uint64_t)TarAddr + (uint64_t)Size) > M95MemorySize) || (M95PageSize == 0U))
+  {
+    return BSP_ERROR_WRONG_PARAM;
+  }
   
   uint32_t iNumberOfPage = (TarAddr + Size) / M95PageSize;
   uint32_t iRemainder = (TarAddr + Size) % M95PageSize;
   uint32_t PageAddress = TarAddr * M95PageSize;
   uint32_t iPageNumber = TarAddr;
-  if (iRemainder!=0)
+  if (iRemainder !=0U)
   {
-    iNumberOfPage+=1;  
+    iNumberOfPage += 1U;  
   }
   
-  if (iNumberOfPage<=1)
+  if (iNumberOfPage <= 1U)
   {
-    if (M95Drv[Instance]->ReadPage(M95CompObj[Instance], pData, PageAddress,M95PageSize) != BSP_ERROR_NONE)
+    if (M95Drv[Instance]->ReadPage(M95CompObj[Instance], pData, PageAddress, M95PageSize) != BSP_ERROR_NONE)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -241,7 +244,7 @@ int32_t EEPRMA2_M95_ReadPage(uint32_t Instance, uint8_t * pData, const uint32_t 
     for (uint32_t iCounter=0; iCounter<iNumberOfPage; iCounter++)
     {
       uint32_t iPageAddress = iPageNumber * M95PageSize;
-      ret = M95Drv[Instance]->ReadPage(M95CompObj[Instance], &pData[0+iCounter*M95PageSize], iPageAddress,M95PageSize);     
+      ret = M95Drv[Instance]->ReadPage(M95CompObj[Instance], &pData[0U + (iCounter*M95PageSize)], iPageAddress,M95PageSize);     
       iPageNumber++;
       HAL_Delay(5);  
     }
@@ -251,8 +254,8 @@ int32_t EEPRMA2_M95_ReadPage(uint32_t Instance, uint8_t * pData, const uint32_t 
 
 /**
   * @brief  Reads data from the memory
-  * @param  Instance : memory name to read
-  * @param  pData   : pointer to the data to read       
+  * @param  Instance : SPI EEPROMs instance to be used
+  * @param  pData : pointer to the data to read       
   * @param  TarAddr : starting address to read
   * @param  Size : Size in bytes of the value to be Read
   * @retval BSP status
@@ -261,7 +264,7 @@ int32_t EEPRMA2_M95_ReadData(uint32_t Instance, uint8_t * pData, const uint32_t 
 {
   int32_t ret;
   EEPRMA2_M95MemorySizeLocator(Instance);
-  if ((TarAddr + Size)>M95MemorySize)
+  if (((uint64_t)TarAddr + (uint64_t)Size) > M95MemorySize)
       return BSP_ERROR_WRONG_PARAM;
   
   if (M95Drv[Instance]->ReadData( M95CompObj[Instance], pData, TarAddr, Size) != BSP_ERROR_NONE)
@@ -277,7 +280,7 @@ int32_t EEPRMA2_M95_ReadData(uint32_t Instance, uint8_t * pData, const uint32_t 
 
 /**
   * @brief  Writes bytes in the memory at specific address
-  * @param  Instance : memory name to write
+  * @param  Instance : SPI EEPROMs instance to be used
   * @param  pData : pointer to the data to write
   * @param  TarAddr : I2C data memory address to write
   * @retval EEPROMEX enum status
@@ -286,7 +289,7 @@ int32_t EEPRMA2_M95_WriteByte(uint32_t Instance, uint8_t * pData, const uint32_t
 {
   int32_t ret;
   EEPRMA2_M95MemorySizeLocator(Instance);
-  if ((TarAddr + 1)>M95MemorySize)
+  if (((uint64_t)TarAddr + (uint64_t)1U) > M95MemorySize)
       return BSP_ERROR_WRONG_PARAM;
   
   if (M95Drv[Instance]->WriteByte(M95CompObj[Instance], pData, TarAddr) != BSP_ERROR_NONE)
@@ -302,7 +305,7 @@ int32_t EEPRMA2_M95_WriteByte(uint32_t Instance, uint8_t * pData, const uint32_t
 
 /**
   * @brief  Writes complete page in the memory at starting page address
-  * @param  Instance : memory name to write
+  * @param  Instance : SPI EEPROMs instance to be used
   * @param  pData : pointer to the data to write
   * @param  TarAddr : SPI data memory starting page address(page no.) to write
   * @param  Size : Size in bytes of the value to be written
@@ -310,25 +313,27 @@ int32_t EEPRMA2_M95_WriteByte(uint32_t Instance, uint8_t * pData, const uint32_t
   */
 int32_t EEPRMA2_M95_WritePage(uint32_t Instance, uint8_t * pData, const uint32_t TarAddr, const uint16_t Size)
 {
-   int32_t ret;
+   int32_t ret = BSP_ERROR_NONE;
   EEPRMA2_M95MemorySizeLocator(Instance);
-  if ((TarAddr + Size)>M95MemorySize)
-      return BSP_ERROR_WRONG_PARAM;
-  
-  uint32_t iPageNumber = TarAddr;
-  uint32_t iNumberOfPage = (Size) / M95PageSize;
-  uint32_t iRemainder = (Size) % M95PageSize;
-   
-  if (iRemainder!=0)
+  if ((((uint64_t)TarAddr + (uint64_t)Size) > M95MemorySize) || (M95PageSize == 0U))
   {
-    iNumberOfPage+=1;  
+    return BSP_ERROR_WRONG_PARAM;
   }
   
-  if (iNumberOfPage<=1)
+  uint32_t iPageNumber = TarAddr;
+  uint16_t iNumberOfPage = (Size) / M95PageSize;
+  uint16_t iRemainder = (Size) % M95PageSize;
+   
+  if (iRemainder != 0U)
+  {
+    iNumberOfPage += 1U;  
+  }
+  
+  if (iNumberOfPage <= 1U)
   {
     /* Absolute address to write, depending on the page number(TarAddr is the pagenumber)  */
     uint32_t iPageAddress = TarAddr * M95PageSize;
-    if (M95Drv[Instance]->WritePage(M95CompObj[Instance], pData, iPageAddress,M95PageSize, Size) != BSP_ERROR_NONE)
+    if (M95Drv[Instance]->WritePage(M95CompObj[Instance], pData, iPageAddress, M95PageSize, Size) != BSP_ERROR_NONE)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -342,7 +347,7 @@ int32_t EEPRMA2_M95_WritePage(uint32_t Instance, uint8_t * pData, const uint32_t
     for (uint32_t iCounter=0; iCounter<iNumberOfPage; iCounter++)
     {
       uint32_t iPageAddress = iPageNumber * M95PageSize;
-      ret = M95Drv[Instance]->WritePage(M95CompObj[Instance], &pData[0+iCounter*M95PageSize], iPageAddress,M95PageSize, Size);     
+      ret = M95Drv[Instance]->WritePage(M95CompObj[Instance], &pData[0U + (iCounter*M95PageSize)], iPageAddress,M95PageSize, Size);     
       iPageNumber++;
       HAL_Delay(5);  
     }
@@ -352,8 +357,8 @@ int32_t EEPRMA2_M95_WritePage(uint32_t Instance, uint8_t * pData, const uint32_t
 
 /**
   * @brief  Write data to the memory
-  * @param  Instance : memory name to write
-  * @param  pData   : pointer to the data to be written       
+  * @param  Instance : SPI EEPROMs instance to be used
+  * @param  pData : pointer to the data to be written       
   * @param  TarAddr : starting address to be written
   * @param  Size : Size in bytes of the value to be written
   * @retval BSP status
@@ -362,7 +367,7 @@ int32_t EEPRMA2_M95_WriteData(uint32_t Instance, uint8_t * pData, const uint32_t
 {
   int32_t ret;
   EEPRMA2_M95MemorySizeLocator(Instance);
-  if ((TarAddr + Size)>M95MemorySize)
+  if (((uint64_t)TarAddr + (uint64_t)Size) > M95MemorySize)
       return BSP_ERROR_WRONG_PARAM;
   
   if (M95Drv[Instance]->WriteData(M95CompObj[Instance],  pData, TarAddr, M95PageSize, Size) != BSP_ERROR_NONE)
@@ -379,9 +384,10 @@ int32_t EEPRMA2_M95_WriteData(uint32_t Instance, uint8_t * pData, const uint32_t
 
 /**
   * @brief  Writes data in identification page of the memory at specific address
-  * @param  Instance the device instance
+  * @param  Instance : SPI EEPROMs instance to be used
   * @param  pData : pointer to the data to write
   * @param  TarAddr : SPI  data memory address to write
+  * @param  Size : Size in bytes of the value to be written
   * @retval BSP status
   */
 int32_t EEPRMA2_M95_WriteID(uint32_t Instance, uint8_t * pData, const uint32_t TarAddr, const uint16_t Size )
@@ -402,10 +408,10 @@ int32_t EEPRMA2_M95_WriteID(uint32_t Instance, uint8_t * pData, const uint32_t T
 }
 /**
   * @brief  Reads data in identification page of the memory at specific address
-  * @param  Instance : memory name to write
-  * @param  pData   : pointer to the data to write
+  * @param  Instance : SPI EEPROMs instance to be used
+  * @param  pData : pointer to the data to write
   * @param  TarAddr : memory address to write
-  * @param  Size    : Size in bytes of the value to be written
+  * @param  Size : Size in bytes of the value to be written
   * @retval BSP status
   */
 int32_t EEPRMA2_M95_ReadID(uint32_t Instance, uint8_t * pData, const uint32_t TarAddr, const uint16_t Size )
@@ -426,8 +432,8 @@ int32_t EEPRMA2_M95_ReadID(uint32_t Instance, uint8_t * pData, const uint32_t Ta
 
 /**
   * @brief  Lock status of the memory at specific address
-  * @param  pData   : pointer to the data to write
-  * @param  Instance : memory name to write
+  * @param  Instance : SPI EEPROMs instance to be used
+  * @param  pData : pointer to the data to write
   * @retval BSP status
   */
 int32_t EEPRMA2_M95_LockStatus( uint32_t Instance, uint8_t * pData)
@@ -448,7 +454,7 @@ int32_t EEPRMA2_M95_LockStatus( uint32_t Instance, uint8_t * pData)
 
 /**
   * @brief  Lock identification page of the memory
-  * @param  Instance : memory name to write
+  * @param  Instance : SPI EEPROMs instance to be used
   * @retval BSP status
   */
 int32_t EEPRMA2_M95_LockID( uint32_t Instance)
@@ -468,79 +474,98 @@ int32_t EEPRMA2_M95_LockID( uint32_t Instance)
   return ret;
 }
 
-
+/**
+  * @brief  Read data, at specific address, through spi to the M95xx
+  * @param  pData: pointer to the data to read
+  * @param  DevAddr : Target device address
+  * @retval EEPROMEX enum status
+  */
 int32_t EEPRMA2_SPI_ReadReg(uint8_t * pData, uint8_t Devaddr)
 {
  EEPROMEX_CTRL_LOW( Devaddr & EEPROMEX_SPI_SLAVESEL );
  if ( EEPRMA2_M95_IOWrite( EEPROMEX_RDSR ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
-  if ( EEPRMA2_SPI_Recv( ( uint8_t * )pData, 1 ) != BSP_ERROR_NONE )
+  if ( EEPRMA2_SPI_RECV( ( uint8_t * )pData, 1 ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   EEPROMEX_CTRL_HIGH( Devaddr & EEPROMEX_SPI_SLAVESEL );
   return BSP_ERROR_NONE; 
 }
 
+/**
+  * @brief  Read data, at specific address, through spi to the M95xx
+  * @param  pData: pointer to the data to read
+  * @param  TarAddr : I2C data memory address to write
+  * @param  DevAddr : Target device address
+  * @param  Size : Size in bytes of the value to be written
+  * @param  Inst : SPI instruction
+  * @retval EEPROMEX enum status
+  */
 int32_t EEPRMA2_SPI_RecvBuffer(uint8_t * pData, uint32_t TarAddr, 
                                uint32_t DevAddr, const uint16_t Size, const uint8_t Inst )
 {
-  EEPROMEX_CTRL_LOW( DevAddr & EEPROMEX_SPI_SLAVESEL );
+  EEPROMEX_CTRL_LOW( (uint8_t)DevAddr & EEPROMEX_SPI_SLAVESEL );
   if (EEPRMA2_M95_IOWrite(Inst) != BSP_ERROR_NONE)
     return BSP_ERROR_COMPONENT_FAILURE;
   if (EEPRMA2_M95_WriteAddr(TarAddr, DevAddr) != BSP_ERROR_NONE ) 
     return BSP_ERROR_COMPONENT_FAILURE;
-  if (EEPRMA2_SPI_Recv( pData, Size ) != BSP_ERROR_NONE )
+  if (EEPRMA2_SPI_RECV( pData, Size ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
-  EEPROMEX_CTRL_HIGH( DevAddr & EEPROMEX_SPI_SLAVESEL );
+  EEPROMEX_CTRL_HIGH( (uint8_t)DevAddr & EEPROMEX_SPI_SLAVESEL );
   return BSP_ERROR_NONE;
 }
 
 /**
   * @brief  Write data, at specific address, through spi to the M95xx
   * @param  pData: pointer to the data to write
-  * @param  DevAddr : Target device address
   * @param  TarAddr : I2C data memory address to write
+  * @param  DevAddr : Target device address
   * @param  Size : Size in bytes of the value to be written
+  * @param  Inst : SPI instruction
   * @retval EEPROMEX enum status
   */
 int32_t EEPRMA2_SPI_SendBuffer(uint8_t * pData,uint32_t TarAddr, uint32_t DevAddr, 
                                     const uint16_t Size, const uint8_t Inst)
 {
-  if ( EEPRMA2_M95_WriteCmd( EEPROMEX_WREN, DevAddr  ) != BSP_ERROR_NONE )
+  if ( EEPRMA2_M95_WriteCmd( EEPROMEX_WREN, (uint8_t)DevAddr  ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE; 
-  EEPROMEX_CTRL_LOW( DevAddr & EEPROMEX_SPI_SLAVESEL );
+  EEPROMEX_CTRL_LOW( (uint8_t)DevAddr & EEPROMEX_SPI_SLAVESEL );
   if ( EEPRMA2_M95_IOWrite(Inst) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   if ( EEPRMA2_M95_WriteAddr(TarAddr, DevAddr) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
-  if ( EEPRMA2_SPI_Send( pData, Size )!= BSP_ERROR_NONE )
+  if ( EEPRMA2_SPI_SEND( pData, Size )!= BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
-  EEPROMEX_CTRL_HIGH( DevAddr & EEPROMEX_SPI_SLAVESEL );
+  EEPROMEX_CTRL_HIGH( (uint8_t)DevAddr & EEPROMEX_SPI_SLAVESEL );
   return BSP_ERROR_NONE;
 }
 
-
+/**
+  * @brief  Write data, at specific register, through spi to the M95xx
+  * @param  pData: pointer to the data to read
+  * @param  DevAddr : Target device address
+  * @retval EEPROMEX enum status
+  */
 int32_t EEPRMA2_SPI_WriteReg(uint8_t pData, uint32_t Devaddr)
 {
-  EEPROMEX_CTRL_LOW( Devaddr & EEPROMEX_SPI_SLAVESEL ); 
+  EEPROMEX_CTRL_LOW( (uint8_t)Devaddr & EEPROMEX_SPI_SLAVESEL ); 
   if ( EEPRMA2_M95_IOWrite( EEPROMEX_WREN ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   if (EEPRMA2_M95_IOWrite( EEPROMEX_WRSR ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   if (EEPRMA2_M95_IOWrite( pData ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
-  EEPROMEX_CTRL_HIGH( Devaddr & EEPROMEX_SPI_SLAVESEL );
-  EEPRMA2_M95_IsDeviceReady( Devaddr);
+  EEPROMEX_CTRL_HIGH( (uint8_t)Devaddr & EEPROMEX_SPI_SLAVESEL );
+  EEPRMA2_M95_IsDeviceReady( (uint8_t)Devaddr);
   return BSP_ERROR_NONE;
 }
 
 
 /**
-* @brief  Checks if target device is ready for communication
-* @note   This function is used with Memory devices
-* @param  DevAddr : Target device address
-* @param  Trials : Number of trials
-* @retval EEPROMEX enum status
-*/
+  * @brief  Checks if target device is ready for communication
+  * @note   This function is used with Memory devices
+  * @param  DevAddr : Target device address
+  * @retval EEPROMEX enum status
+  */
 int32_t EEPRMA2_M95_IsDeviceReady(uint8_t Devaddr)
 {
   uint8_t status = 0;
@@ -548,11 +573,12 @@ int32_t EEPRMA2_M95_IsDeviceReady(uint8_t Devaddr)
   if ( EEPRMA2_M95_IOWrite( EEPROMEX_RDSR ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   do {
-    EEPRMA2_SPI_Recv( &status, 1 );
-  } while ( (status & EEPROMEX_SPI_WIPFLAG) == 1 );
+    EEPRMA2_SPI_RECV( &status, 1 );
+  } while ( (status & EEPROMEX_SPI_WIPFLAG) == 1U );
   EEPROMEX_CTRL_HIGH( Devaddr & EEPROMEX_SPI_SLAVESEL );
   return BSP_ERROR_NONE;
 }
+
 /**
   * @brief  Write one byte to the memory .
   * @param  TxData: Byte to be send 
@@ -561,7 +587,7 @@ int32_t EEPRMA2_M95_IsDeviceReady(uint8_t Devaddr)
 int32_t EEPRMA2_M95_IOWrite(uint8_t TxData )
 {
   int32_t status = BSP_ERROR_NONE;
-  status = EEPRMA2_SPI_Send( &TxData, 1);
+  status = EEPRMA2_SPI_SEND( &TxData, 1);
   return status;
 }
 
@@ -575,7 +601,7 @@ int32_t EEPRMA2_M95_WriteCmd( uint8_t Cmd, uint8_t Devaddr)
 {
   int32_t status = BSP_ERROR_NONE; 
   EEPROMEX_CTRL_LOW( Devaddr & EEPROMEX_SPI_SLAVESEL );         /* For M95M04  0xCC & 0x03 = 0*/
-  status = EEPRMA2_SPI_Send( &Cmd, 1 );
+  status = EEPRMA2_SPI_SEND( &Cmd, 1 );
   EEPROMEX_CTRL_HIGH( Devaddr & EEPROMEX_SPI_SLAVESEL );
   return status;
 }
@@ -592,13 +618,13 @@ int32_t EEPRMA2_M95_WriteAddr( const uint32_t TarAddr, const uint32_t DevAddr)
   static uint8_t Addr[3]; 
   uint8_t count, temp;
   uint32_t addrpacket = TarAddr; 
-  AddrSize = ( DevAddr & EEPROMEX_SPI_ADDRSEL ) >> EEPROMEX_SPI_ADDRSHIFT;
-  for (count = AddrSize; count > 0; count--){
-    temp = (uint8_t)( addrpacket & 0xFF );
-    Addr[count - 1] = temp;
-    addrpacket = addrpacket >> 8;
+  AddrSize = ( (uint8_t)DevAddr & EEPROMEX_SPI_ADDRSEL ) >> EEPROMEX_SPI_ADDRSHIFT;
+  for (count = AddrSize; count > 0U; count--){
+    temp = (uint8_t)( addrpacket & 0xFFU );
+    Addr[count - 1U] = temp;
+    addrpacket = addrpacket >> 8U;
   }
-  return  EEPRMA2_SPI_Send( Addr, AddrSize );
+  return  EEPRMA2_SPI_SEND( Addr, AddrSize );
 }
 
 /**
@@ -611,14 +637,14 @@ static int32_t M95M04_0_Probe(void)
   int32_t ret = BSP_ERROR_NONE;
  static M95_Object_t M95M04_obj_0;
   io_ctxm04.Address        = M95M04_SPI_ADDR;
-  io_ctxm04.Init           = EEPRMA2_SPI_Init;
-  io_ctxm04.DeInit         = EEPRMA2_SPI_DeInit;
+  io_ctxm04.Init           = EEPRMA2_SPI_INIT;
+  io_ctxm04.DeInit         = EEPRMA2_SPI_DEINIT;
   io_ctxm04.Read           = EEPRMA2_SPI_ReadReg;
   io_ctxm04.Write          = EEPRMA2_SPI_WriteReg;
   io_ctxm04.WriteBuffer    = EEPRMA2_SPI_SendBuffer;
   io_ctxm04.ReadBuffer     = EEPRMA2_SPI_RecvBuffer;
   io_ctxm04.IsReady        = EEPRMA2_M95_IsDeviceReady;
-  io_ctxm04.Delay          = EEPRMA2_M95_Delay;
+  io_ctxm04.Delay          = EEPRMA2_M95_DELAY;
 
   if (M95_RegisterBusIO(&M95M04_obj_0,&io_ctxm04) != M95_OK)
   {
@@ -649,14 +675,14 @@ static int32_t M95256_0_Probe(void)
   int32_t ret = BSP_ERROR_NONE;
  static M95_Object_t M95256_obj_0;
   io_ctx256.Address        = M95256_SPI_ADDR;
-  io_ctx256.Init           = EEPRMA2_SPI_Init;
-  io_ctx256.DeInit         = EEPRMA2_SPI_DeInit;
+  io_ctx256.Init           = EEPRMA2_SPI_INIT;
+  io_ctx256.DeInit         = EEPRMA2_SPI_DEINIT;
   io_ctx256.Read           = EEPRMA2_SPI_ReadReg;
   io_ctx256.Write          = EEPRMA2_SPI_WriteReg;
   io_ctx256.WriteBuffer    = EEPRMA2_SPI_SendBuffer;
   io_ctx256.ReadBuffer     = EEPRMA2_SPI_RecvBuffer;
   io_ctx256.IsReady        = EEPRMA2_M95_IsDeviceReady;
-  io_ctx256.Delay          = EEPRMA2_M95_Delay;
+  io_ctx256.Delay          = EEPRMA2_M95_DELAY;
   
   if (M95_RegisterBusIO(&M95256_obj_0, &io_ctx256) != M95_OK)
   {
@@ -689,14 +715,14 @@ static int32_t M95040_0_Probe(void)
   static M95_Object_t M95040_obj_0;
   
   io_ctx040.Address        = M95040_SPI_ADDR;
-  io_ctx040.Init           = EEPRMA2_SPI_Init;
-  io_ctx040.DeInit         = EEPRMA2_SPI_DeInit;
+  io_ctx040.Init           = EEPRMA2_SPI_INIT;
+  io_ctx040.DeInit         = EEPRMA2_SPI_DEINIT;
   io_ctx040.Read           = EEPRMA2_SPI_ReadReg;
   io_ctx040.Write          = EEPRMA2_SPI_WriteReg;
   io_ctx040.WriteBuffer    = EEPRMA2_SPI_SendBuffer;
   io_ctx040.ReadBuffer     = EEPRMA2_SPI_RecvBuffer;
   io_ctx040.IsReady        = EEPRMA2_M95_IsDeviceReady;
-  io_ctx040.Delay          = EEPRMA2_M95_Delay;
+  io_ctx040.Delay          = EEPRMA2_M95_DELAY;
 
   if (M95_RegisterBusIO(&M95040_obj_0, &io_ctx040) != M95_OK)
   {
@@ -880,6 +906,7 @@ void EEPRMA2_M95MemorySizeLocator(uint32_t Instance)
     }
     }  
 #endif
+    break;
   }
  }
 }

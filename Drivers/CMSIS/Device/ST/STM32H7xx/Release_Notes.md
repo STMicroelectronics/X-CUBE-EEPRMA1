@@ -21,7 +21,20 @@ Copyright &copy; 2017 STMicroelectronics\
 
 # __Update History__
 ::: {.collapse}
-<input type="checkbox" id="collapse-section14" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section15" checked aria-hidden="true">
+<label for="collapse-section15" aria-hidden="true">__V1.10.3  /  04-November-2022__</label>
+<div>
+
+## Main Changes
+
+- General updates to fix known defects and implementation enhancements
+- Update system_stm32h7xx_*.c template files to fix typo in comment: the VTOR offset value is multiple of 0x400.
+- Adjust QUADSPI FIFO level threshold bits mask definition on 5 bits instead of 4bits.
+
+</div>
+:::
+::: {.collapse}
+<input type="checkbox" id="collapse-section14" aria-hidden="true">
 <label for="collapse-section14" aria-hidden="true">__V1.10.2  /  12-February-2022__</label>
 <div>
 

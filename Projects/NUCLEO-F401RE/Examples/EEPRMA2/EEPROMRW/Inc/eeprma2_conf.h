@@ -1,13 +1,12 @@
-
 /**
   ******************************************************************************
   * @file           : eeprma2_conf.h
-  * @author  		: SRA Application Team
-  * @brief   		: This file contains definitions for the EEPRMA2 components bus interfaces
+  * @author         : SRA Application Team
+  * @brief          : This file contains definitions for the EEPRMA2 components bus interfaces
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -40,22 +39,22 @@ extern "C" {
 
 /* Defines ---------------------------------------------------------------*/
 
-#define EEPRMA2_I2C_Init         		BSP_I2C1_Init
-#define EEPRMA2_I2C_DeInit       		BSP_I2C1_DeInit
-#define EEPRMA2_I2C_ReadReg         	BSP_I2C1_ReadReg
-#define EEPRMA2_I2C_WriteReg         	BSP_I2C1_WriteReg
-#define EEPRMA2_I2C_ReadReg16     		BSP_I2C1_ReadReg16
-#define EEPRMA2_I2C_WriteReg16			BSP_I2C1_WriteReg16
-#define EEPRMA2_I2C_IsReady             BSP_I2C1_IsReady
-#define EEPRMA2_I2C_Send				BSP_I2C1_Send
-#define EEPRMA2_M24_Delay          	    HAL_Delay
+#define EEPRMA2_I2C_INIT         BSP_I2C1_Init
+#define EEPRMA2_I2C_DEINIT       BSP_I2C1_DeInit
+#define EEPRMA2_I2C_READREG      BSP_I2C1_ReadReg
+#define EEPRMA2_I2C_WRITEREG     BSP_I2C1_WriteReg
+#define EEPRMA2_I2C_READREG16    BSP_I2C1_ReadReg16
+#define EEPRMA2_I2C_WRITEREG16   BSP_I2C1_WriteReg16
+#define EEPRMA2_I2C_ISREADY      BSP_I2C1_IsReady
+#define EEPRMA2_I2C_SEND         BSP_I2C1_Send
+#define EEPRMA2_M24_DELAY        HAL_Delay
 
-#define EEPRMA2_SPI_Init         BSP_SPI1_Init
-#define EEPRMA2_SPI_DeInit       BSP_SPI1_DeInit
-#define EEPRMA2_SPI_Recv         BSP_SPI1_Recv
-#define EEPRMA2_SPI_Send         BSP_SPI1_Send
-#define EEPRMA2_SPI_SendRecv     BSP_SPI1_SendRecv
-#define EEPRMA2_M95_Delay            HAL_Delay
+#define EEPRMA2_SPI_INIT        BSP_SPI1_Init
+#define EEPRMA2_SPI_DEINIT       BSP_SPI1_DeInit
+#define EEPRMA2_SPI_RECV         BSP_SPI1_Recv
+#define EEPRMA2_SPI_SEND         BSP_SPI1_Send
+#define EEPRMA2_SPI_SENDRECV     BSP_SPI1_SendRecv
+#define EEPRMA2_M95_DELAY        HAL_Delay
 
 #define M95M04_EEPROM_SPI_CS_PORT             GPIOB
 #define M95M04_EEPROM_SPI_CS_PIN              GPIO_PIN_6
