@@ -847,7 +847,7 @@ __STATIC_INLINE void LL_UCPD_EnableIT_RxOvr(UCPD_TypeDef *UCPDx)
 }
 
 /**
-  * @brief  Enable Rx hard resrt interrupt
+  * @brief  Enable Rx hard reset interrupt
   * @rmtoll IMR          RXHRSTDETIE         LL_UCPD_EnableIT_RxHRST
   * @param  UCPDx UCPD Instance
   * @retval None
@@ -1012,7 +1012,7 @@ __STATIC_INLINE void LL_UCPD_DisableIT_RxOvr(UCPD_TypeDef *UCPDx)
 }
 
 /**
-  * @brief  Disable Rx hard resrt interrupt
+  * @brief  Disable Rx hard reset interrupt
   * @rmtoll IMR          RXHRSTDETIE         LL_UCPD_DisableIT_RxHRST
   * @param  UCPDx UCPD Instance
   * @retval None
@@ -1177,7 +1177,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxOvr(UCPD_TypeDef const *const UCPD
 }
 
 /**
-  * @brief  Check if Rx hard resrt interrupt enabled
+  * @brief  Check if Rx hard reset interrupt enabled
   * @rmtoll IMR          RXHRSTDETIE         LL_UCPD_IsEnableIT_RxHRST
   * @param  UCPDx UCPD Instance
   * @retval State of bit (1 or 0).
@@ -1350,7 +1350,7 @@ __STATIC_INLINE void LL_UCPD_ClearFlag_RxOvr(UCPD_TypeDef *UCPDx)
 }
 
 /**
-  * @brief  Clear Rx hard resrt interrupt
+  * @brief  Clear Rx hard reset interrupt
   * @rmtoll ICR          RXHRSTDETIE         LL_UCPD_ClearFlag_RxHRST
   * @param  UCPDx UCPD Instance
   * @retval None
@@ -1501,7 +1501,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxOvr(UCPD_TypeDef const *const UC
 }
 
 /**
-  * @brief  Check if Rx hard resrt interrupt
+  * @brief  Check if Rx hard reset interrupt
   * @rmtoll SR          RXHRSTDET         LL_UCPD_IsActiveFlag_RxHRST
   * @param  UCPDx UCPD Instance
   * @retval None
@@ -1779,18 +1779,18 @@ __STATIC_INLINE uint32_t LL_UCPD_ReadRxOrderSet(UCPD_TypeDef const *const UCPDx)
 
 /**
   * @brief  Read the Rx paysize
-  * @rmtoll TX_PAYSZ          TXPAYSZ            LL_UCPD_ReadRxPaySize
+  * @rmtoll RX_PAYSZ          RXPAYSZ            LL_UCPD_ReadRxPaySize
   * @param  UCPDx UCPD Instance
   * @retval RXPaysize.
   */
 __STATIC_INLINE uint32_t LL_UCPD_ReadRxPaySize(UCPD_TypeDef const *const UCPDx)
 {
-  return READ_BIT(UCPDx->TX_PAYSZ, UCPD_RX_PAYSZ_RXPAYSZ);
+  return READ_BIT(UCPDx->RX_PAYSZ, UCPD_RX_PAYSZ_RXPAYSZ);
 }
 
 /**
   * @brief  Read data
-  * @rmtoll TXDR           RXDATA            LL_UCPD_ReadData
+  * @rmtoll RXDR           RXDATA            LL_UCPD_ReadData
   * @param  UCPDx UCPD Instance
   * @retval RxData Value between Min_Data=0x00 and Max_Data=0xFF
   */
@@ -1833,7 +1833,7 @@ __STATIC_INLINE void LL_UCPD_SetRxOrdExt2(UCPD_TypeDef *UCPDx, uint32_t SOPExt)
   */
 
 ErrorStatus LL_UCPD_DeInit(UCPD_TypeDef *UCPDx);
-ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx, LL_UCPD_InitTypeDef *UCPD_InitStruct);
+ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx, const LL_UCPD_InitTypeDef *UCPD_InitStruct);
 void        LL_UCPD_StructInit(LL_UCPD_InitTypeDef *UCPD_InitStruct);
 
 /**

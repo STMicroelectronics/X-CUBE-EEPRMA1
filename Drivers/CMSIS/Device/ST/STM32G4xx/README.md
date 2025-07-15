@@ -25,16 +25,7 @@ Details about the content of this release are available in the release note [her
 
 ## Compatibility information
 
-In this table, you can find the successive versions of this CMSIS Device component, in-line with the corresponding versions of the full MCU package:
-
-CMSIS Device G4 | CMSIS Core | Was delivered in the full MCU package
---------------- | ---------- | -------------------------------------
-Tag v1.0.0 | Tag v5.4.0_cm4 | Tag v1.0.0
-Tag v1.1.0 | Tag v5.4.0_cm4 | Tag v1.1.0
-Tag v1.1.1 | Tag v5.4.0_cm4 | Tag v1.2.0
-Tag v1.2.0 | Tag v5.6.0_cm4 | Tag v1.3.0
-Tag v1.2.1 | Tag v5.6.0_cm4 | Tag v1.4.0
-Tag v1.2.2 | Tag v5.6.0_cm4 | Tag v1.5.0
+It is **crucial** that you use a consistent set of versions for the CMSIS Core - CMSIS Device, as mentioned in [this](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/STM32CubeG4/blob/master/Release_Notes.html) release note.
 
 The full **STM32CubeG4** MCU package is available [here](https://github.com/STMicroelectronics/STM32CubeG4).
 

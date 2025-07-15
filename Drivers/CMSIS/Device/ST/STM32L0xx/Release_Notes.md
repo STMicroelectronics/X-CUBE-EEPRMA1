@@ -1,29 +1,18 @@
 ---
 pagetitle: Release Notes for STM32L0xx CMSIS
 lang: en
+header-includes: <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 ---
 
 ::: {.row}
 ::: {.col-sm-12 .col-lg-4}
 
-::: {.card .fluid}
-::: {.sectione .dark}
 <center>
 # <small>Release Notes for</small> <mark>STM32L0xx CMSIS</mark>
-Copyright &copy; 2009-2018 ARM Limited - STMicroelectronics\
+Copyright &copy; 2016 STMicroelectronics\
     
-[![ST logo](_htmresc/st_logo.png)](https://www.st.com){.logo}
+[![ST logo](_htmresc/st_logo_2020.png)](https://www.st.com){.logo}
 </center>
-:::
-:::
-
-# License
-
-Licensed by ST under Apache-2.0 license (the \"License\"). You may
-not use this package except in compliance with the License. You may
-obtain a copy of the License at:
-
-[Apache License v2.0](../../../LICENSE.txt)
 
 # Purpose
 
@@ -47,6 +36,40 @@ Various template file are provided to easily build an application. They can be a
 
 ::: {.col-sm-12 .col-lg-8}
 # Update History
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section17" checked aria-hidden="true">
+<label for="collapse-section17" aria-hidden="true">V1.9.4 / 07-March-2025</label>
+<div>
+
+## Main Changes
+
+### Maintenance release
+
+## Contents
+
+- Align GPIO_OSPEEDR Register Bits Naming with Reference Manual.
+
+</div>
+:::
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section16" aria-hidden="true">
+<label for="collapse-section16" aria-hidden="true">V1.9.3 / 27-January-2023</label>
+<div>
+
+## Main Changes
+
+### Maintenance release
+
+## Contents
+
+- All source files: update disclaimer to add reference to the new license agreement.
+- Fix inconsistent IRQn_Type enumeration for supervisor call exception with alias for compatibility.
+- Update the GCC startup file to be aligned to IAR/Keil IDE.
+
+</div>
+:::
 
 ::: {.collapse}
 <input type="checkbox" id="collapse-section15" aria-hidden="true">
@@ -131,7 +154,7 @@ Various template file are provided to easily build an application. They can be a
   - Add compatibility definition of USART_ICR_NECF / USART_ICR_NCF with others series.
   - Update IS_UART_INSTANCE macro definition.
   - Add definition of IS_LPTIM_ENCODER_INTERFACE_INSTANCE macro after LPTIM driver update.
-  - Move definition of FLASH_BANK2_BASE start address to stm32l0xx_hal_flash.h to be dependant on Memory Size register.
+  - Move definition of FLASH_BANK2_BASE start address to stm32l0xx_hal_flash.h to be dependent on Memory Size register.
   - Update interrupt definition to use DMA1_Channel4_5_IRQn  for STM32L011xx and STM32L021xx devices.
   - Correct PWR_WAKEUP_PIN definitions for L011xx and L021xx devices.
 
@@ -236,7 +259,7 @@ Various template file are provided to easily build an application. They can be a
     - #define ADC_IER_EOCALIE                      ADC_IER_EOCALIE_Msk
   - The same rule applies on all the other constants present inside the CMSIS files.
         
-- MISRA C 2004 rule 10.6 compliancy. (A 'U' suffix shall be applied to all constants of unisgned type).
+- MISRA C 2004 rule 10.6 compliance. (A 'U' suffix shall be applied to all constants of unisgned type).
 
 - Several SYSCFG definition changes :
  - SYSCFG_CFGR3_EN_VREFINT enable bit suppressed. (no more needed and must not be used). 
@@ -269,7 +292,7 @@ Various template file are provided to easily build an application. They can be a
 
 ## Contents
 
-- MISRA C 2004 rule 5.1 and rule 10.6 compliancy.
+- MISRA C 2004 rule 5.1 and rule 10.6 compliance.
 - Several renaming in order to be aligned with the Reference Manual.The list of the modification is listed hereafter :
   - Adding of a new COMP_Common_TypeDef structure.
   - Removal of the RCR field inside the TIM_TypeDef structure.

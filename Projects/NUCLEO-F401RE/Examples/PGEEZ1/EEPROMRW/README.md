@@ -47,7 +47,7 @@ M95P32, PGEEZ1, EEPROM, SPI, External Storage Device
     - NUCLEO-F401RE RevC board  
     - NUCLEO-L053R8 RevC board
     - NUCLEO-G474RE RevC board
-    - NUCLEO-H743ZI RevE board
+    - NUCLEO-H753ZI RevE board
 
 - ADDITIONAL_BOARD : X-NUCLEO-PGEEZ1 https://www.st.com/en/ecosystems/x-nucleo-pgeez1.html
 - ADDITIONAL_COMP : M95P32 https://www.st.com/en/memories/m95p32-i.html
@@ -60,10 +60,10 @@ In order to make the program work, you must do the following:
    installation path is not too in-depth since the toolchain may report errors
    after building.
    
-- Open STM32CubeIDE (this firmware has been successfully tested with Version 1.13.2).
+- Open STM32CubeIDE (this firmware has been successfully tested with Version 1.18.1).
    Alternatively you can use the Keil uVision toolchain (this firmware
-   has been successfully tested with V5.37.0.0) or the IAR toolchain (this firmware has 
-   been successfully tested with Embedded Workbench V9.20.1).
+   has been successfully tested with V5.38.0.0) or the IAR toolchain (this firmware has 
+   been successfully tested with Embedded Workbench V9.60.3).
    
 - Rebuild all files and load your image into target memory.
 
@@ -77,6 +77,6 @@ SRA Application Team
 
 ### <b>License</b>
 
-Copyright (c) 2023 STMicroelectronics. All rights reserved.
+Copyright (c) 2025 STMicroelectronics. All rights reserved.
 
 This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-IS.

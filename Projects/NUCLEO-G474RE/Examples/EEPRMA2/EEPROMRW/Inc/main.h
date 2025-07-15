@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -63,6 +63,18 @@ void Error_Handler(void);
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
 #define B1_EXTI_IRQn EXTI15_10_IRQn
+#define RCC_OSC32_IN_Pin GPIO_PIN_14
+#define RCC_OSC32_IN_GPIO_Port GPIOC
+#define RCC_OSC32_OUT_Pin GPIO_PIN_15
+#define RCC_OSC32_OUT_GPIO_Port GPIOC
+#define RCC_OSC_IN_Pin GPIO_PIN_0
+#define RCC_OSC_IN_GPIO_Port GPIOF
+#define RCC_OSC_OUT_Pin GPIO_PIN_1
+#define RCC_OSC_OUT_GPIO_Port GPIOF
+#define LPUART1_TX_Pin GPIO_PIN_2
+#define LPUART1_TX_GPIO_Port GPIOA
+#define LPUART1_RX_Pin GPIO_PIN_3
+#define LPUART1_RX_GPIO_Port GPIOA
 #define T_SWDIO_Pin GPIO_PIN_13
 #define T_SWDIO_GPIO_Port GPIOA
 #define T_SWCLK_Pin GPIO_PIN_14

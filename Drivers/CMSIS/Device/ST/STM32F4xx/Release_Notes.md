@@ -25,8 +25,20 @@ This driver provides the CMSIS device for the stm32f4xx products.
 # Update History
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section31" checked aria-hidden="true">
-<label for="collapse-section3" aria-hidden="true">V2.6.9 / 22-September-2022</label>
+<input type="checkbox" id="collapse-section32" checked aria-hidden="true">
+<label for="collapse-section32" aria-hidden="true">V2.6.10 / 31-May-2024</label>
+<div>
+
+## Main Changes
+
+- Add MCO2PRE[2:0] and MCO2[1:0] bits definition within CMSIS files.
+
+</div>
+:::
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section31" aria-hidden="true">
+<label for="collapse-section31" aria-hidden="true">V2.6.9 / 22-September-2022</label>
 <div>			
 
 ## Main Changes

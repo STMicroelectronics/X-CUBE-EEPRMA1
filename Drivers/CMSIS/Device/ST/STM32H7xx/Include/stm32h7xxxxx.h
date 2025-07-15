@@ -342,7 +342,7 @@ typedef enum
 #include "core_cm4.h"                     /*!< Cortex-M4 processor and core peripherals      */
 #else  /* CORE_CM7 */
 #ifdef CORE_CM7
-#define __CM7_REV               0x0100U   /*!< Cortex-M7 revision r1p0                       */
+#define __CM7_REV               0x0101U   /*!< Cortex-M7 revision r1p1                       */
 #define __MPU_PRESENT             1U       /*!< CM7 provides an MPU                           */
 #define __NVIC_PRIO_BITS          4U       /*!< CM7 uses 4 Bits for the Priority Levels       */
 #define __Vendor_SysTickConfig    0U       /*!< Set to 1 if different SysTick Config is used  */
@@ -358,14 +358,30 @@ typedef enum
 /**
   * @}
   */
+#endif /*DUAL_CORE*/
 
-
-#else  /* SINGLE_CORE */
-
+#if !$DUAL_CORE$ && ($H7_SHARK$ || $H7_VALUE_LINE$)
 /**
   * @brief Configuration of the Cortex-M7 Processor and Core Peripherals
    */
-#define __CM7_REV               0x0100U   /*!< Cortex-M7 revision r1p0                       */
+#define __CM7_REV               0x0101U   /*!< Cortex-M7 revision r1p1                       */
+#define __MPU_PRESENT             1U       /*!< CM7 provides an MPU                           */
+#define __NVIC_PRIO_BITS          4U       /*!< CM7 uses 4 Bits for the Priority Levels       */
+#define __Vendor_SysTickConfig    0U       /*!< Set to 1 if different SysTick Config is used  */
+#define __FPU_PRESENT             1U       /*!< FPU present                                   */
+#define __ICACHE_PRESENT          1U       /*!< CM7 instruction cache present                 */
+#define __DCACHE_PRESENT          1U       /*!< CM7 data cache present                        */
+#include "core_cm7.h"                     /*!< Cortex-M7 processor and core peripherals      */
+
+/**
+  * @}
+  */
+#endif /* !DUAL_CORE && (H7_SHARK || H7_VALUE_LINE) */
+#if $H7_LITTLE_SHARK$ || $H7_TINY_SHARK$
+/**
+  * @brief Configuration of the Cortex-M7 Processor and Core Peripherals
+   */
+#define __CM7_REV               0x0110U   /*!< Cortex-M7 revision r1p2                       */
 #define __MPU_PRESENT             1U       /*!< CM7 provides an MPU                           */
 #define __NVIC_PRIO_BITS          4U       /*!< CM7 uses 4 Bits for the Priority Levels       */
 #define __Vendor_SysTickConfig    0U       /*!< Set to 1 if different SysTick Config is used  */
@@ -378,7 +394,7 @@ typedef enum
   * @}
   */
 
-#endif /*DUAL_CORE*/
+#endif /* H7_LITTLE_SHARK || H7_TINY_SHARK */
 
 
 
@@ -1902,7 +1918,11 @@ typedef struct
   __IO uint32_t TSDR;       /*!< RTC time stamp date register,                              Address offset: 0x34 */
   __IO uint32_t TSSSR;      /*!< RTC time-stamp sub second register,                        Address offset: 0x38 */
   __IO uint32_t CALR;       /*!< RTC calibration register,                                  Address offset: 0x3C */
+#if $H7_LITTLE_SHARK$ || $H7_LITTLE_VALUE_LINE$
+  __IO uint32_t TAFCR;      /*!< RTC tamper and alternate function configuration register,  Address offset: 0x40 */
+#else /* H7_SHARK || H7_VALUE_LINE || H7_DUAL_CORE_1M */
   __IO uint32_t TAMPCR;     /*!< RTC tamper configuration register,                         Address offset: 0x40 */
+#endif /* H7_LITTLE_SHARK || H7_LITTLE_VALUE_LINE */
   __IO uint32_t ALRMASSR;   /*!< RTC alarm A sub second register,                           Address offset: 0x44 */
   __IO uint32_t ALRMBSSR;   /*!< RTC alarm B sub second register,                           Address offset: 0x48 */
   __IO uint32_t OR;         /*!< RTC option register,                                       Address offset: 0x4C */
@@ -2980,7 +3000,7 @@ typedef struct
 #define D1_ITCMRAM_BASE           (0x00000000UL) /*!< Base address of : 64KB RAM reserved for CPU execution/instruction accessible over ITCM  */
 #define D1_ITCMICP_BASE           (0x00100000UL) /*!< Base address of : (up to 128KB) embedded Test FLASH memory accessible over ITCM         */
 #define D1_DTCMRAM_BASE           (0x20000000UL) /*!< Base address of : 128KB system data RAM accessible over DTCM                            */
-#if $H7_VALUE_LINE$ || $H7_LITTLE_VALUE_LINE$ 
+#if $H7_VALUE_LINE$ || $H7_LITTLE_VALUE_LINE$
 #define D1_AXIFLASH_BASE          (0x08000000UL) /*!< Base address of : (up to 128 KB) embedded FLASH memory accessible over AXI      */
 #elif $H7_LITTLE_SHARK$
 #define D1_AXIFLASH_BASE          (0x08000000UL) /*!< Base address of : (up to 1 MB) embedded FLASH memory accessible over AXI                */
@@ -3046,7 +3066,7 @@ typedef struct
 #define FLASH_BANK2_BASE          (0x08100000UL) /*!< Base address of : (up to 1 MB) Flash Bank2 accessible over AXI                          */
 #define FLASH_END                 (0x081FFFFFUL) /*!< FLASH end address                                                                       */
 #endif /* H7_VALUE_LINE */
-#endif /* H7_LITTLE_SHARK */ 
+#endif /* H7_LITTLE_SHARK */
 
 /* Legacy define */
 #define FLASH_BASE                FLASH_BANK1_BASE
@@ -3389,7 +3409,6 @@ typedef struct
 #define MDMA_Channel13_BASE   (MDMA_BASE + 0x00000380UL)
 #define MDMA_Channel14_BASE   (MDMA_BASE + 0x000003C0UL)
 #define MDMA_Channel15_BASE   (MDMA_BASE + 0x00000400UL)
-#define MDMA_Channel16_BASE   (MDMA_BASE + 0x00000440UL)
 
 /* GFXMMU virtual buffers base address */
 #define GFXMMU_VIRTUAL_BUFFERS_BASE  (0x25000000UL)
@@ -5435,6 +5454,12 @@ typedef struct
 #define ADC_AWD2CR_AWD2CH_18              (0x40000UL << ADC_AWD2CR_AWD2CH_Pos)  /*!< 0x00040000 */
 #define ADC_AWD2CR_AWD2CH_19              (0x80000UL << ADC_AWD2CR_AWD2CH_Pos)  /*!< 0x00080000 */
 
+#if $H7_LITTLE_SHARK$
+#define ADC3_AWD2CR_AWD2CH_Pos             (0U)
+#define ADC3_AWD2CR_AWD2CH_Msk             (0x7FFFFUL << ADC3_AWD2CR_AWD2CH_Pos)  /*!< 0x0007FFFF */
+#define ADC3_AWD2CR_AWD2CH                  ADC3_AWD2CR_AWD2CH_Msk                 /*!< ADC Analog watchdog 2 channel selection */
+
+#endif /* H7_LITTLE_SHARK */
 /********************  Bit definition for ADC_AWD3CR register  ********************/
 #define ADC_AWD3CR_AWD3CH_Pos             (0U)
 #define ADC_AWD3CR_AWD3CH_Msk             (0xFFFFFUL << ADC_AWD3CR_AWD3CH_Pos)  /*!< 0x000FFFFF */
@@ -5460,6 +5485,12 @@ typedef struct
 #define ADC_AWD3CR_AWD3CH_18              (0x40000UL << ADC_AWD3CR_AWD3CH_Pos)  /*!< 0x00040000 */
 #define ADC_AWD3CR_AWD3CH_19              (0x80000UL << ADC_AWD3CR_AWD3CH_Pos)  /*!< 0x00080000 */
 
+#if $H7_LITTLE_SHARK$
+#define ADC3_AWD3CR_AWD3CH_Pos             (0U)
+#define ADC3_AWD3CR_AWD3CH_Msk             (0x7FFFFUL << ADC3_AWD3CR_AWD3CH_Pos)  /*!< 0x0007FFFF */
+#define ADC3_AWD3CR_AWD3CH                  ADC3_AWD3CR_AWD3CH_Msk                 /*!< ADC Analog watchdog 3 channel selection */
+
+#endif /* H7_LITTLE_SHARK */
 /********************  Bit definition for ADC_DIFSEL register  ********************/
 #define ADC_DIFSEL_DIFSEL_Pos             (0U)
 #define ADC_DIFSEL_DIFSEL_Msk             (0xFFFFFUL << ADC_DIFSEL_DIFSEL_Pos)  /*!< 0x000FFFFF */
@@ -16911,7 +16942,7 @@ typedef struct
 #define FMC_SDCMR_MODE             FMC_SDCMR_MODE_Msk                          /*!<MODE[2:0] bits (Command mode) */
 #define FMC_SDCMR_MODE_0           (0x1UL << FMC_SDCMR_MODE_Pos)                /*!< 0x00000001 */
 #define FMC_SDCMR_MODE_1           (0x2UL << FMC_SDCMR_MODE_Pos)                /*!< 0x00000002 */
-#define FMC_SDCMR_MODE_2           (0x3UL << FMC_SDCMR_MODE_Pos)                /*!< 0x00000003 */
+#define FMC_SDCMR_MODE_2           (0x4UL << FMC_SDCMR_MODE_Pos)                /*!< 0x00000004 */
 
 #define FMC_SDCMR_CTB2_Pos         (3U)
 #define FMC_SDCMR_CTB2_Msk         (0x1UL << FMC_SDCMR_CTB2_Pos)               /*!< 0x00000008 */
@@ -17114,101 +17145,198 @@ typedef struct
 /*                                                                            */
 /******************************************************************************/
 /******************  Bits definition for GPIO_MODER register  *****************/
-#define GPIO_MODER_MODE0_Pos           (0U)
-#define GPIO_MODER_MODE0_Msk           (0x3UL << GPIO_MODER_MODE0_Pos)         /*!< 0x00000003 */
-#define GPIO_MODER_MODE0               GPIO_MODER_MODE0_Msk
-#define GPIO_MODER_MODE0_0             (0x1UL << GPIO_MODER_MODE0_Pos)          /*!< 0x00000001 */
-#define GPIO_MODER_MODE0_1             (0x2UL << GPIO_MODER_MODE0_Pos)          /*!< 0x00000002 */
+#define GPIO_MODER_MODER0_Pos           (0U)
+#define GPIO_MODER_MODER0_Msk           (0x3UL << GPIO_MODER_MODER0_Pos)         /*!< 0x00000003 */
+#define GPIO_MODER_MODER0               GPIO_MODER_MODER0_Msk
+#define GPIO_MODER_MODER0_0             (0x1UL << GPIO_MODER_MODER0_Pos)          /*!< 0x00000001 */
+#define GPIO_MODER_MODER0_1             (0x2UL << GPIO_MODER_MODER0_Pos)          /*!< 0x00000002 */
 
-#define GPIO_MODER_MODE1_Pos           (2U)
-#define GPIO_MODER_MODE1_Msk           (0x3UL << GPIO_MODER_MODE1_Pos)         /*!< 0x0000000C */
-#define GPIO_MODER_MODE1               GPIO_MODER_MODE1_Msk
-#define GPIO_MODER_MODE1_0             (0x1UL << GPIO_MODER_MODE1_Pos)          /*!< 0x00000004 */
-#define GPIO_MODER_MODE1_1             (0x2UL << GPIO_MODER_MODE1_Pos)          /*!< 0x00000008 */
+#define GPIO_MODER_MODER1_Pos           (2U)
+#define GPIO_MODER_MODER1_Msk           (0x3UL << GPIO_MODER_MODER1_Pos)         /*!< 0x0000000C */
+#define GPIO_MODER_MODER1               GPIO_MODER_MODER1_Msk
+#define GPIO_MODER_MODER1_0             (0x1UL << GPIO_MODER_MODER1_Pos)          /*!< 0x00000004 */
+#define GPIO_MODER_MODER1_1             (0x2UL << GPIO_MODER_MODER1_Pos)          /*!< 0x00000008 */
 
-#define GPIO_MODER_MODE2_Pos           (4U)
-#define GPIO_MODER_MODE2_Msk           (0x3UL << GPIO_MODER_MODE2_Pos)         /*!< 0x00000030 */
-#define GPIO_MODER_MODE2               GPIO_MODER_MODE2_Msk
-#define GPIO_MODER_MODE2_0             (0x1UL << GPIO_MODER_MODE2_Pos)          /*!< 0x00000010 */
-#define GPIO_MODER_MODE2_1             (0x2UL << GPIO_MODER_MODE2_Pos)          /*!< 0x00000020 */
+#define GPIO_MODER_MODER2_Pos           (4U)
+#define GPIO_MODER_MODER2_Msk           (0x3UL << GPIO_MODER_MODER2_Pos)         /*!< 0x00000030 */
+#define GPIO_MODER_MODER2               GPIO_MODER_MODER2_Msk
+#define GPIO_MODER_MODER2_0             (0x1UL << GPIO_MODER_MODER2_Pos)          /*!< 0x00000010 */
+#define GPIO_MODER_MODER2_1             (0x2UL << GPIO_MODER_MODER2_Pos)          /*!< 0x00000020 */
 
-#define GPIO_MODER_MODE3_Pos           (6U)
-#define GPIO_MODER_MODE3_Msk           (0x3UL << GPIO_MODER_MODE3_Pos)         /*!< 0x000000C0 */
-#define GPIO_MODER_MODE3               GPIO_MODER_MODE3_Msk
-#define GPIO_MODER_MODE3_0             (0x1UL << GPIO_MODER_MODE3_Pos)          /*!< 0x00000040 */
-#define GPIO_MODER_MODE3_1             (0x2UL << GPIO_MODER_MODE3_Pos)          /*!< 0x00000080 */
+#define GPIO_MODER_MODER3_Pos           (6U)
+#define GPIO_MODER_MODER3_Msk           (0x3UL << GPIO_MODER_MODER3_Pos)         /*!< 0x000000C0 */
+#define GPIO_MODER_MODER3               GPIO_MODER_MODER3_Msk
+#define GPIO_MODER_MODER3_0             (0x1UL << GPIO_MODER_MODER3_Pos)          /*!< 0x00000040 */
+#define GPIO_MODER_MODER3_1             (0x2UL << GPIO_MODER_MODER3_Pos)          /*!< 0x00000080 */
 
-#define GPIO_MODER_MODE4_Pos           (8U)
-#define GPIO_MODER_MODE4_Msk           (0x3UL << GPIO_MODER_MODE4_Pos)         /*!< 0x00000300 */
-#define GPIO_MODER_MODE4               GPIO_MODER_MODE4_Msk
-#define GPIO_MODER_MODE4_0             (0x1UL << GPIO_MODER_MODE4_Pos)          /*!< 0x00000100 */
-#define GPIO_MODER_MODE4_1             (0x2UL << GPIO_MODER_MODE4_Pos)          /*!< 0x00000200 */
+#define GPIO_MODER_MODER4_Pos           (8U)
+#define GPIO_MODER_MODER4_Msk           (0x3UL << GPIO_MODER_MODER4_Pos)         /*!< 0x00000300 */
+#define GPIO_MODER_MODER4               GPIO_MODER_MODER4_Msk
+#define GPIO_MODER_MODER4_0             (0x1UL << GPIO_MODER_MODER4_Pos)          /*!< 0x00000100 */
+#define GPIO_MODER_MODER4_1             (0x2UL << GPIO_MODER_MODER4_Pos)          /*!< 0x00000200 */
 
-#define GPIO_MODER_MODE5_Pos           (10U)
-#define GPIO_MODER_MODE5_Msk           (0x3UL << GPIO_MODER_MODE5_Pos)         /*!< 0x00000C00 */
-#define GPIO_MODER_MODE5               GPIO_MODER_MODE5_Msk
-#define GPIO_MODER_MODE5_0             (0x1UL << GPIO_MODER_MODE5_Pos)          /*!< 0x00000400 */
-#define GPIO_MODER_MODE5_1             (0x2UL << GPIO_MODER_MODE5_Pos)          /*!< 0x00000800 */
+#define GPIO_MODER_MODER5_Pos           (10U)
+#define GPIO_MODER_MODER5_Msk           (0x3UL << GPIO_MODER_MODER5_Pos)         /*!< 0x00000C00 */
+#define GPIO_MODER_MODER5               GPIO_MODER_MODER5_Msk
+#define GPIO_MODER_MODER5_0             (0x1UL << GPIO_MODER_MODER5_Pos)          /*!< 0x00000400 */
+#define GPIO_MODER_MODER5_1             (0x2UL << GPIO_MODER_MODER5_Pos)          /*!< 0x00000800 */
 
-#define GPIO_MODER_MODE6_Pos           (12U)
-#define GPIO_MODER_MODE6_Msk           (0x3UL << GPIO_MODER_MODE6_Pos)         /*!< 0x00003000 */
-#define GPIO_MODER_MODE6               GPIO_MODER_MODE6_Msk
-#define GPIO_MODER_MODE6_0             (0x1UL << GPIO_MODER_MODE6_Pos)          /*!< 0x00001000 */
-#define GPIO_MODER_MODE6_1             (0x2UL << GPIO_MODER_MODE6_Pos)          /*!< 0x00002000 */
+#define GPIO_MODER_MODER6_Pos           (12U)
+#define GPIO_MODER_MODER6_Msk           (0x3UL << GPIO_MODER_MODER6_Pos)         /*!< 0x00003000 */
+#define GPIO_MODER_MODER6               GPIO_MODER_MODER6_Msk
+#define GPIO_MODER_MODER6_0             (0x1UL << GPIO_MODER_MODER6_Pos)          /*!< 0x00001000 */
+#define GPIO_MODER_MODER6_1             (0x2UL << GPIO_MODER_MODER6_Pos)          /*!< 0x00002000 */
 
-#define GPIO_MODER_MODE7_Pos           (14U)
-#define GPIO_MODER_MODE7_Msk           (0x3UL << GPIO_MODER_MODE7_Pos)         /*!< 0x0000C000 */
-#define GPIO_MODER_MODE7               GPIO_MODER_MODE7_Msk
-#define GPIO_MODER_MODE7_0             (0x1UL << GPIO_MODER_MODE7_Pos)          /*!< 0x00004000 */
-#define GPIO_MODER_MODE7_1             (0x2UL << GPIO_MODER_MODE7_Pos)          /*!< 0x00008000 */
+#define GPIO_MODER_MODER7_Pos           (14U)
+#define GPIO_MODER_MODER7_Msk           (0x3UL << GPIO_MODER_MODER7_Pos)         /*!< 0x0000C000 */
+#define GPIO_MODER_MODER7               GPIO_MODER_MODER7_Msk
+#define GPIO_MODER_MODER7_0             (0x1UL << GPIO_MODER_MODER7_Pos)          /*!< 0x00004000 */
+#define GPIO_MODER_MODER7_1             (0x2UL << GPIO_MODER_MODER7_Pos)          /*!< 0x00008000 */
 
-#define GPIO_MODER_MODE8_Pos           (16U)
-#define GPIO_MODER_MODE8_Msk           (0x3UL << GPIO_MODER_MODE8_Pos)         /*!< 0x00030000 */
-#define GPIO_MODER_MODE8               GPIO_MODER_MODE8_Msk
-#define GPIO_MODER_MODE8_0             (0x1UL << GPIO_MODER_MODE8_Pos)          /*!< 0x00010000 */
-#define GPIO_MODER_MODE8_1             (0x2UL << GPIO_MODER_MODE8_Pos)          /*!< 0x00020000 */
+#define GPIO_MODER_MODER8_Pos           (16U)
+#define GPIO_MODER_MODER8_Msk           (0x3UL << GPIO_MODER_MODER8_Pos)         /*!< 0x00030000 */
+#define GPIO_MODER_MODER8               GPIO_MODER_MODER8_Msk
+#define GPIO_MODER_MODER8_0             (0x1UL << GPIO_MODER_MODER8_Pos)          /*!< 0x00010000 */
+#define GPIO_MODER_MODER8_1             (0x2UL << GPIO_MODER_MODER8_Pos)          /*!< 0x00020000 */
 
-#define GPIO_MODER_MODE9_Pos           (18U)
-#define GPIO_MODER_MODE9_Msk           (0x3UL << GPIO_MODER_MODE9_Pos)         /*!< 0x000C0000 */
-#define GPIO_MODER_MODE9               GPIO_MODER_MODE9_Msk
-#define GPIO_MODER_MODE9_0             (0x1UL << GPIO_MODER_MODE9_Pos)          /*!< 0x00040000 */
-#define GPIO_MODER_MODE9_1             (0x2UL << GPIO_MODER_MODE9_Pos)          /*!< 0x00080000 */
+#define GPIO_MODER_MODER9_Pos           (18U)
+#define GPIO_MODER_MODER9_Msk           (0x3UL << GPIO_MODER_MODER9_Pos)         /*!< 0x000C0000 */
+#define GPIO_MODER_MODER9               GPIO_MODER_MODER9_Msk
+#define GPIO_MODER_MODER9_0             (0x1UL << GPIO_MODER_MODER9_Pos)          /*!< 0x00040000 */
+#define GPIO_MODER_MODER9_1             (0x2UL << GPIO_MODER_MODER9_Pos)          /*!< 0x00080000 */
 
-#define GPIO_MODER_MODE10_Pos          (20U)
-#define GPIO_MODER_MODE10_Msk          (0x3UL << GPIO_MODER_MODE10_Pos)        /*!< 0x00300000 */
-#define GPIO_MODER_MODE10              GPIO_MODER_MODE10_Msk
-#define GPIO_MODER_MODE10_0            (0x1UL << GPIO_MODER_MODE10_Pos)         /*!< 0x00100000 */
-#define GPIO_MODER_MODE10_1            (0x2UL << GPIO_MODER_MODE10_Pos)         /*!< 0x00200000 */
+#define GPIO_MODER_MODER10_Pos          (20U)
+#define GPIO_MODER_MODER10_Msk          (0x3UL << GPIO_MODER_MODER10_Pos)        /*!< 0x00300000 */
+#define GPIO_MODER_MODER10              GPIO_MODER_MODER10_Msk
+#define GPIO_MODER_MODER10_0            (0x1UL << GPIO_MODER_MODER10_Pos)         /*!< 0x00100000 */
+#define GPIO_MODER_MODER10_1            (0x2UL << GPIO_MODER_MODER10_Pos)         /*!< 0x00200000 */
 
-#define GPIO_MODER_MODE11_Pos          (22U)
-#define GPIO_MODER_MODE11_Msk          (0x3UL << GPIO_MODER_MODE11_Pos)        /*!< 0x00C00000 */
-#define GPIO_MODER_MODE11              GPIO_MODER_MODE11_Msk
-#define GPIO_MODER_MODE11_0            (0x1UL << GPIO_MODER_MODE11_Pos)         /*!< 0x00400000 */
-#define GPIO_MODER_MODE11_1            (0x2UL << GPIO_MODER_MODE11_Pos)         /*!< 0x00800000 */
+#define GPIO_MODER_MODER11_Pos          (22U)
+#define GPIO_MODER_MODER11_Msk          (0x3UL << GPIO_MODER_MODER11_Pos)        /*!< 0x00C00000 */
+#define GPIO_MODER_MODER11              GPIO_MODER_MODER11_Msk
+#define GPIO_MODER_MODER11_0            (0x1UL << GPIO_MODER_MODER11_Pos)         /*!< 0x00400000 */
+#define GPIO_MODER_MODER11_1            (0x2UL << GPIO_MODER_MODER11_Pos)         /*!< 0x00800000 */
 
-#define GPIO_MODER_MODE12_Pos          (24U)
-#define GPIO_MODER_MODE12_Msk          (0x3UL << GPIO_MODER_MODE12_Pos)        /*!< 0x03000000 */
-#define GPIO_MODER_MODE12              GPIO_MODER_MODE12_Msk
-#define GPIO_MODER_MODE12_0            (0x1UL << GPIO_MODER_MODE12_Pos)         /*!< 0x01000000 */
-#define GPIO_MODER_MODE12_1            (0x2UL << GPIO_MODER_MODE12_Pos)         /*!< 0x02000000 */
+#define GPIO_MODER_MODER12_Pos          (24U)
+#define GPIO_MODER_MODER12_Msk          (0x3UL << GPIO_MODER_MODER12_Pos)        /*!< 0x03000000 */
+#define GPIO_MODER_MODER12              GPIO_MODER_MODER12_Msk
+#define GPIO_MODER_MODER12_0            (0x1UL << GPIO_MODER_MODER12_Pos)         /*!< 0x01000000 */
+#define GPIO_MODER_MODER12_1            (0x2UL << GPIO_MODER_MODER12_Pos)         /*!< 0x02000000 */
 
-#define GPIO_MODER_MODE13_Pos          (26U)
-#define GPIO_MODER_MODE13_Msk          (0x3UL << GPIO_MODER_MODE13_Pos)        /*!< 0x0C000000 */
-#define GPIO_MODER_MODE13              GPIO_MODER_MODE13_Msk
-#define GPIO_MODER_MODE13_0            (0x1UL << GPIO_MODER_MODE13_Pos)         /*!< 0x04000000 */
-#define GPIO_MODER_MODE13_1            (0x2UL << GPIO_MODER_MODE13_Pos)         /*!< 0x08000000 */
+#define GPIO_MODER_MODER13_Pos          (26U)
+#define GPIO_MODER_MODER13_Msk          (0x3UL << GPIO_MODER_MODER13_Pos)        /*!< 0x0C000000 */
+#define GPIO_MODER_MODER13              GPIO_MODER_MODER13_Msk
+#define GPIO_MODER_MODER13_0            (0x1UL << GPIO_MODER_MODER13_Pos)         /*!< 0x04000000 */
+#define GPIO_MODER_MODER13_1            (0x2UL << GPIO_MODER_MODER13_Pos)         /*!< 0x08000000 */
 
-#define GPIO_MODER_MODE14_Pos          (28U)
-#define GPIO_MODER_MODE14_Msk          (0x3UL << GPIO_MODER_MODE14_Pos)        /*!< 0x30000000 */
-#define GPIO_MODER_MODE14              GPIO_MODER_MODE14_Msk
-#define GPIO_MODER_MODE14_0            (0x1UL << GPIO_MODER_MODE14_Pos)         /*!< 0x10000000 */
-#define GPIO_MODER_MODE14_1            (0x2UL << GPIO_MODER_MODE14_Pos)         /*!< 0x20000000 */
+#define GPIO_MODER_MODER14_Pos          (28U)
+#define GPIO_MODER_MODER14_Msk          (0x3UL << GPIO_MODER_MODER14_Pos)        /*!< 0x30000000 */
+#define GPIO_MODER_MODER14              GPIO_MODER_MODER14_Msk
+#define GPIO_MODER_MODER14_0            (0x1UL << GPIO_MODER_MODER14_Pos)         /*!< 0x10000000 */
+#define GPIO_MODER_MODER14_1            (0x2UL << GPIO_MODER_MODER14_Pos)         /*!< 0x20000000 */
 
-#define GPIO_MODER_MODE15_Pos          (30U)
-#define GPIO_MODER_MODE15_Msk          (0x3UL << GPIO_MODER_MODE15_Pos)        /*!< 0xC0000000 */
-#define GPIO_MODER_MODE15              GPIO_MODER_MODE15_Msk
-#define GPIO_MODER_MODE15_0            (0x1UL << GPIO_MODER_MODE15_Pos)         /*!< 0x40000000 */
-#define GPIO_MODER_MODE15_1            (0x2UL << GPIO_MODER_MODE15_Pos)         /*!< 0x80000000 */
+#define GPIO_MODER_MODER15_Pos          (30U)
+#define GPIO_MODER_MODER15_Msk          (0x3UL << GPIO_MODER_MODER15_Pos)        /*!< 0xC0000000 */
+#define GPIO_MODER_MODER15              GPIO_MODER_MODER15_Msk
+#define GPIO_MODER_MODER15_0            (0x1UL << GPIO_MODER_MODER15_Pos)         /*!< 0x40000000 */
+#define GPIO_MODER_MODER15_1            (0x2UL << GPIO_MODER_MODER15_Pos)         /*!< 0x80000000 */
+
+/* Legacy Defines */
+#define GPIO_MODER_MODE0_Pos           GPIO_MODER_MODER0_Pos
+#define GPIO_MODER_MODE0_Msk           GPIO_MODER_MODER0_Msk
+#define GPIO_MODER_MODE0               GPIO_MODER_MODER0
+#define GPIO_MODER_MODE0_0             GPIO_MODER_MODER0_0
+#define GPIO_MODER_MODE0_1             GPIO_MODER_MODER0_1
+
+#define GPIO_MODER_MODE1_Pos           GPIO_MODER_MODER1_Pos
+#define GPIO_MODER_MODE1_Msk           GPIO_MODER_MODER1_Msk
+#define GPIO_MODER_MODE1               GPIO_MODER_MODER1
+#define GPIO_MODER_MODE1_0             GPIO_MODER_MODER1_0
+#define GPIO_MODER_MODE1_1             GPIO_MODER_MODER1_1
+
+#define GPIO_MODER_MODE2_Pos           GPIO_MODER_MODER2_Pos
+#define GPIO_MODER_MODE2_Msk           GPIO_MODER_MODER2_Msk
+#define GPIO_MODER_MODE2               GPIO_MODER_MODER2
+#define GPIO_MODER_MODE2_0             GPIO_MODER_MODER2_0
+#define GPIO_MODER_MODE2_1             GPIO_MODER_MODER2_1
+
+#define GPIO_MODER_MODE3_Pos           GPIO_MODER_MODER3_Pos
+#define GPIO_MODER_MODE3_Msk           GPIO_MODER_MODER3_Msk
+#define GPIO_MODER_MODE3               GPIO_MODER_MODER3
+#define GPIO_MODER_MODE3_0             GPIO_MODER_MODER3_0
+#define GPIO_MODER_MODE3_1             GPIO_MODER_MODER3_1
+
+#define GPIO_MODER_MODE4_Pos           GPIO_MODER_MODER4_Pos
+#define GPIO_MODER_MODE4_Msk           GPIO_MODER_MODER4_Msk
+#define GPIO_MODER_MODE4               GPIO_MODER_MODER4
+#define GPIO_MODER_MODE4_0             GPIO_MODER_MODER4_0
+#define GPIO_MODER_MODE4_1             GPIO_MODER_MODER4_1
+
+#define GPIO_MODER_MODE5_Pos           GPIO_MODER_MODER5_Pos
+#define GPIO_MODER_MODE5_Msk           GPIO_MODER_MODER5_Msk
+#define GPIO_MODER_MODE5               GPIO_MODER_MODER5
+#define GPIO_MODER_MODE5_0             GPIO_MODER_MODER5_0
+#define GPIO_MODER_MODE5_1             GPIO_MODER_MODER5_1
+
+#define GPIO_MODER_MODE6_Pos           GPIO_MODER_MODER6_Pos
+#define GPIO_MODER_MODE6_Msk           GPIO_MODER_MODER6_Msk
+#define GPIO_MODER_MODE6               GPIO_MODER_MODER6
+#define GPIO_MODER_MODE6_0             GPIO_MODER_MODER6_0
+#define GPIO_MODER_MODE6_1             GPIO_MODER_MODER6_1
+
+#define GPIO_MODER_MODE7_Pos           GPIO_MODER_MODER7_Pos
+#define GPIO_MODER_MODE7_Msk           GPIO_MODER_MODER7_Msk
+#define GPIO_MODER_MODE7               GPIO_MODER_MODER7
+#define GPIO_MODER_MODE7_0             GPIO_MODER_MODER7_0
+#define GPIO_MODER_MODE7_1             GPIO_MODER_MODER7_1
+
+#define GPIO_MODER_MODE8_Pos           GPIO_MODER_MODER8_Pos
+#define GPIO_MODER_MODE8_Msk           GPIO_MODER_MODER8_Msk
+#define GPIO_MODER_MODE8               GPIO_MODER_MODER8
+#define GPIO_MODER_MODE8_0             GPIO_MODER_MODER8_0
+#define GPIO_MODER_MODE8_1             GPIO_MODER_MODER8_1
+
+#define GPIO_MODER_MODE9_Pos           GPIO_MODER_MODER9_Pos
+#define GPIO_MODER_MODE9_Msk           GPIO_MODER_MODER9_Msk
+#define GPIO_MODER_MODE9               GPIO_MODER_MODER9
+#define GPIO_MODER_MODE9_0             GPIO_MODER_MODER9_0
+#define GPIO_MODER_MODE9_1             GPIO_MODER_MODER9_1
+
+#define GPIO_MODER_MODE10_Pos          GPIO_MODER_MODER10_Po
+#define GPIO_MODER_MODE10_Msk          GPIO_MODER_MODER10_Ms
+#define GPIO_MODER_MODE10              GPIO_MODER_MODER10
+#define GPIO_MODER_MODE10_0            GPIO_MODER_MODER10_0
+#define GPIO_MODER_MODE10_1            GPIO_MODER_MODER10_1
+
+#define GPIO_MODER_MODE11_Pos          GPIO_MODER_MODER11_Po
+#define GPIO_MODER_MODE11_Msk          GPIO_MODER_MODER11_Ms
+#define GPIO_MODER_MODE11              GPIO_MODER_MODER11
+#define GPIO_MODER_MODE11_0            GPIO_MODER_MODER11_0
+#define GPIO_MODER_MODE11_1            GPIO_MODER_MODER11_1
+
+#define GPIO_MODER_MODE12_Pos          GPIO_MODER_MODER12_Po
+#define GPIO_MODER_MODE12_Msk          GPIO_MODER_MODER12_Ms
+#define GPIO_MODER_MODE12              GPIO_MODER_MODER12
+#define GPIO_MODER_MODE12_0            GPIO_MODER_MODER12_0
+#define GPIO_MODER_MODE12_1            GPIO_MODER_MODER12_1
+
+#define GPIO_MODER_MODE13_Pos          GPIO_MODER_MODER13_Po
+#define GPIO_MODER_MODE13_Msk          GPIO_MODER_MODER13_Ms
+#define GPIO_MODER_MODE13              GPIO_MODER_MODER13
+#define GPIO_MODER_MODE13_0            GPIO_MODER_MODER13_0
+#define GPIO_MODER_MODE13_1            GPIO_MODER_MODER13_1
+
+#define GPIO_MODER_MODE14_Pos          GPIO_MODER_MODER14_Po
+#define GPIO_MODER_MODE14_Msk          GPIO_MODER_MODER14_Ms
+#define GPIO_MODER_MODE14              GPIO_MODER_MODER14
+#define GPIO_MODER_MODE14_0            GPIO_MODER_MODER14_0
+#define GPIO_MODER_MODE14_1            GPIO_MODER_MODER14_1
+
+#define GPIO_MODER_MODE15_Pos          GPIO_MODER_MODER15_Po
+#define GPIO_MODER_MODE15_Msk          GPIO_MODER_MODER15_Ms
+#define GPIO_MODER_MODE15              GPIO_MODER_MODER15
+#define GPIO_MODER_MODE15_0            GPIO_MODER_MODER15_0
+#define GPIO_MODER_MODE15_1            GPIO_MODER_MODER15_1
 
 /******************  Bits definition for GPIO_OTYPER register  ****************/
 #define GPIO_OTYPER_OT0_Pos            (0U)
@@ -19275,7 +19403,7 @@ typedef struct
 /********************  Bit definition for SR register  ********************/
 #define JPEG_SR_IFTF_Pos                (1U)
 #define JPEG_SR_IFTF_Msk                (0x1UL << JPEG_SR_IFTF_Pos)            /*!< 0x00000002 */
-#define JPEG_SR_IFTF                    JPEG_SR_IFTF_Msk                       /*!<Input FIFO is not full and is bellow its threshold flag */
+#define JPEG_SR_IFTF                    JPEG_SR_IFTF_Msk                       /*!<Input FIFO is not full and is below its threshold flag */
 #define JPEG_SR_IFNFF_Pos               (2U)
 #define JPEG_SR_IFNFF_Msk               (0x1UL << JPEG_SR_IFNFF_Pos)           /*!< 0x00000004 */
 #define JPEG_SR_IFNFF                   JPEG_SR_IFNFF_Msk                      /*!<Input FIFO Not Full Flag, a data can be written */
@@ -19296,10 +19424,10 @@ typedef struct
 #define JPEG_SR_COF                     JPEG_SR_COF_Msk                        /*!<JPEG Codec operation on going flag */
 
 /********************  Bit definition for CFR register  ********************/
-#define JPEG_CFR_CEOCF_Pos              (4U)
+#define JPEG_CFR_CEOCF_Pos              (5U)
 #define JPEG_CFR_CEOCF_Msk              (0x1UL << JPEG_CFR_CEOCF_Pos)          /*!< 0x00000010 */
 #define JPEG_CFR_CEOCF                  JPEG_CFR_CEOCF_Msk                     /*!<Clear End of Conversion Flag */
-#define JPEG_CFR_CHPDF_Pos              (5U)
+#define JPEG_CFR_CHPDF_Pos              (6U)
 #define JPEG_CFR_CHPDF_Msk              (0x1UL << JPEG_CFR_CHPDF_Pos)          /*!< 0x00000020 */
 #define JPEG_CFR_CHPDF                  JPEG_CFR_CHPDF_Msk                     /*!<Clear Header Parsing Done Flag */
 
@@ -23922,6 +24050,13 @@ typedef struct
 /*                           Real-Time Clock (RTC)                            */
 /*                                                                            */
 /******************************************************************************/
+#if $H7_SHARK$ || $H7_VALUE_LINE$ || $H7_DUAL_CORE_1M$ || $H7_TINY_SHARK$
+#define RTC_TAMPER2_SUPPORT           /*!<RTC TAMPER 2 support feature                   */
+#define RTC_TAMPNOERASE_SUPPORT       /*!<RTC BKP REG NO ERASE ON TAMPER support feature */
+#define RTC_TAMPMASKFLAG_SUPPORT      /*!<RTC TAMPER MASK FLAG support feature           */
+#define RTC_TAMPxIE_SUPPORT           /*!<RTC TAMPERx INTERRUPT ENABLE support feature   */
+
+#endif /* H7_SHARK || H7_VALUE_LINE || H7_DUAL_CORE_1M || H7_TINY_SHARK */
 /********************  Bits definition for RTC_TR register  *******************/
 #define RTC_TR_PM_Pos                  (22U)
 #define RTC_TR_PM_Msk                  (0x1UL << RTC_TR_PM_Pos)                /*!< 0x00400000 */
@@ -24456,6 +24591,139 @@ typedef struct
 #define RTC_CALR_CALM_8                (0x100UL << RTC_CALR_CALM_Pos)           /*!< 0x00000100 */
 
 #if !$H7_TINY_SHARK$
+#if $H7_LITTLE_SHARK$ || $H7_LITTLE_VALUE_LINE$
+/********************  Bits definition for RTC_TAFCR register  ***************/
+#define RTC_TAFCR_PC15MODE_Pos         (23U)
+#define RTC_TAFCR_PC15MODE_Msk         (0x1UL << RTC_TAFCR_PC15MODE_Pos)      /*!< 0x00800000 */
+#define RTC_TAFCR_PC15MODE             RTC_TAFCR_PC15MODE_Msk
+#define RTC_TAFCR_PC15VALUE_Pos        (22U)
+#define RTC_TAFCR_PC15VALUE_Msk        (0x1UL << RTC_TAFCR_PC15VALUE_Pos)     /*!< 0x00400000 */
+#define RTC_TAFCR_PC15VALUE            RTC_TAFCR_PC15VALUE_Msk
+#define RTC_TAFCR_PC14MODE_Pos         (21U)
+#define RTC_TAFCR_PC14MODE_Msk         (0x1UL << RTC_TAFCR_PC14MODE_Pos)      /*!< 0x00200000 */
+#define RTC_TAFCR_PC14MODE             RTC_TAFCR_PC14MODE_Msk
+#define RTC_TAFCR_PC14VALUE_Pos        (20U)
+#define RTC_TAFCR_PC14VALUE_Msk        (0x1UL << RTC_TAFCR_PC14VALUE_Pos)     /*!< 0x00100000 */
+#define RTC_TAFCR_PC14VALUE            RTC_TAFCR_PC14VALUE_Msk
+#define RTC_TAFCR_PC13MODE_Pos         (19U)
+#define RTC_TAFCR_PC13MODE_Msk         (0x1UL << RTC_TAFCR_PC13MODE_Pos)      /*!< 0x00080000 */
+#define RTC_TAFCR_PC13MODE             RTC_TAFCR_PC13MODE_Msk
+#define RTC_TAFCR_PC13VALUE_Pos        (18U)
+#define RTC_TAFCR_PC13VALUE_Msk        (0x1UL << RTC_TAFCR_PC13VALUE_Pos)     /*!< 0x00040000 */
+#define RTC_TAFCR_PC13VALUE            RTC_TAFCR_PC13VALUE_Msk
+#define RTC_TAFCR_TAMPPUDIS_Pos        (15U)
+#define RTC_TAFCR_TAMPPUDIS_Msk        (0x1UL << RTC_TAFCR_TAMPPUDIS_Pos)     /*!< 0x00008000 */
+#define RTC_TAFCR_TAMPPUDIS            RTC_TAFCR_TAMPPUDIS_Msk
+#define RTC_TAFCR_TAMPPRCH_Pos         (13U)
+#define RTC_TAFCR_TAMPPRCH_Msk         (0x3UL << RTC_TAFCR_TAMPPRCH_Pos)      /*!< 0x00006000 */
+#define RTC_TAFCR_TAMPPRCH             RTC_TAFCR_TAMPPRCH_Msk
+#define RTC_TAFCR_TAMPPRCH_0           (0x1UL << RTC_TAFCR_TAMPPRCH_Pos)       /*!< 0x00002000 */
+#define RTC_TAFCR_TAMPPRCH_1           (0x2UL << RTC_TAFCR_TAMPPRCH_Pos)       /*!< 0x00004000 */
+#define RTC_TAFCR_TAMPFLT_Pos          (11U)
+#define RTC_TAFCR_TAMPFLT_Msk          (0x3UL << RTC_TAFCR_TAMPFLT_Pos)       /*!< 0x00001800 */
+#define RTC_TAFCR_TAMPFLT              RTC_TAFCR_TAMPFLT_Msk
+#define RTC_TAFCR_TAMPFLT_0            (0x1UL << RTC_TAFCR_TAMPFLT_Pos)        /*!< 0x00000800 */
+#define RTC_TAFCR_TAMPFLT_1            (0x2UL << RTC_TAFCR_TAMPFLT_Pos)        /*!< 0x00001000 */
+#define RTC_TAFCR_TAMPFREQ_Pos         (8U)
+#define RTC_TAFCR_TAMPFREQ_Msk         (0x7UL << RTC_TAFCR_TAMPFREQ_Pos)      /*!< 0x00000700 */
+#define RTC_TAFCR_TAMPFREQ             RTC_TAFCR_TAMPFREQ_Msk
+#define RTC_TAFCR_TAMPFREQ_0           (0x1UL << RTC_TAFCR_TAMPFREQ_Pos)       /*!< 0x00000100 */
+#define RTC_TAFCR_TAMPFREQ_1           (0x2UL << RTC_TAFCR_TAMPFREQ_Pos)       /*!< 0x00000200 */
+#define RTC_TAFCR_TAMPFREQ_2           (0x4UL << RTC_TAFCR_TAMPFREQ_Pos)       /*!< 0x00000400 */
+#define RTC_TAFCR_TAMPTS_Pos           (7U)
+#define RTC_TAFCR_TAMPTS_Msk           (0x1UL << RTC_TAFCR_TAMPTS_Pos)        /*!< 0x00000080 */
+#define RTC_TAFCR_TAMPTS               RTC_TAFCR_TAMPTS_Msk
+#define RTC_TAFCR_TAMP3TRG_Pos         (6U)
+#define RTC_TAFCR_TAMP3TRG_Msk         (0x1UL << RTC_TAFCR_TAMP3TRG_Pos)      /*!< 0x00000040 */
+#define RTC_TAFCR_TAMP3TRG             RTC_TAFCR_TAMP3TRG_Msk
+#define RTC_TAFCR_TAMP3E_Pos           (5U)
+#define RTC_TAFCR_TAMP3E_Msk           (0x1UL << RTC_TAFCR_TAMP3E_Pos)        /*!< 0x00000020 */
+#define RTC_TAFCR_TAMP3E               RTC_TAFCR_TAMP3E_Msk
+#define RTC_TAFCR_TAMPIE_Pos           (2U)
+#define RTC_TAFCR_TAMPIE_Msk           (0x1UL << RTC_TAFCR_TAMPIE_Pos)        /*!< 0x00000004 */
+#define RTC_TAFCR_TAMPIE               RTC_TAFCR_TAMPIE_Msk
+#define RTC_TAFCR_TAMP1TRG_Pos         (1U)
+#define RTC_TAFCR_TAMP1TRG_Msk         (0x1UL << RTC_TAFCR_TAMP1TRG_Pos)      /*!< 0x00000002 */
+#define RTC_TAFCR_TAMP1TRG             RTC_TAFCR_TAMP1TRG_Msk
+#define RTC_TAFCR_TAMP1E_Pos           (0U)
+#define RTC_TAFCR_TAMP1E_Msk           (0x1UL << RTC_TAFCR_TAMP1E_Pos)        /*!< 0x00000001 */
+#define RTC_TAFCR_TAMP1E               RTC_TAFCR_TAMP1E_Msk
+
+/* Aliases for RTC TAFCR */
+#define TAMPCR                         TAFCR
+#define RTC_TAMPCR_TAMPPUDIS_Pos       RTC_TAFCR_TAMPPUDIS_Pos
+#define RTC_TAMPCR_TAMPPUDIS_Msk       RTC_TAFCR_TAMPPUDIS_Msk
+#define RTC_TAMPCR_TAMPPUDIS           RTC_TAFCR_TAMPPUDIS
+#define RTC_TAMPCR_TAMPPRCH_Pos        RTC_TAFCR_TAMPPRCH_Pos
+#define RTC_TAMPCR_TAMPPRCH_Msk        RTC_TAFCR_TAMPPRCH_Msk
+#define RTC_TAMPCR_TAMPPRCH            RTC_TAFCR_TAMPPRCH
+#define RTC_TAMPCR_TAMPPRCH_0          RTC_TAFCR_TAMPPRCH_0
+#define RTC_TAMPCR_TAMPPRCH_1          RTC_TAFCR_TAMPPRCH_1
+#define RTC_TAMPCR_TAMPFLT_Pos         RTC_TAFCR_TAMPFLT_Pos
+#define RTC_TAMPCR_TAMPFLT_Msk         RTC_TAFCR_TAMPFLT_Msk
+#define RTC_TAMPCR_TAMPFLT             RTC_TAFCR_TAMPFLT
+#define RTC_TAMPCR_TAMPFLT_0           RTC_TAFCR_TAMPFLT_0
+#define RTC_TAMPCR_TAMPFLT_1           RTC_TAFCR_TAMPFLT_1
+#define RTC_TAMPCR_TAMPFREQ_Pos        RTC_TAFCR_TAMPFREQ_Pos
+#define RTC_TAMPCR_TAMPFREQ_Msk        RTC_TAFCR_TAMPFREQ_Msk
+#define RTC_TAMPCR_TAMPFREQ            RTC_TAFCR_TAMPFREQ
+#define RTC_TAMPCR_TAMPFREQ_0          RTC_TAFCR_TAMPFREQ_0
+#define RTC_TAMPCR_TAMPFREQ_1          RTC_TAFCR_TAMPFREQ_1
+#define RTC_TAMPCR_TAMPFREQ_2          RTC_TAFCR_TAMPFREQ_2
+#define RTC_TAMPCR_TAMPTS_Pos          RTC_TAFCR_TAMPTS_Pos
+#define RTC_TAMPCR_TAMPTS_Msk          RTC_TAFCR_TAMPTS_Msk
+#define RTC_TAMPCR_TAMPTS              RTC_TAFCR_TAMPTS
+#define RTC_TAMPCR_TAMP3TRG_Pos        RTC_TAFCR_TAMP3TRG_Pos
+#define RTC_TAMPCR_TAMP3TRG_Msk        RTC_TAFCR_TAMP3TRG_Msk
+#define RTC_TAMPCR_TAMP3TRG            RTC_TAFCR_TAMP3TRG
+#define RTC_TAMPCR_TAMP3E_Pos          RTC_TAFCR_TAMP3E_Pos
+#define RTC_TAMPCR_TAMP3E_Msk          RTC_TAFCR_TAMP3E_Msk
+#define RTC_TAMPCR_TAMP3E              RTC_TAFCR_TAMP3E
+#define RTC_TAMPCR_TAMPIE_Pos          RTC_TAFCR_TAMPIE_Pos
+#define RTC_TAMPCR_TAMPIE_Msk          RTC_TAFCR_TAMPIE_Msk
+#define RTC_TAMPCR_TAMPIE              RTC_TAFCR_TAMPIE
+#define RTC_TAMPCR_TAMP1TRG_Pos        RTC_TAFCR_TAMP1TRG_Pos
+#define RTC_TAMPCR_TAMP1TRG_Msk        RTC_TAFCR_TAMP1TRG_Msk
+#define RTC_TAMPCR_TAMP1TRG            RTC_TAFCR_TAMP1TRG
+#define RTC_TAMPCR_TAMP1E_Pos          RTC_TAFCR_TAMP1E_Pos
+#define RTC_TAMPCR_TAMP1E_Msk          RTC_TAFCR_TAMP1E_Msk
+#define RTC_TAMPCR_TAMP1E              RTC_TAFCR_TAMP1E
+
+/* Legacy defines for backward compatibility */
+#define RTC_TAMPCR_TAMP3MF_Pos         (24U)
+#define RTC_TAMPCR_TAMP3MF_Msk         (0x1UL << RTC_TAMPCR_TAMP3MF_Pos)       /*!< 0x01000000 */
+#define RTC_TAMPCR_TAMP3MF             RTC_TAMPCR_TAMP3MF_Msk
+#define RTC_TAMPCR_TAMP3NOERASE_Pos    (23U)
+#define RTC_TAMPCR_TAMP3NOERASE_Msk    (0x1UL << RTC_TAMPCR_TAMP3NOERASE_Pos)  /*!< 0x00800000 */
+#define RTC_TAMPCR_TAMP3NOERASE        RTC_TAMPCR_TAMP3NOERASE_Msk
+#define RTC_TAMPCR_TAMP3IE_Pos         (22U)
+#define RTC_TAMPCR_TAMP3IE_Msk         (0x1UL << RTC_TAMPCR_TAMP3IE_Pos)       /*!< 0x00400000 */
+#define RTC_TAMPCR_TAMP3IE             RTC_TAMPCR_TAMP3IE_Msk
+#define RTC_TAMPCR_TAMP2MF_Pos         (21U)
+#define RTC_TAMPCR_TAMP2MF_Msk         (0x1UL << RTC_TAMPCR_TAMP2MF_Pos)       /*!< 0x00200000 */
+#define RTC_TAMPCR_TAMP2MF             RTC_TAMPCR_TAMP2MF_Msk
+#define RTC_TAMPCR_TAMP2NOERASE_Pos    (20U)
+#define RTC_TAMPCR_TAMP2NOERASE_Msk    (0x1UL << RTC_TAMPCR_TAMP2NOERASE_Pos)  /*!< 0x00100000 */
+#define RTC_TAMPCR_TAMP2NOERASE        RTC_TAMPCR_TAMP2NOERASE_Msk
+#define RTC_TAMPCR_TAMP2IE_Pos         (19U)
+#define RTC_TAMPCR_TAMP2IE_Msk         (0x1UL << RTC_TAMPCR_TAMP2IE_Pos)       /*!< 0x00080000 */
+#define RTC_TAMPCR_TAMP2IE             RTC_TAMPCR_TAMP2IE_Msk
+#define RTC_TAMPCR_TAMP1MF_Pos         (18U)
+#define RTC_TAMPCR_TAMP1MF_Msk         (0x1UL << RTC_TAMPCR_TAMP1MF_Pos)       /*!< 0x00040000 */
+#define RTC_TAMPCR_TAMP1MF             RTC_TAMPCR_TAMP1MF_Msk
+#define RTC_TAMPCR_TAMP1NOERASE_Pos    (17U)
+#define RTC_TAMPCR_TAMP1NOERASE_Msk    (0x1UL << RTC_TAMPCR_TAMP1NOERASE_Pos)  /*!< 0x00020000 */
+#define RTC_TAMPCR_TAMP1NOERASE        RTC_TAMPCR_TAMP1NOERASE_Msk
+#define RTC_TAMPCR_TAMP1IE_Pos         (16U)
+#define RTC_TAMPCR_TAMP1IE_Msk         (0x1UL << RTC_TAMPCR_TAMP1IE_Pos)       /*!< 0x00010000 */
+#define RTC_TAMPCR_TAMP1IE             RTC_TAMPCR_TAMP1IE_Msk
+#define RTC_TAMPCR_TAMP2TRG_Pos        (4U)
+#define RTC_TAMPCR_TAMP2TRG_Msk        (0x1UL << RTC_TAMPCR_TAMP2TRG_Pos)      /*!< 0x00000010 */
+#define RTC_TAMPCR_TAMP2TRG            RTC_TAMPCR_TAMP2TRG_Msk
+#define RTC_TAMPCR_TAMP2E_Pos          (3U)
+#define RTC_TAMPCR_TAMP2E_Msk          (0x1UL << RTC_TAMPCR_TAMP2E_Pos)        /*!< 0x00000008 */
+#define RTC_TAMPCR_TAMP2E              RTC_TAMPCR_TAMP2E_Msk
+#else /* H7_SHARK || H7_VALUE_LINE || H7_DUAL_CORE_1M */
 /********************  Bits definition for RTC_TAMPCR register  ***************/
 #define RTC_TAMPCR_TAMP3MF_Pos         (24U)
 #define RTC_TAMPCR_TAMP3MF_Msk         (0x1UL << RTC_TAMPCR_TAMP3MF_Pos)       /*!< 0x01000000 */
@@ -24527,6 +24795,7 @@ typedef struct
 #define RTC_TAMPCR_TAMP1E_Pos          (0U)
 #define RTC_TAMPCR_TAMP1E_Msk          (0x1UL << RTC_TAMPCR_TAMP1E_Pos)        /*!< 0x00000001 */
 #define RTC_TAMPCR_TAMP1E              RTC_TAMPCR_TAMP1E_Msk
+#endif /* H7_LITTLE_SHARK || H7_LITTLE_VALUE_LINE */
 #endif /* !H7_TINY_SHARK */
 
 /********************  Bits definition for RTC_ALRMASSR register  *************/
@@ -26309,9 +26578,9 @@ typedef struct
 /*                   Serial Peripheral Interface (SPI/I2S)                    */
 /*                                                                            */
 /******************************************************************************/
-#if $H7_TINY_SHARK$
+#if $H7_TINY_SHARK$ || $H7_LITTLE_SHARK$
 #define SPI_SPI6I2S_SUPPORT       /*!<SPI6 I2S support feature */
-#endif /* H7_TINY_SHARK  */
+#endif /* H7_TINY_SHARK || H7_LITTLE_SHARK */
 /*******************  Bit definition for SPI_CR1 register  ********************/
 #define SPI_CR1_SPE_Pos             (0U)
 #define SPI_CR1_SPE_Msk             (0x1UL << SPI_CR1_SPE_Pos)                 /*!< 0x00000001 */
@@ -30324,7 +30593,7 @@ typedef struct
 #define DBGMCU_APB1HFZ1_DBG_TIM23_Pos     (24U)
 #define DBGMCU_APB1HFZ1_DBG_TIM23_Msk     (0x1UL << DBGMCU_APB1HFZ1_DBG_TIM23_Pos) /*!< 0x01000000 */
 #define DBGMCU_APB1HFZ1_DBG_TIM23          DBGMCU_APB1HFZ1_DBG_TIM23_Msk
-#define DBGMCU_APB1HFZ1_DBG_TIM24_Pos     (24U)
+#define DBGMCU_APB1HFZ1_DBG_TIM24_Pos     (25U)
 #define DBGMCU_APB1HFZ1_DBG_TIM24_Msk     (0x1UL << DBGMCU_APB1HFZ1_DBG_TIM24_Pos) /*!< 0x02000000 */
 #define DBGMCU_APB1HFZ1_DBG_TIM24          DBGMCU_APB1HFZ1_DBG_TIM24_Msk
 #else
@@ -30560,7 +30829,7 @@ typedef struct
 
 #define HRTIM_MCR_DACSYNC_Pos         (25U)
 #define HRTIM_MCR_DACSYNC_Msk         (0x3UL << HRTIM_MCR_DACSYNC_Pos)         /*!< 0x06000000 */
-#define HRTIM_MCR_DACSYNC             HRTIM_MCR_DACSYNC_Msk                    /*!< DAC sychronization mask */
+#define HRTIM_MCR_DACSYNC             HRTIM_MCR_DACSYNC_Msk                    /*!< DAC synchronization mask */
 #define HRTIM_MCR_DACSYNC_0           (0x1UL << HRTIM_MCR_DACSYNC_Pos)          /*!< 0x02000000 */
 #define HRTIM_MCR_DACSYNC_1           (0x2UL << HRTIM_MCR_DACSYNC_Pos)          /*!< 0x04000000 */
 
@@ -30769,7 +31038,7 @@ typedef struct
 
 #define HRTIM_TIMCR_DACSYNC_Pos       (25U)
 #define HRTIM_TIMCR_DACSYNC_Msk       (0x3UL << HRTIM_TIMCR_DACSYNC_Pos)       /*!< 0x06000000 */
-#define HRTIM_TIMCR_DACSYNC           HRTIM_TIMCR_DACSYNC_Msk                  /*!< DAC sychronization mask */
+#define HRTIM_TIMCR_DACSYNC           HRTIM_TIMCR_DACSYNC_Msk                  /*!< DAC synchronization mask */
 #define HRTIM_TIMCR_DACSYNC_0         (0x1UL << HRTIM_TIMCR_DACSYNC_Pos)        /*!< 0x02000000 */
 #define HRTIM_TIMCR_DACSYNC_1         (0x2UL << HRTIM_TIMCR_DACSYNC_Pos)        /*!< 0x04000000 */
 #define HRTIM_TIMCR_PREEN_Pos         (27U)
@@ -33545,6 +33814,9 @@ typedef struct
 #define USB_OTG_GOTGCTL_OTGVER_Pos               (20U)
 #define USB_OTG_GOTGCTL_OTGVER_Msk               (0x1UL << USB_OTG_GOTGCTL_OTGVER_Pos) /*!< 0x00100000 */
 #define USB_OTG_GOTGCTL_OTGVER                   USB_OTG_GOTGCTL_OTGVER_Msk    /*!< OTG version  */
+#define USB_OTG_GOTGCTL_CURMOD_Pos               (21U)
+#define USB_OTG_GOTGCTL_CURMOD_Msk               (0x1UL << USB_OTG_GOTGCTL_CURMOD_Pos) /*!< 0x00200000 */
+#define USB_OTG_GOTGCTL_CURMOD                   USB_OTG_GOTGCTL_CURMOD_Msk    /*!< Current mode of operation */
 
 /********************  Bit definition forUSB_OTG_HCFG register  ********************/
 
@@ -33570,7 +33842,7 @@ typedef struct
 
 #define USB_OTG_DCFG_DAD_Pos                     (4U)
 #define USB_OTG_DCFG_DAD_Msk                     (0x7FUL << USB_OTG_DCFG_DAD_Pos) /*!< 0x000007F0 */
-#define USB_OTG_DCFG_DAD                         USB_OTG_DCFG_DAD_Msk          /*!< Device address */
+#define USB_OTG_DCFG_DAD                         USB_OTG_DCFG_DAD_Msk             /*!< Device address */
 #define USB_OTG_DCFG_DAD_0                       (0x01UL << USB_OTG_DCFG_DAD_Pos) /*!< 0x00000010 */
 #define USB_OTG_DCFG_DAD_1                       (0x02UL << USB_OTG_DCFG_DAD_Pos) /*!< 0x00000020 */
 #define USB_OTG_DCFG_DAD_2                       (0x04UL << USB_OTG_DCFG_DAD_Pos) /*!< 0x00000040 */
@@ -33581,13 +33853,21 @@ typedef struct
 
 #define USB_OTG_DCFG_PFIVL_Pos                   (11U)
 #define USB_OTG_DCFG_PFIVL_Msk                   (0x3UL << USB_OTG_DCFG_PFIVL_Pos) /*!< 0x00001800 */
-#define USB_OTG_DCFG_PFIVL                       USB_OTG_DCFG_PFIVL_Msk        /*!< Periodic (micro)frame interval */
+#define USB_OTG_DCFG_PFIVL                       USB_OTG_DCFG_PFIVL_Msk            /*!< Periodic (micro)frame interval */
 #define USB_OTG_DCFG_PFIVL_0                     (0x1UL << USB_OTG_DCFG_PFIVL_Pos) /*!< 0x00000800 */
 #define USB_OTG_DCFG_PFIVL_1                     (0x2UL << USB_OTG_DCFG_PFIVL_Pos) /*!< 0x00001000 */
 
+#define USB_OTG_DCFG_XCVRDLY_Pos                 (14U)
+#define USB_OTG_DCFG_XCVRDLY_Msk                 (0x1UL << USB_OTG_DCFG_XCVRDLY_Pos) /*!< 0x00004000 */
+#define USB_OTG_DCFG_XCVRDLY                     USB_OTG_DCFG_XCVRDLY_Msk            /*!< Transceiver delay */
+
+#define USB_OTG_DCFG_ERRATIM_Pos                 (15U)
+#define USB_OTG_DCFG_ERRATIM_Msk                 (0x1UL << USB_OTG_DCFG_ERRATIM_Pos) /*!< 0x00008000 */
+#define USB_OTG_DCFG_ERRATIM                     USB_OTG_DCFG_ERRATIM_Msk            /*!< Erratic error interrupt mask */
+
 #define USB_OTG_DCFG_PERSCHIVL_Pos               (24U)
 #define USB_OTG_DCFG_PERSCHIVL_Msk               (0x3UL << USB_OTG_DCFG_PERSCHIVL_Pos) /*!< 0x03000000 */
-#define USB_OTG_DCFG_PERSCHIVL                   USB_OTG_DCFG_PERSCHIVL_Msk    /*!< Periodic scheduling interval */
+#define USB_OTG_DCFG_PERSCHIVL                   USB_OTG_DCFG_PERSCHIVL_Msk            /*!< Periodic scheduling interval */
 #define USB_OTG_DCFG_PERSCHIVL_0                 (0x1UL << USB_OTG_DCFG_PERSCHIVL_Pos) /*!< 0x01000000 */
 #define USB_OTG_DCFG_PERSCHIVL_1                 (0x2UL << USB_OTG_DCFG_PERSCHIVL_Pos) /*!< 0x02000000 */
 
@@ -33657,6 +33937,12 @@ typedef struct
 #define USB_OTG_DCTL_POPRGDNE_Pos                (11U)
 #define USB_OTG_DCTL_POPRGDNE_Msk                (0x1UL << USB_OTG_DCTL_POPRGDNE_Pos) /*!< 0x00000800 */
 #define USB_OTG_DCTL_POPRGDNE                    USB_OTG_DCTL_POPRGDNE_Msk     /*!< Power-on programming done */
+#define USB_OTG_DCTL_ENCONTONBNA_Pos             (17U)
+#define USB_OTG_DCTL_ENCONTONBNA_Msk             (0x1UL << USB_OTG_DCTL_ENCONTONBNA_Pos) /*!< 0x00020000 */
+#define USB_OTG_DCTL_ENCONTONBNA                 USB_OTG_DCTL_ENCONTONBNA_Msk  /*!< Enable continue on BNA */
+#define USB_OTG_DCTL_DSBESLRJCT_Pos              (18U)
+#define USB_OTG_DCTL_DSBESLRJCT_Msk              (0x1UL << USB_OTG_DCTL_DSBESLRJCT_Pos) /*!< 0x00040000 */
+#define USB_OTG_DCTL_DSBESLRJCT                  USB_OTG_DCTL_DSBESLRJCT_Msk  /*!< Deep sleep BESL reject */
 
 /********************  Bit definition forUSB_OTG_HFIR register  ********************/
 #define USB_OTG_HFIR_FRIVL_Pos                   (0U)
@@ -33774,7 +34060,7 @@ typedef struct
 #define USB_OTG_GUSBCFG_FDMOD                    USB_OTG_GUSBCFG_FDMOD_Msk     /*!< Forced peripheral mode          */
 #define USB_OTG_GUSBCFG_CTXPKT_Pos               (31U)
 #define USB_OTG_GUSBCFG_CTXPKT_Msk               (0x1UL << USB_OTG_GUSBCFG_CTXPKT_Pos) /*!< 0x80000000 */
-#define USB_OTG_GUSBCFG_CTXPKT                   USB_OTG_GUSBCFG_CTXPKT_Msk    /*!< Corrupt Tx packet               */
+#define USB_OTG_GUSBCFG_CTXPKT                   USB_OTG_GUSBCFG_CTXPKT_Msk    /*!< Corrupt Tx packet for debug propose only; must be kept at reset value */
 
 /********************  Bit definition forUSB_OTG_GRSTCTL register  ********************/
 #define USB_OTG_GRSTCTL_CSRST_Pos                (0U)

@@ -99,8 +99,8 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     ADC1_2_IRQHandler                 ; ADC1 and ADC2
                 DCD     USB_HP_IRQHandler                 ; USB Device High Priority
                 DCD     USB_LP_IRQHandler                 ; USB Device Low Priority
-                DCD     0                                 ; Reserved
-                DCD     0                                 ; Reserved
+                DCD     FDCAN1_IT0_IRQHandler             ; FDCAN1 interrupt line 0
+                DCD     FDCAN1_IT1_IRQHandler             ; FDCAN1 interrupt line 1
                 DCD     EXTI9_5_IRQHandler                ; External Line[9:5]s
                 DCD     TIM1_BRK_TIM15_IRQHandler         ; TIM1 Break, Transition error, Index error and TIM15
                 DCD     TIM1_UP_TIM16_IRQHandler          ; TIM1 Update and TIM16

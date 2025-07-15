@@ -6,7 +6,7 @@
 ******************************************************************************
 * @attention
 *
-* Copyright (c) 2023 STMicroelectronics.
+* Copyright (c) 2025 STMicroelectronics.
 * All rights reserved.
 *
 * This software is licensed under terms that can be found in the LICENSE file
@@ -34,13 +34,6 @@
 #define PGEEZ1_M95P32_INSTANCES_NBR       2U 
 #define PGEEZ1_M95P32_0                 0U   
 #define PGEEZ1_M95P32_1                 1U
-   
-#define EEPROMEX_SLAVE_CS_PIN          GPIO_PIN_0
-#define EEPROMEX_SLAVE_CS_PIN_PORT     GPIOC
-
-#define EEPROMEX_SPI_SLAVE_FOUR_GPIO_CLK_ENABLE()  __HAL_RCC_GPIOC_CLK_ENABLE()
-
-
 
 #ifdef  USE_SPI
    void EEPROMEX_CTRL_HIGH(void);

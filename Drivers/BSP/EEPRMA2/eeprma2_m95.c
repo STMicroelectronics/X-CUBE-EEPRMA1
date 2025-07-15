@@ -35,10 +35,9 @@ static int32_t M95256_0_Probe(void);
 static int32_t M95040_0_Probe(void);
 
 /* Global variables ----------------------------------------------------------*/
-EEPROMEX_CtrlPin_TypeDef EEPROMEX_CtrlPin[7] = { { M95M04_EEPROM_SPI_CS_PIN, M95M04_EEPROM_SPI_CS_PORT },
+EEPROMEX_CtrlPin_TypeDef EEPROMEX_CtrlPin[6] = { { M95M04_EEPROM_SPI_CS_PIN, M95M04_EEPROM_SPI_CS_PORT },
                                                     { M95256_EEPROM_SPI_CS_PIN, M95256_EEPROM_SPI_CS_PORT },
                                                     { M95040_EEPROM_SPI_CS_PIN, M95040_EEPROM_SPI_CS_PORT },
-                                                    { EEPROMEX_SLAVE_FOUR_PIN, EEPROMEX_SLAVE_FOUR_PIN_PORT },
                                                     { EEPRMA2_M24_WC_PIN, EEPRMA2_M24_WC_PORT},
                                                     { EEPRMA2_M95_HOLD_PIN, EEPRMA2_M95_HOLD_PORT },
                                                     { EEPRMA2_M95_WP_PIN, EEPRMA2_M95_WP_PORT } }; 
@@ -547,9 +546,9 @@ int32_t EEPRMA2_SPI_SendBuffer(uint8_t * pData,uint32_t TarAddr, uint32_t DevAdd
   */
 int32_t EEPRMA2_SPI_WriteReg(uint8_t pData, uint32_t Devaddr)
 {
+  if ( EEPRMA2_M95_WriteCmd( EEPROMEX_WREN, (uint8_t)Devaddr  ) != BSP_ERROR_NONE )
+    return BSP_ERROR_COMPONENT_FAILURE; 
   EEPROMEX_CTRL_LOW( (uint8_t)Devaddr & EEPROMEX_SPI_SLAVESEL ); 
-  if ( EEPRMA2_M95_IOWrite( EEPROMEX_WREN ) != BSP_ERROR_NONE )
-    return BSP_ERROR_COMPONENT_FAILURE;
   if (EEPRMA2_M95_IOWrite( EEPROMEX_WRSR ) != BSP_ERROR_NONE )
     return BSP_ERROR_COMPONENT_FAILURE;
   if (EEPRMA2_M95_IOWrite( pData ) != BSP_ERROR_NONE )
@@ -760,7 +759,6 @@ void EEPRMA2_GPIO_Init( void )
   M95M04_EEPROM_SPI_CS_RCC();
   M95256_EEPROM_SPI_CS_RCC();
   M95040_EEPROM_SPI_CS_RCC();
-  EEPROMEX_SPI_SLAVE_FOUR_GPIO_CLK_ENABLE();
   
   
     /* EEPROMEX Write protect pin configuration */
@@ -808,13 +806,6 @@ void EEPRMA2_GPIO_Init( void )
   GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init( M95040_EEPROM_SPI_CS_PORT, &GPIO_InitStruct );
   HAL_GPIO_WritePin( M95040_EEPROM_SPI_CS_PORT,M95040_EEPROM_SPI_CS_PIN,GPIO_PIN_SET );
-  /*Slave four : M95XX*/
-  GPIO_InitStruct.Pin       = EEPROMEX_SLAVE_FOUR_PIN;
-  GPIO_InitStruct.Mode      = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull      = GPIO_PULLUP;
-  GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init( EEPROMEX_SLAVE_FOUR_PIN_PORT, &GPIO_InitStruct );
-  HAL_GPIO_WritePin( EEPROMEX_SLAVE_FOUR_PIN_PORT,EEPROMEX_SLAVE_FOUR_PIN,GPIO_PIN_SET );
 
 }
 

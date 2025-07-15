@@ -2,11 +2,11 @@
   ******************************************************************************
   * @file           : app_eepromrw.c
   * @brief          : This file provides code for the configuration
-  *       of the STMicroelectronics.X-CUBE-EEPRMA1.5.1.0 instances.
+  *       of the STMicroelectronics.X-CUBE-EEPRMA1.5.2.0 instances.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -1597,7 +1597,7 @@ void M95P32_PageProg_with_SafetyRegisterCheck()
     printf("Page Program NOT DONE.\r\n");
   }
 
-  /* Check page prgrammed successfully by reading data*/
+  /* Check page programmed successfully by reading data*/
   memset(&ReceiveBuff, 0x00, SIZE1024);
   PGEEZ1_M95P32_ReadPage(PGEEZ1_M95P32_0, ReceiveBuff, 0, M95P32_PAGE_SIZE);
 

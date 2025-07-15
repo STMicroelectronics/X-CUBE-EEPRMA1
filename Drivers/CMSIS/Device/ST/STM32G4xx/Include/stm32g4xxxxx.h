@@ -92,12 +92,14 @@ typedef enum
   DMA1_Channel4_IRQn          = 14,     /*!< DMA1 Channel 4 global Interrupt                                                    */
   DMA1_Channel5_IRQn          = 15,     /*!< DMA1 Channel 5 global Interrupt                                                    */
   DMA1_Channel6_IRQn          = 16,     /*!< DMA1 Channel 6 global Interrupt                                                    */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   DMA1_Channel7_IRQn          = 17,     /*!< DMA1 Channel 7 global Interrupt                                                    */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
   ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                                                     */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
   USB_HP_IRQn                 = 19,     /*!< USB HP Interrupt                                                                   */
   USB_LP_IRQn                 = 20,     /*!< USB LP  Interrupt                                                                  */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
   FDCAN1_IT0_IRQn             = 21,     /*!< FDCAN1 IT0 Interrupt                                                               */
   FDCAN1_IT1_IRQn             = 22,     /*!< FDCAN1 IT1 Interrupt                                                               */
   EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                                                      */
@@ -116,35 +118,41 @@ typedef enum
   SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                                              */
   USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                                                            */
   USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                                                            */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
   USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                                                            */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
   EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                                                    */
   RTC_Alarm_IRQn              = 41,     /*!< RTC Alarm (A and B) through EXTI Line Interrupt                                    */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
   USBWakeUp_IRQn              = 42,     /*!< USB Wakeup through EXTI line Interrupt                                             */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
   TIM8_BRK_IRQn               = 43,     /*!< TIM8 Break, Transition error and Index error Interrupt                             */
   TIM8_UP_IRQn                = 44,     /*!< TIM8 Update Interrupt                                                              */
   TIM8_TRG_COM_IRQn           = 45,     /*!< TIM8 Trigger, Commutation, Direction change and Index Interrupt                    */
   TIM8_CC_IRQn                = 46,     /*!< TIM8 Capture Compare Interrupt                                                     */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)|| defined (STM32G411xC)
   ADC3_IRQn                   = 47,     /*!< ADC3 global  Interrupt                                                             */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
   FMC_IRQn                    = 48,     /*!< FMC global Interrupt                                                               */
-#endif
+#endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
   LPTIM1_IRQn                 = 49,     /*!< LP TIM1 Interrupt                                                                  */
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
   TIM5_IRQn                   = 50,     /*!< TIM5 global Interrupt                                                              */
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
   SPI3_IRQn                   = 51,     /*!< SPI3 global Interrupt                                                              */
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   UART4_IRQn                  = 52,     /*!< UART4 global Interrupt                                                             */
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   UART5_IRQn                  = 53,     /*!< UART5 global Interrupt                                                             */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
   TIM6_DAC_IRQn               = 54,     /*!< TIM6 global and DAC1&3 underrun error  interrupts                                  */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
   TIM7_DAC_IRQn               = 55,     /*!< TIM7 global and DAC2&4 underrun error  interrupts                                  */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   TIM7_IRQn                   = 55,     /*!< TIM7 global interrupts                                                             */
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
   DMA2_Channel1_IRQn          = 56,     /*!< DMA2 Channel 1 global Interrupt                                                    */
@@ -156,17 +164,19 @@ typedef enum
   ADC4_IRQn                   = 61,     /*!< ADC4 global Interrupt                                                              */
   ADC5_IRQn                   = 62,     /*!< ADC5 global Interrupt                                                              */
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
   UCPD1_IRQn                  = 63,     /*!< UCPD global Interrupt                                                              */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
   COMP1_2_3_IRQn              = 64,     /*!< COMP1, COMP2 and COMP3 Interrupts                                                  */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
   COMP4_5_6_IRQn              = 65,     /*!< COMP4, COMP5 and COMP6                                                             */
-#elif defined (STM32G431xx) || defined (STM32G441xx)|| defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx)|| defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   COMP4_IRQn                  = 65,     /*!< COMP4                                                                              */
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
   COMP7_IRQn                  = 66,     /*!< COMP7 Interrupt                                                                    */
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
   HRTIM1_Master_IRQn          = 67,     /*!< HRTIM Master Timer global Interrupt                                                */
   HRTIM1_TIMA_IRQn            = 68,     /*!< HRTIM Timer A global Interrupt                                                     */
   HRTIM1_TIMB_IRQn            = 69,     /*!< HRTIM Timer B global Interrupt                                                     */
@@ -175,10 +185,12 @@ typedef enum
   HRTIM1_TIME_IRQn            = 72,     /*!< HRTIM Timer E global Interrupt                                                     */
   HRTIM1_FLT_IRQn             = 73,     /*!< HRTIM Fault global Interrupt                                                       */
   HRTIM1_TIMF_IRQn            = 74,     /*!< HRTIM Timer F global Interrupt                                                     */
-#endif /* (STM32G474xx) || (STM32G484xx) */
+#endif /* (STM32G474xx) || (STM32G414xx) || (STM32G484xx) */
   CRS_IRQn                    = 75,     /*!< CRS global interrupt                                                               */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
   SAI1_IRQn                   = 76,     /*!< Serial Audio Interface global interrupt                                            */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
   TIM20_BRK_IRQn              = 77,     /*!< TIM20 Break, Transition error and Index error Interrupt                            */
   TIM20_UP_IRQn               = 78,     /*!< TIM20 Update interrupt                                                             */
   TIM20_TRG_COM_IRQn          = 79,     /*!< TIM20 Trigger, Commutation, Direction change and Index Interrupt                   */
@@ -190,9 +202,9 @@ typedef enum
   I2C4_ER_IRQn                = 83,     /*!< I2C4 Error interrupt                                                               */
   SPI4_IRQn                   = 84,     /*!< SPI4 Event interrupt                                                               */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
   AES_IRQn                    = 85,     /*!< AES global interrupt                                                               */
-#endif /* (STM32G441xx) || (STM32G483xx) || (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || (STM32G483xx) || (STM32G484xx) || (STM32G4A1xx) || (STM32G414xx)*/
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   FDCAN2_IT0_IRQn             = 86,     /*!< FDCAN2 interrupt line 0 interrupt                                                  */
   FDCAN2_IT1_IRQn             = 87,     /*!< FDCAN2 interrupt line 1 interrupt                                                  */
@@ -203,22 +215,26 @@ typedef enum
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
   RNG_IRQn                    = 90,     /*!< RNG global interrupt                                                               */
   LPUART1_IRQn                = 91,     /*!< LP UART 1 Interrupt                                                                */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
   I2C3_EV_IRQn                = 92,     /*!< I2C3 Event Interrupt                                                               */
   I2C3_ER_IRQn                = 93,     /*!< I2C3 Error interrupt                                                               */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
   DMAMUX_OVR_IRQn             = 94,     /*!< DMAMUX overrun global interrupt                                                    */
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   QUADSPI_IRQn                = 95,     /*!< QUADSPI interrupt                                                                  */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   DMA1_Channel8_IRQn          = 96,     /*!< DMA1 Channel 8 interrupt                                                           */
-#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32G414xx) */
   DMA2_Channel6_IRQn          = 97,     /*!< DMA2 Channel 6 interrupt                                                           */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   DMA2_Channel7_IRQn          = 98,     /*!< DMA2 Channel 7 interrupt                                                           */
   DMA2_Channel8_IRQn          = 99,     /*!< DMA2 Channel 8 interrupt                                                           */
-#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32G414xx) */
   CORDIC_IRQn                 = 100,    /*!< CORDIC global Interrupt                                                            */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
   FMAC_IRQn                   = 101     /*!< FMAC global Interrupt                                                              */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 } IRQn_Type;
 
 /**
@@ -511,7 +527,7 @@ typedef struct
   __IO uint32_t PCROP1ER;         /*!< FLASH bank1 PCROP end address register,   Address offset: 0x28 */
   __IO uint32_t WRP1AR;           /*!< FLASH bank1 WRP area A address register,  Address offset: 0x2C */
   __IO uint32_t WRP1BR;           /*!< FLASH bank1 WRP area B address register,  Address offset: 0x30 */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
        uint32_t RESERVED2[4];     /*!< Reserved2,                                Address offset: 0x34 */
   __IO uint32_t PCROP2SR;         /*!< FLASH bank2 PCROP start address register, Address offset: 0x44 */
   __IO uint32_t PCROP2ER;         /*!< FLASH bank2 PCROP end address register,   Address offset: 0x48 */
@@ -522,11 +538,12 @@ typedef struct
        uint32_t RESERVED2[15];    /*!< Reserved2,                                Address offset: 0x34 */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
   __IO uint32_t SEC1R;            /*!< FLASH Securable memory register bank1,    Address offset: 0x70 */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
   __IO uint32_t SEC2R;            /*!< FLASH Securable memory register bank2,    Address offset: 0x74 */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 } FLASH_TypeDef;
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 /**
   * @brief FMAC
   */
@@ -541,6 +558,7 @@ typedef struct
   __IO uint32_t WDATA;           /*!< FMAC Write Data register,              Address offset: 0x18          */
   __IO uint32_t RDATA;           /*!< FMAC Read Data register,               Address offset: 0x1C          */
 } FMAC_TypeDef;
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 /**
@@ -644,6 +662,7 @@ typedef struct
   __IO uint32_t OR;               /*!< LPTIM Option register,                              Address offset: 0x20 */
 } LPTIM_TypeDef;
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G411xB) || defined (STM32G411xC)
 /**
   * @brief Operational Amplifier (OPAMP)
   */
@@ -654,6 +673,7 @@ typedef struct
   __IO uint32_t RESERVED[5];   /*!< OPAMP offset trimming register for normal mode,    Address offset: 0x04 */
   __IO uint32_t TCMR;          /*!< OPAMP timer controlled mux mode register,          Address offset: 0x18 */
 } OPAMP_TypeDef;
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G411xB) || (STM32G411xC)*/
 
 /**
   * @brief Power Control
@@ -768,9 +788,9 @@ typedef struct
 #define RTC_TAMP_INT_NB        4u
 
 #define RTC_TAMP_NB            3u
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RTC_BACKUP_NB          32u
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define RTC_BACKUP_NB          16u
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
@@ -837,7 +857,7 @@ typedef struct
   __IO uint32_t BKP13R;                  /*!< TAMP backup register 13,                Address offset: 0x134 */
   __IO uint32_t BKP14R;                  /*!< TAMP backup register 14,                Address offset: 0x138 */
   __IO uint32_t BKP15R;                  /*!< TAMP backup register 15,                Address offset: 0x13C */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
   __IO uint32_t BKP16R;                  /*!< TAMP backup register 16,                Address offset: 0x140 */
   __IO uint32_t BKP17R;                  /*!< TAMP backup register 17,                Address offset: 0x144 */
   __IO uint32_t BKP18R;                  /*!< TAMP backup register 18,                Address offset: 0x148 */
@@ -857,14 +877,14 @@ typedef struct
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 } TAMP_TypeDef;
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /**
   * @brief Serial Audio Interface
   */
 
 typedef struct
 {
-  __IO uint32_t GCR;          /*!< SAI global configuration register,        Address offset: 0x00 */
-  uint32_t      RESERVED[16]; /*!< Reserved,                         Address offset: 0x04 to 0x40 */
+  uint32_t      RESERVED[17]; /*!< Reserved,                                 Address offset: 0x00 to 0x40 */
   __IO uint32_t PDMCR;        /*!< SAI PDM control register,                 Address offset: 0x44 */
   __IO uint32_t PDMDLY;       /*!< SAI PDM delay register,                   Address offset: 0x48 */
 } SAI_TypeDef;
@@ -880,6 +900,7 @@ typedef struct
   __IO uint32_t CLRFR;       /*!< SAI block x clear flag register,          Address offset: 0x1C */
   __IO uint32_t DR;          /*!< SAI block x data register,                Address offset: 0x20 */
 } SAI_Block_TypeDef;
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /**
   * @brief Serial Peripheral Interface
@@ -907,10 +928,18 @@ typedef struct
   __IO uint32_t MEMRMP;      /*!< SYSCFG memory remap register,                        Address offset: 0x00      */
   __IO uint32_t CFGR1;       /*!< SYSCFG configuration register 1,                     Address offset: 0x04      */
   __IO uint32_t EXTICR[4];   /*!< SYSCFG external interrupt configuration registers,   Address offset: 0x08-0x14 */
+#if defined (STM32G414xx) || defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
   __IO uint32_t SCSR;        /*!< SYSCFG CCMSRAM control and status register,          Address offset: 0x18      */
+#else
+       uint32_t RESERVED0;   /*!< Reserved,                                            Address offset: 0x18      */
+#endif /* (STM32G414xx) || (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
   __IO uint32_t CFGR2;       /*!< SYSCFG configuration register 2,                     Address offset: 0x1C      */
+#if defined (STM32G414xx) || defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
   __IO uint32_t SWPR;        /*!< SYSCFG CCMSRAM write protection register,            Address offset: 0x20      */
   __IO uint32_t SKR;         /*!< SYSCFG CCMSRAM Key Register,                         Address offset: 0x24      */
+#else
+       uint32_t RESERVED1[2]; /*!< Reserved,                                           Address offset:  0x20 to 0x24 */
+#endif /* (STM32G414xx) || (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 } SYSCFG_TypeDef;
 
 /**
@@ -970,6 +999,7 @@ typedef struct
   __IO uint32_t PRESC;       /*!< USART Prescaler register,                 Address offset: 0x2C  */
 } USART_TypeDef;
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /**
   * @brief Universal Serial Bus Full Speed Device
   */
@@ -1007,6 +1037,7 @@ typedef struct
   __IO uint16_t BCDR;            /*!< Battery Charging detector register,     Address offset: 0x58 */
   __IO uint16_t RESERVEDE;       /*!< Reserved */
 } USB_TypeDef;
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 #if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 /**
@@ -1031,7 +1062,7 @@ typedef struct
   __IO uint32_t SR;          /*!< WWDG Status register,        Address offset: 0x08 */
 } WWDG_TypeDef;
 
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
 /**
   * @brief AES hardware accelerator
   */
@@ -1063,7 +1094,7 @@ typedef struct
   __IO uint32_t SUSP6R;      /*!< AES Suspend register 6,                      Address offset: 0x58 */
   __IO uint32_t SUSP7R;      /*!< AES Suspend register 7,                      Address offset: 0x6C */
 } AES_TypeDef;
-#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) || (STM32G414xx) */
 
 /**
   * @brief RNG
@@ -1086,6 +1117,7 @@ typedef struct
   __IO uint32_t RDATA;        /*!< CORDIC result register,                    Address offset: 0x08 */
 } CORDIC_TypeDef;
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /**
   * @brief UCPD
   */
@@ -1108,8 +1140,9 @@ typedef struct
   __IO uint32_t RX_ORDEXT1;    /*!< UCPD Rx ordered set extension 1 register,  Address offset: 0x34 */
   __IO uint32_t RX_ORDEXT2;    /*!< UCPD Rx ordered set extension 2 register,  Address offset: 0x38 */
 } UCPD_TypeDef;
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 /**
   * @brief High resolution Timer (HRTIM)
   */
@@ -1121,7 +1154,7 @@ typedef struct
 {
   __IO uint32_t MCR;            /*!< HRTIM Master Timer control register,                     Address offset: 0x00 */
   __IO uint32_t MISR;           /*!< HRTIM Master Timer interrupt status register,            Address offset: 0x04 */
-  __IO uint32_t MICR;           /*!< HRTIM Master Timer interupt clear register,              Address offset: 0x08 */
+  __IO uint32_t MICR;           /*!< HRTIM Master Timer interrupt clear register,              Address offset: 0x08 */
   __IO uint32_t MDIER;          /*!< HRTIM Master Timer DMA/interrupt enable register         Address offset: 0x0C */
   __IO uint32_t MCNTR;          /*!< HRTIM Master Timer counter register,                     Address offset: 0x10 */
   __IO uint32_t MPER;           /*!< HRTIM Master Timer period register,                      Address offset: 0x14 */
@@ -1228,14 +1261,19 @@ typedef struct {
 
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_BASE            (0x08000000UL) /*!< FLASH (up to 512 kB) base address */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G414xx) || defined (STM32G411xC) 
+#define FLASH_BASE            (0x08000000UL) /*!< FLASH (up to 256 kB) base address */
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_BASE            (0x08000000UL) /*!< FLASH (up to 128 kB) base address */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define SRAM1_BASE            (0x20000000UL) /*!< SRAM1(up to 80 KB) base address */
 #define SRAM2_BASE            (0x20014000UL) /*!< SRAM2(16 KB) base address */
 #define CCMSRAM_BASE          (0x10000000UL) /*!< CCMSRAM(32 KB) base address */
-#elif defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G414xx)
+#define SRAM1_BASE            (0x20000000UL) /*!< SRAM1(up to 40 KB) base address */
+#define CCMSRAM_BASE          (0x10000000UL) /*!< CCMSRAM(16 KB) base address */
+#elif defined (STM32G491xx) || defined (STM32G4A1xx)|| defined (STM32G411xC)
 #define SRAM1_BASE            (0x20000000UL) /*!< SRAM1(up to 80 KB) base address */
 #define SRAM2_BASE            (0x20014000UL) /*!< SRAM2(16 KB) base address */
 #define CCMSRAM_BASE          (0x10000000UL) /*!< CCMSRAM(16 KB) base address */
@@ -1243,6 +1281,10 @@ typedef struct {
 #define SRAM1_BASE            (0x20000000UL) /*!< SRAM1(up to 16 KB) base address */
 #define SRAM2_BASE            (0x20004000UL) /*!< SRAM2(6 KB) base address */
 #define CCMSRAM_BASE          (0x10000000UL) /*!< CCMSRAM(10 KB) base address */
+#elif defined (STM32G411xB)
+#define SRAM1_BASE            (0x20000000UL) /*!< SRAM1(up to 16 KB) base address */
+#define SRAM2_BASE            (0x20004000UL) /*!< SRAM2(6 KB) base address */
+#define CCMSRAM_BASE          (0x10000000UL) /*!< CCMSRAM(16 KB) base address */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 #define PERIPH_BASE           (0x40000000UL) /*!< Peripheral base address */
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
@@ -1250,7 +1292,7 @@ typedef struct {
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define QSPI_BASE             (0x90000000UL) /*!< QUADSPI memories accessible over AHB base address */
-#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A|| defined (STM32G484xx)
+#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || defined (STM32G484xx) */
 
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define FMC_R_BASE            (0xA0000000UL) /*!< FMC  control registers base address */
@@ -1262,7 +1304,10 @@ typedef struct {
 #define SRAM1_BB_BASE         (0x22000000UL) /*!< SRAM1(80 KB) base address in the bit-band region */
 #define SRAM2_BB_BASE         (0x22280000UL) /*!< SRAM2(16 KB) base address in the bit-band region */
 #define CCMSRAM_BB_BASE       (0x22300000UL) /*!< CCMSRAM(32 KB) base address in the bit-band region */
-#elif defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G414xx)
+#define SRAM1_BB_BASE         (0x22000000UL) /*!< SRAM1(40 KB) base address in the bit-band region */
+#define CCMSRAM_BB_BASE       (0x22300000UL) /*!< CCMSRAM(16 KB) base address in the bit-band region */
+#elif defined (STM32G491xx) || defined (STM32G4A1xx)|| defined (STM32G411xC)
 #define SRAM1_BB_BASE         (0x22000000UL) /*!< SRAM1(80 KB) base address in the bit-band region */
 #define SRAM2_BB_BASE         (0x22280000UL) /*!< SRAM2(16 KB) base address in the bit-band region */
 #define CCMSRAM_BB_BASE       (0x22300000UL) /*!< CCMSRAM(16 KB) base address in the bit-band region */
@@ -1270,6 +1315,10 @@ typedef struct {
 #define SRAM1_BB_BASE         (0x22000000UL) /*!< SRAM1(16 KB) base address in the bit-band region */
 #define SRAM2_BB_BASE         (0x22080000UL) /*!< SRAM2(6 KB) base address in the bit-band region */
 #define CCMSRAM_BB_BASE       (0x220B0000UL) /*!< CCMSRAM(10 KB) base address in the bit-band region */
+#elif defined (STM32G411xB)
+#define SRAM1_BB_BASE         (0x22000000UL) /*!< SRAM1(16 KB) base address in the bit-band region */
+#define SRAM2_BB_BASE         (0x22080000UL) /*!< SRAM2(6 KB) base address in the bit-band region */
+#define CCMSRAM_BB_BASE       (0x22300000UL) /*!< CCMSRAM(16 KB) base address in the bit-band region */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 #define PERIPH_BB_BASE        (0x42000000UL) /*!< Peripheral base address in the bit-band region */
 /* Legacy defines */
@@ -1280,7 +1329,10 @@ typedef struct {
 #define SRAM1_SIZE_MAX        (0x00014000UL) /*!< maximum SRAM1 size (up to 80 KBytes) */
 #define SRAM2_SIZE            (0x00004000UL) /*!< SRAM2 size (16 KBytes) */
 #define CCMSRAM_SIZE          (0x00008000UL) /*!< CCMSRAM size (32 KBytes) */
-#elif defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G414xx)
+#define SRAM1_SIZE_MAX        (0x0000A000UL) /*!< maximum SRAM1 size (up to 40 KBytes) */
+#define CCMSRAM_SIZE          (0x00004000UL) /*!< CCMSRAM size (16 KBytes) */ 
+#elif defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define SRAM1_SIZE_MAX        (0x00014000UL) /*!< maximum SRAM1 size (up to 80 KBytes) */
 #define SRAM2_SIZE            (0x00004000UL) /*!< SRAM2 size (16 KBytes) */
 #define CCMSRAM_SIZE          (0x00004000UL) /*!< CCMSRAM size (16 KBytes) */
@@ -1288,6 +1340,10 @@ typedef struct {
 #define SRAM1_SIZE_MAX        (0x00004000UL) /*!< maximum SRAM1 size (up to 16 KBytes) */
 #define SRAM2_SIZE            (0x00001800UL) /*!< SRAM2 size (6 KBytes) */
 #define CCMSRAM_SIZE          (0x00002800UL) /*!< CCMSRAM size (10 KBytes) */
+#elif defined (STM32G411xB)
+#define SRAM1_SIZE_MAX        (0x00004000UL) /*!< maximum SRAM1 size (up to 16 KBytes) */
+#define SRAM2_SIZE            (0x00001800UL) /*!< SRAM2 size (6 KBytes) */
+#define CCMSRAM_SIZE          (0x00004000UL) /*!< CCMSRAM size (16 KBytes) */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /*!< Peripheral memory map */
@@ -1320,19 +1376,25 @@ typedef struct {
 #define WWDG_BASE             (APB1PERIPH_BASE + 0x2C00UL)
 #define IWDG_BASE             (APB1PERIPH_BASE + 0x3000UL)
 #define SPI2_BASE             (APB1PERIPH_BASE + 0x3800UL)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define SPI3_BASE             (APB1PERIPH_BASE + 0x3C00UL)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define USART2_BASE           (APB1PERIPH_BASE + 0x4400UL)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define USART3_BASE           (APB1PERIPH_BASE + 0x4800UL)
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define UART4_BASE            (APB1PERIPH_BASE + 0x4C00UL)
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define UART5_BASE            (APB1PERIPH_BASE + 0x5000UL)
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define I2C1_BASE             (APB1PERIPH_BASE + 0x5400UL)
 #define I2C2_BASE             (APB1PERIPH_BASE + 0x5800UL)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define USB_BASE              (APB1PERIPH_BASE + 0x5C00UL)  /*!< USB_IP Peripheral Registers base address */
 #define USB_PMAADDR           (APB1PERIPH_BASE + 0x6000UL)  /*!< USB_IP Packet Memory Area base address */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define FDCAN1_BASE           (APB1PERIPH_BASE + 0x6400UL)
 #define FDCAN_CONFIG_BASE     (APB1PERIPH_BASE + 0x6500UL)  /*!< FDCAN configuration registers base address */
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
@@ -1342,13 +1404,17 @@ typedef struct {
 #define FDCAN3_BASE           (APB1PERIPH_BASE + 0x6C00UL)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 #define PWR_BASE              (APB1PERIPH_BASE + 0x7000UL)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define I2C3_BASE             (APB1PERIPH_BASE + 0x7800UL)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define LPTIM1_BASE           (APB1PERIPH_BASE + 0x7C00UL)
 #define LPUART1_BASE          (APB1PERIPH_BASE + 0x8000UL)
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define I2C4_BASE             (APB1PERIPH_BASE + 0x8400UL)
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define UCPD1_BASE            (APB1PERIPH_BASE + 0xA000UL)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define SRAMCAN_BASE          (APB1PERIPH_BASE + 0xA400UL)
 
 /*!< APB2 peripherals */
@@ -1356,26 +1422,46 @@ typedef struct {
 #if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define VREFBUF_BASE          (APB2PERIPH_BASE + 0x0030UL)
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#if defined (STM32G411xB) || defined (STM32G411xC)
+#define COMP1_BASE            (APB2PERIPH_BASE + 0x0200UL)
+#define COMP2_BASE            (APB2PERIPH_BASE + 0x0204UL)
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define COMP1_BASE            (APB2PERIPH_BASE + 0x0200UL)
 #define COMP2_BASE            (APB2PERIPH_BASE + 0x0204UL)
 #define COMP3_BASE            (APB2PERIPH_BASE + 0x0208UL)
 #define COMP4_BASE            (APB2PERIPH_BASE + 0x020CUL)
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#define COMP1_BASE            (APB2PERIPH_BASE + 0x0200UL)
+#define COMP2_BASE            (APB2PERIPH_BASE + 0x0204UL)
+#define COMP3_BASE            (APB2PERIPH_BASE + 0x0208UL)
+#define COMP4_BASE            (APB2PERIPH_BASE + 0x020CUL)
 #define COMP5_BASE            (APB2PERIPH_BASE + 0x0210UL)
 #define COMP6_BASE            (APB2PERIPH_BASE + 0x0214UL)
 #define COMP7_BASE            (APB2PERIPH_BASE + 0x0218UL)
-#endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#endif /* (STM32G411xB) || (STM32G411xC) */
+#if defined (STM32G411xB) || defined (STM32G411xC)
+#define OPAMP_BASE            (APB2PERIPH_BASE + 0x0300UL)
+#define OPAMP1_BASE           (APB2PERIPH_BASE + 0x0300UL)
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32GBK1CB)
 #define OPAMP_BASE            (APB2PERIPH_BASE + 0x0300UL)
 #define OPAMP1_BASE           (APB2PERIPH_BASE + 0x0300UL)
 #define OPAMP2_BASE           (APB2PERIPH_BASE + 0x0304UL)
 #define OPAMP3_BASE           (APB2PERIPH_BASE + 0x0308UL)
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#define OPAMP_BASE            (APB2PERIPH_BASE + 0x0300UL)
+#define OPAMP1_BASE           (APB2PERIPH_BASE + 0x0300UL)
+#define OPAMP2_BASE           (APB2PERIPH_BASE + 0x0304UL)
+#define OPAMP3_BASE           (APB2PERIPH_BASE + 0x0308UL)
 #define OPAMP4_BASE           (APB2PERIPH_BASE + 0x030CUL)
 #define OPAMP5_BASE           (APB2PERIPH_BASE + 0x0310UL)
 #define OPAMP6_BASE           (APB2PERIPH_BASE + 0x0314UL)
 #elif defined (STM32G491xx) || defined (STM32G4A1xx)
+#define OPAMP_BASE            (APB2PERIPH_BASE + 0x0300UL)
+#define OPAMP1_BASE           (APB2PERIPH_BASE + 0x0300UL)
+#define OPAMP2_BASE           (APB2PERIPH_BASE + 0x0304UL)
+#define OPAMP3_BASE           (APB2PERIPH_BASE + 0x0308UL)
 #define OPAMP6_BASE           (APB2PERIPH_BASE + 0x0314UL)
-#endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#endif /* (STM32G411xB) || (STM32G411xC) */
 
 #define EXTI_BASE             (APB2PERIPH_BASE + 0x0400UL)
 #define TIM1_BASE             (APB2PERIPH_BASE + 0x2C00UL)
@@ -1388,13 +1474,15 @@ typedef struct {
 #define TIM15_BASE            (APB2PERIPH_BASE + 0x4000UL)
 #define TIM16_BASE            (APB2PERIPH_BASE + 0x4400UL)
 #define TIM17_BASE            (APB2PERIPH_BASE + 0x4800UL)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define TIM20_BASE            (APB2PERIPH_BASE + 0x5000UL)
 #endif /* (STM32G471xx) ||(STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define SAI1_BASE             (APB2PERIPH_BASE + 0x5400UL)
 #define SAI1_Block_A_BASE     (SAI1_BASE + 0x0004UL)
 #define SAI1_Block_B_BASE     (SAI1_BASE + 0x0024UL)
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 #define HRTIM1_BASE           (APB2PERIPH_BASE + 0x6800UL)
 #define HRTIM1_TIMA_BASE      (HRTIM1_BASE + 0x0080UL)
 #define HRTIM1_TIMB_BASE      (HRTIM1_BASE + 0x0100UL)
@@ -1411,7 +1499,9 @@ typedef struct {
 #define DMAMUX1_BASE          (AHB1PERIPH_BASE + 0x0800UL)
 #define CORDIC_BASE           (AHB1PERIPH_BASE + 0x0C00UL)
 #define RCC_BASE              (AHB1PERIPH_BASE + 0x1000UL)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define FMAC_BASE             (AHB1PERIPH_BASE + 0x1400UL)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define FLASH_R_BASE          (AHB1PERIPH_BASE + 0x2000UL)
 #define CRC_BASE              (AHB1PERIPH_BASE + 0x3000UL)
 
@@ -1421,7 +1511,7 @@ typedef struct {
 #define DMA1_Channel4_BASE    (DMA1_BASE + 0x0044UL)
 #define DMA1_Channel5_BASE    (DMA1_BASE + 0x0058UL)
 #define DMA1_Channel6_BASE    (DMA1_BASE + 0x006CUL)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMA1_Channel7_BASE    (DMA1_BASE + 0x0080UL)
 #define DMA1_Channel8_BASE    (DMA1_BASE + 0x0094UL)
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
@@ -1432,7 +1522,7 @@ typedef struct {
 #define DMA2_Channel4_BASE    (DMA2_BASE + 0x0044UL)
 #define DMA2_Channel5_BASE    (DMA2_BASE + 0x0058UL)
 #define DMA2_Channel6_BASE    (DMA2_BASE + 0x006CUL)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMA2_Channel7_BASE    (DMA2_BASE + 0x0080UL)
 #define DMA2_Channel8_BASE    (DMA2_BASE + 0x0094UL)
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
@@ -1443,7 +1533,7 @@ typedef struct {
 #define DMAMUX1_Channel3_BASE    (DMAMUX1_BASE + 0x000CUL)
 #define DMAMUX1_Channel4_BASE    (DMAMUX1_BASE + 0x0010UL)
 #define DMAMUX1_Channel5_BASE    (DMAMUX1_BASE + 0x0014UL)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMAMUX1_Channel6_BASE    (DMAMUX1_BASE + 0x0018UL)
 #define DMAMUX1_Channel7_BASE    (DMAMUX1_BASE + 0x001CUL)
 #define DMAMUX1_Channel8_BASE    (DMAMUX1_BASE + 0x0020UL)
@@ -1454,7 +1544,7 @@ typedef struct {
 #define DMAMUX1_Channel13_BASE   (DMAMUX1_BASE + 0x0034UL)
 #define DMAMUX1_Channel14_BASE   (DMAMUX1_BASE + 0x0038UL)
 #define DMAMUX1_Channel15_BASE   (DMAMUX1_BASE + 0x003CUL)
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define DMAMUX1_Channel6_BASE    (DMAMUX1_BASE + 0x0020UL)
 #define DMAMUX1_Channel7_BASE    (DMAMUX1_BASE + 0x0024UL)
 #define DMAMUX1_Channel8_BASE    (DMAMUX1_BASE + 0x0028UL)
@@ -1482,7 +1572,7 @@ typedef struct {
 #define ADC1_BASE             (AHB2PERIPH_BASE + 0x08000000UL)
 #define ADC2_BASE             (AHB2PERIPH_BASE + 0x08000100UL)
 #define ADC12_COMMON_BASE     (AHB2PERIPH_BASE + 0x08000300UL)
-#if defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define ADC3_BASE             (AHB2PERIPH_BASE + 0x08000400UL)
 #define ADC345_COMMON_BASE    (AHB2PERIPH_BASE + 0x08000700UL)
 #elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
@@ -1490,20 +1580,20 @@ typedef struct {
 #define ADC4_BASE             (AHB2PERIPH_BASE + 0x08000500UL)
 #define ADC5_BASE             (AHB2PERIPH_BASE + 0x08000600UL)
 #define ADC345_COMMON_BASE    (AHB2PERIPH_BASE + 0x08000700UL)
-#endif /* (STM32G471xx) || (STM32G491xx) || (STM32G4A1xx) */
+#endif /* (STM32G471xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32G411xC)*/
 
 #define DAC_BASE              (AHB2PERIPH_BASE + 0x08000800UL)
 #define DAC1_BASE             (AHB2PERIPH_BASE + 0x08000800UL)
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define DAC2_BASE             (AHB2PERIPH_BASE + 0x08000C00UL)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 #define DAC3_BASE             (AHB2PERIPH_BASE + 0x08001000UL)
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define DAC4_BASE             (AHB2PERIPH_BASE + 0x08001400UL)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
 #define AES_BASE              (AHB2PERIPH_BASE + 0x08060000UL)
-#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) ||  (STM32G414xx) */
 
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 /*!< FMC Banks registers base  address */
@@ -1539,18 +1629,24 @@ typedef struct {
 #define WWDG                ((WWDG_TypeDef *) WWDG_BASE)
 #define IWDG                ((IWDG_TypeDef *) IWDG_BASE)
 #define SPI2                ((SPI_TypeDef *) SPI2_BASE)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define SPI3                ((SPI_TypeDef *) SPI3_BASE)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define USART2              ((USART_TypeDef *) USART2_BASE)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define USART3              ((USART_TypeDef *) USART3_BASE)
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define UART4               ((USART_TypeDef *) UART4_BASE)
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define UART5               ((USART_TypeDef *) UART5_BASE)
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define I2C1                ((I2C_TypeDef *) I2C1_BASE)
 #define I2C2                ((I2C_TypeDef *) I2C2_BASE)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define USB                 ((USB_TypeDef *) USB_BASE)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define FDCAN1              ((FDCAN_GlobalTypeDef *) FDCAN1_BASE)
 #define FDCAN_CONFIG        ((FDCAN_Config_TypeDef *) FDCAN_CONFIG_BASE)
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
@@ -1560,39 +1656,63 @@ typedef struct {
 #define FDCAN3              ((FDCAN_GlobalTypeDef *) FDCAN3_BASE)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 #define PWR                 ((PWR_TypeDef *) PWR_BASE)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define I2C3                ((I2C_TypeDef *) I2C3_BASE)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define LPTIM1              ((LPTIM_TypeDef *) LPTIM1_BASE)
 #define LPUART1             ((USART_TypeDef *) LPUART1_BASE)
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define I2C4                ((I2C_TypeDef *) I2C4_BASE)
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define UCPD1              ((UCPD_TypeDef *) UCPD1_BASE)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 #define SYSCFG              ((SYSCFG_TypeDef *) SYSCFG_BASE)
 #if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define VREFBUF             ((VREFBUF_TypeDef *) VREFBUF_BASE)
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#if defined (STM32G411xB) || defined (STM32G411xC)
+#define COMP1               ((COMP_TypeDef *) COMP1_BASE)
+#define COMP2               ((COMP_TypeDef *) COMP2_BASE)
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define COMP1               ((COMP_TypeDef *) COMP1_BASE)
 #define COMP2               ((COMP_TypeDef *) COMP2_BASE)
 #define COMP3               ((COMP_TypeDef *) COMP3_BASE)
 #define COMP4               ((COMP_TypeDef *) COMP4_BASE)
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#define COMP1               ((COMP_TypeDef *) COMP1_BASE)
+#define COMP2               ((COMP_TypeDef *) COMP2_BASE)
+#define COMP3               ((COMP_TypeDef *) COMP3_BASE)
+#define COMP4               ((COMP_TypeDef *) COMP4_BASE)
 #define COMP5               ((COMP_TypeDef *) COMP5_BASE)
 #define COMP6               ((COMP_TypeDef *) COMP6_BASE)
 #define COMP7               ((COMP_TypeDef *) COMP7_BASE)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
+#if defined (STM32G411xB) || defined (STM32G411xC)
+#define OPAMP               ((OPAMP_TypeDef *) OPAMP_BASE)
+#define OPAMP1              ((OPAMP_TypeDef *) OPAMP1_BASE)
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32GBK1CB)
 #define OPAMP               ((OPAMP_TypeDef *) OPAMP_BASE)
 #define OPAMP1              ((OPAMP_TypeDef *) OPAMP1_BASE)
 #define OPAMP2              ((OPAMP_TypeDef *) OPAMP2_BASE)
 #define OPAMP3              ((OPAMP_TypeDef *) OPAMP3_BASE)
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#define OPAMP               ((OPAMP_TypeDef *) OPAMP_BASE)
+#define OPAMP1              ((OPAMP_TypeDef *) OPAMP1_BASE)
+#define OPAMP2              ((OPAMP_TypeDef *) OPAMP2_BASE)
+#define OPAMP3              ((OPAMP_TypeDef *) OPAMP3_BASE)
 #define OPAMP4              ((OPAMP_TypeDef *) OPAMP4_BASE)
 #define OPAMP5              ((OPAMP_TypeDef *) OPAMP5_BASE)
 #define OPAMP6              ((OPAMP_TypeDef *) OPAMP6_BASE)
 #elif defined (STM32G491xx) || defined (STM32G4A1xx)
+#define OPAMP               ((OPAMP_TypeDef *) OPAMP_BASE)
+#define OPAMP1              ((OPAMP_TypeDef *) OPAMP1_BASE)
+#define OPAMP2              ((OPAMP_TypeDef *) OPAMP2_BASE)
+#define OPAMP3              ((OPAMP_TypeDef *) OPAMP3_BASE)
 #define OPAMP6              ((OPAMP_TypeDef *) OPAMP6_BASE)
-#endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#endif /* (STM32G411xC) || (STM32G411xC) */
 
 #define EXTI                ((EXTI_TypeDef *) EXTI_BASE)
 #define TIM1                ((TIM_TypeDef *) TIM1_BASE)
@@ -1605,13 +1725,15 @@ typedef struct {
 #define TIM15               ((TIM_TypeDef *) TIM15_BASE)
 #define TIM16               ((TIM_TypeDef *) TIM16_BASE)
 #define TIM17               ((TIM_TypeDef *) TIM17_BASE)
-#if defined (STM32G471xx) ||defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) ||defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined(STM32G411xC)
 #define TIM20               ((TIM_TypeDef *) TIM20_BASE)
 #endif /* (STM32G471xx) ||(STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define SAI1                ((SAI_TypeDef *) SAI1_BASE)
 #define SAI1_Block_A        ((SAI_Block_TypeDef *)SAI1_Block_A_BASE)
 #define SAI1_Block_B        ((SAI_Block_TypeDef *)SAI1_Block_B_BASE)
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 #define HRTIM1              ((HRTIM_TypeDef *) HRTIM1_BASE)
 #define HRTIM1_TIMA         ((HRTIM_Timerx_TypeDef *) HRTIM1_TIMA_BASE)
 #define HRTIM1_TIMB         ((HRTIM_Timerx_TypeDef *) HRTIM1_TIMB_BASE)
@@ -1626,7 +1748,9 @@ typedef struct {
 #define DMAMUX1             ((DMAMUX_Channel_TypeDef *) DMAMUX1_BASE)
 #define CORDIC              ((CORDIC_TypeDef *) CORDIC_BASE)
 #define RCC                 ((RCC_TypeDef *) RCC_BASE)
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define FMAC                ((FMAC_TypeDef *) FMAC_BASE)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
 #define CRC                 ((CRC_TypeDef *) CRC_BASE)
 
@@ -1640,7 +1764,7 @@ typedef struct {
 #define ADC1                ((ADC_TypeDef *) ADC1_BASE)
 #define ADC2                ((ADC_TypeDef *) ADC2_BASE)
 #define ADC12_COMMON        ((ADC_Common_TypeDef *) ADC12_COMMON_BASE)
-#if defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define ADC3                ((ADC_TypeDef *) ADC3_BASE)
 #define ADC345_COMMON       ((ADC_Common_TypeDef *) ADC345_COMMON_BASE)
 #elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
@@ -1651,16 +1775,16 @@ typedef struct {
 #endif /* (STM32G471xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define DAC                 ((DAC_TypeDef *) DAC_BASE)
 #define DAC1                ((DAC_TypeDef *) DAC1_BASE)
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define DAC2                ((DAC_TypeDef *) DAC2_BASE)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 #define DAC3                ((DAC_TypeDef *) DAC3_BASE)
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define DAC4                ((DAC_TypeDef *) DAC4_BASE)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
 #define AES                 ((AES_TypeDef *) AES_BASE)
-#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) || (STM32G414xx) */
 #define RNG                 ((RNG_TypeDef *) RNG_BASE)
 
 #define DMA1_Channel1       ((DMA_Channel_TypeDef *) DMA1_Channel1_BASE)
@@ -1669,7 +1793,7 @@ typedef struct {
 #define DMA1_Channel4       ((DMA_Channel_TypeDef *) DMA1_Channel4_BASE)
 #define DMA1_Channel5       ((DMA_Channel_TypeDef *) DMA1_Channel5_BASE)
 #define DMA1_Channel6       ((DMA_Channel_TypeDef *) DMA1_Channel6_BASE)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMA1_Channel7       ((DMA_Channel_TypeDef *) DMA1_Channel7_BASE)
 #define DMA1_Channel8       ((DMA_Channel_TypeDef *) DMA1_Channel8_BASE)
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
@@ -1680,7 +1804,7 @@ typedef struct {
 #define DMA2_Channel4       ((DMA_Channel_TypeDef *) DMA2_Channel4_BASE)
 #define DMA2_Channel5       ((DMA_Channel_TypeDef *) DMA2_Channel5_BASE)
 #define DMA2_Channel6       ((DMA_Channel_TypeDef *) DMA2_Channel6_BASE)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMA2_Channel7       ((DMA_Channel_TypeDef *) DMA2_Channel7_BASE)
 #define DMA2_Channel8       ((DMA_Channel_TypeDef *) DMA2_Channel8_BASE)
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
@@ -1697,7 +1821,7 @@ typedef struct {
 #define DMAMUX1_Channel9    ((DMAMUX_Channel_TypeDef *) DMAMUX1_Channel9_BASE)
 #define DMAMUX1_Channel10   ((DMAMUX_Channel_TypeDef *) DMAMUX1_Channel10_BASE)
 #define DMAMUX1_Channel11   ((DMAMUX_Channel_TypeDef *) DMAMUX1_Channel11_BASE)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMAMUX1_Channel12   ((DMAMUX_Channel_TypeDef *) DMAMUX1_Channel12_BASE)
 #define DMAMUX1_Channel13   ((DMAMUX_Channel_TypeDef *) DMAMUX1_Channel13_BASE)
 #define DMAMUX1_Channel14   ((DMAMUX_Channel_TypeDef *) DMAMUX1_Channel14_BASE)
@@ -1756,7 +1880,7 @@ typedef struct {
 /******************************************************************************/
 
 /*
- * @brief Specific device feature definitions (not present on all devices in the STM32G4 serie)
+ * @brief Specific device feature definitions (not present on all devices in the STM32G4 series)
  */
 #define ADC_MULTIMODE_SUPPORT                          /*!< ADC feature available only on specific devices: multimode available on devices with several ADC instances */
 
@@ -1902,7 +2026,7 @@ typedef struct {
 #define ADC_CFGR_AUTDLY                ADC_CFGR_AUTDLY_Msk                     /*!< ADC low power auto wait */
 #define ADC_CFGR_ALIGN_Pos             (15U)
 #define ADC_CFGR_ALIGN_Msk             (0x1UL << ADC_CFGR_ALIGN_Pos)           /*!< 0x00008000 */
-#define ADC_CFGR_ALIGN                 ADC_CFGR_ALIGN_Msk                      /*!< ADC data alignement */
+#define ADC_CFGR_ALIGN                 ADC_CFGR_ALIGN_Msk                      /*!< ADC data alignment */
 #define ADC_CFGR_DISCEN_Pos            (16U)
 #define ADC_CFGR_DISCEN_Msk            (0x1UL << ADC_CFGR_DISCEN_Pos)          /*!< 0x00010000 */
 #define ADC_CFGR_DISCEN                ADC_CFGR_DISCEN_Msk                     /*!< ADC group regular sequencer discontinuous mode */
@@ -2733,7 +2857,7 @@ typedef struct {
 #define ADC_CDR_RDATA_SLV_Msk          (0xFFFFUL << ADC_CDR_RDATA_SLV_Pos)     /*!< 0xFFFF0000 */
 #define ADC_CDR_RDATA_SLV              ADC_CDR_RDATA_SLV_Msk                   /*!< ADC multimode slave group regular conversion data */
 
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
 /******************************************************************************/
 /*                                                                            */
 /*                       Advanced Encryption Standard (AES)                   */
@@ -2921,7 +3045,7 @@ typedef struct {
 #define AES_SUSP7R_Pos           (0U)
 #define AES_SUSP7R_Msk           (0xFFFFFFFFUL << AES_SUSP7R_Pos)              /*!< 0xFFFFFFFF */
 #define AES_SUSP7R               AES_SUSP7R_Msk                                /*!< AES Suspend registers 7 */
-#endif /* (STM32G441xx) || (STM32G483xx) || (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || (STM32G483xx) || (STM32G484xx) || (STM32G4A1xx) || (STM32G414xx) */
 
 /******************************************************************************/
 /*                                                                            */
@@ -3607,9 +3731,11 @@ typedef struct {
 #define DBGMCU_APB1FZR1_DBG_I2C2_STOP_Pos      (22U)
 #define DBGMCU_APB1FZR1_DBG_I2C2_STOP_Msk      (0x1UL << DBGMCU_APB1FZR1_DBG_I2C2_STOP_Pos)/*!< 0x00400000 */
 #define DBGMCU_APB1FZR1_DBG_I2C2_STOP          DBGMCU_APB1FZR1_DBG_I2C2_STOP_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define DBGMCU_APB1FZR1_DBG_I2C3_STOP_Pos      (30U)
 #define DBGMCU_APB1FZR1_DBG_I2C3_STOP_Msk      (0x1UL << DBGMCU_APB1FZR1_DBG_I2C3_STOP_Pos)/*!< 0x40000000 */
 #define DBGMCU_APB1FZR1_DBG_I2C3_STOP          DBGMCU_APB1FZR1_DBG_I2C3_STOP_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define DBGMCU_APB1FZR1_DBG_LPTIM1_STOP_Pos    (31U)
 #define DBGMCU_APB1FZR1_DBG_LPTIM1_STOP_Msk    (0x1UL << DBGMCU_APB1FZR1_DBG_LPTIM1_STOP_Pos)/*!< 0x80000000 */
 #define DBGMCU_APB1FZR1_DBG_LPTIM1_STOP        DBGMCU_APB1FZR1_DBG_LPTIM1_STOP_Msk
@@ -3637,12 +3763,12 @@ typedef struct {
 #define DBGMCU_APB2FZ_DBG_TIM17_STOP_Pos       (18U)
 #define DBGMCU_APB2FZ_DBG_TIM17_STOP_Msk       (0x1UL << DBGMCU_APB2FZ_DBG_TIM17_STOP_Pos)/*!< 0x00040000 */
 #define DBGMCU_APB2FZ_DBG_TIM17_STOP           DBGMCU_APB2FZ_DBG_TIM17_STOP_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define DBGMCU_APB2FZ_DBG_TIM20_STOP_Pos       (20U)
 #define DBGMCU_APB2FZ_DBG_TIM20_STOP_Msk       (0x1UL << DBGMCU_APB2FZ_DBG_TIM20_STOP_Pos)/*!< 0x00100000 */
 #define DBGMCU_APB2FZ_DBG_TIM20_STOP           DBGMCU_APB2FZ_DBG_TIM20_STOP_Msk
 #endif /* (STM32G471xx) ||(STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 #define DBGMCU_APB2FZ_DBG_HRTIM1_STOP_Pos      (26U)
 #define DBGMCU_APB2FZ_DBG_HRTIM1_STOP_Msk      (0x1UL << DBGMCU_APB2FZ_DBG_HRTIM1_STOP_Pos)/*!< 0x04000000 */
 #define DBGMCU_APB2FZ_DBG_HRTIM1_STOP          DBGMCU_APB2FZ_DBG_HRTIM1_STOP_Msk
@@ -3727,7 +3853,7 @@ typedef struct {
 #define DMA_ISR_TEIF6_Pos      (23U)
 #define DMA_ISR_TEIF6_Msk      (0x1UL << DMA_ISR_TEIF6_Pos)                    /*!< 0x00800000 */
 #define DMA_ISR_TEIF6          DMA_ISR_TEIF6_Msk                               /*!< Channel 6 Transfer Error flag */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMA_ISR_GIF7_Pos       (24U)
 #define DMA_ISR_GIF7_Msk       (0x1UL << DMA_ISR_GIF7_Pos)                     /*!< 0x01000000 */
 #define DMA_ISR_GIF7           DMA_ISR_GIF7_Msk                                /*!< Channel 7 Global interrupt flag */
@@ -3827,7 +3953,7 @@ typedef struct {
 #define DMA_IFCR_CTEIF6_Pos    (23U)
 #define DMA_IFCR_CTEIF6_Msk    (0x1UL << DMA_IFCR_CTEIF6_Pos)                  /*!< 0x00800000 */
 #define DMA_IFCR_CTEIF6        DMA_IFCR_CTEIF6_Msk                             /*!< Channel 6 Transfer Error clear */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMA_IFCR_CGIF7_Pos     (24U)
 #define DMA_IFCR_CGIF7_Msk     (0x1UL << DMA_IFCR_CGIF7_Pos)                   /*!< 0x01000000 */
 #define DMA_IFCR_CGIF7         DMA_IFCR_CGIF7_Msk                              /*!< Channel 7 Global interrupt clear */
@@ -4009,7 +4135,7 @@ typedef struct {
 #define DMAMUX_CSR_SOF11_Pos                         (11U)
 #define DMAMUX_CSR_SOF11_Msk                         (0x1UL << DMAMUX_CSR_SOF11_Pos)/*!< 0x00000800 */
 #define DMAMUX_CSR_SOF11                              DMAMUX_CSR_SOF11_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMAMUX_CSR_SOF12_Pos                         (12U)
 #define DMAMUX_CSR_SOF12_Msk                         (0x1UL << DMAMUX_CSR_SOF12_Pos)/*!< 0x00001000 */
 #define DMAMUX_CSR_SOF12                             DMAMUX_CSR_SOF12_Msk
@@ -4061,7 +4187,7 @@ typedef struct {
 #define DMAMUX_CFR_CSOF11_Pos                        (11U)
 #define DMAMUX_CFR_CSOF11_Msk                        (0x1UL << DMAMUX_CFR_CSOF11_Pos)/*!< 0x00000800 */
 #define DMAMUX_CFR_CSOF11                            DMAMUX_CFR_CSOF11_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define DMAMUX_CFR_CSOF12_Pos                        (12U)
 #define DMAMUX_CFR_CSOF12_Msk                        (0x1UL << DMAMUX_CFR_CSOF12_Pos)/*!< 0x00001000 */
 #define DMAMUX_CFR_CSOF12                            DMAMUX_CFR_CSOF12_Msk
@@ -4361,16 +4487,16 @@ typedef struct {
 #define EXTI_IMR1_IM30_Pos       (30U)
 #define EXTI_IMR1_IM30_Msk       (0x1UL << EXTI_IMR1_IM30_Pos)                 /*!< 0x40000000 */
 #define EXTI_IMR1_IM30           EXTI_IMR1_IM30_Msk                            /*!< Interrupt Mask on line 30 */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_IMR1_IM31_Pos       (31U)
 #define EXTI_IMR1_IM31_Msk       (0x1UL << EXTI_IMR1_IM31_Pos)                 /*!< 0x80000000 */
 #define EXTI_IMR1_IM31           EXTI_IMR1_IM31_Msk                            /*!< Interrupt Mask on line 31 */
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_IMR1_IM_Pos         (0U)
 #define EXTI_IMR1_IM_Msk         (0xFFFFFFFFUL << EXTI_IMR1_IM_Pos)            /*!< 0xFFFFFFFF */
 #define EXTI_IMR1_IM             EXTI_IMR1_IM_Msk                              /*!< Interrupt Mask All */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define EXTI_IMR1_IM_Pos         (0U)
 #define EXTI_IMR1_IM_Msk         (0x7FFFFFFFUL << EXTI_IMR1_IM_Pos)            /*!< 0x7FFFFFFF */
 #define EXTI_IMR1_IM             EXTI_IMR1_IM_Msk                              /*!< Interrupt Mask All */
@@ -4470,7 +4596,7 @@ typedef struct {
 #define EXTI_EMR1_EM30_Pos       (30U)
 #define EXTI_EMR1_EM30_Msk       (0x1UL << EXTI_EMR1_EM30_Pos)                 /*!< 0x40000000 */
 #define EXTI_EMR1_EM30           EXTI_EMR1_EM30_Msk                            /*!< Event Mask on line 30 */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_EMR1_EM31_Pos       (31U)
 #define EXTI_EMR1_EM31_Msk       (0x1UL << EXTI_EMR1_EM31_Pos)                 /*!< 0x80000000 */
 #define EXTI_EMR1_EM31           EXTI_EMR1_EM31_Msk                            /*!< Event Mask on line 31 */
@@ -4549,7 +4675,7 @@ typedef struct {
 #define EXTI_RTSR1_RT30_Pos      (30U)
 #define EXTI_RTSR1_RT30_Msk      (0x1UL << EXTI_RTSR1_RT30_Pos)                /*!< 0x40000000 */
 #define EXTI_RTSR1_RT30          EXTI_RTSR1_RT30_Msk                           /*!< Rising trigger event configuration bit of line 30 */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_RTSR1_RT31_Pos      (31U)
 #define EXTI_RTSR1_RT31_Msk      (0x1UL << EXTI_RTSR1_RT31_Pos)                /*!< 0x80000000 */
 #define EXTI_RTSR1_RT31          EXTI_RTSR1_RT31_Msk                           /*!< Rising trigger event configuration bit of line 31 */
@@ -4628,7 +4754,7 @@ typedef struct {
 #define EXTI_FTSR1_FT30_Pos      (30U)
 #define EXTI_FTSR1_FT30_Msk      (0x1UL << EXTI_FTSR1_FT30_Pos)                /*!< 0x40000000 */
 #define EXTI_FTSR1_FT30          EXTI_FTSR1_FT30_Msk                           /*!< Falling trigger event configuration bit of line 30 */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_FTSR1_FT31_Pos      (31U)
 #define EXTI_FTSR1_FT31_Msk      (0x1UL << EXTI_FTSR1_FT31_Pos)                /*!< 0x80000000 */
 #define EXTI_FTSR1_FT31          EXTI_FTSR1_FT31_Msk                           /*!< Falling trigger event configuration bit of line 31 */
@@ -4707,7 +4833,7 @@ typedef struct {
 #define EXTI_SWIER1_SWI30_Pos    (30U)
 #define EXTI_SWIER1_SWI30_Msk    (0x1UL << EXTI_SWIER1_SWI30_Pos)              /*!< 0x40000000 */
 #define EXTI_SWIER1_SWI30        EXTI_SWIER1_SWI30_Msk                         /*!< Software Interrupt on line 30 */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_SWIER1_SWI31_Pos    (31U)
 #define EXTI_SWIER1_SWI31_Msk    (0x1UL << EXTI_SWIER1_SWI31_Pos)              /*!< 0x80000000 */
 #define EXTI_SWIER1_SWI31        EXTI_SWIER1_SWI31_Msk                         /*!< Software Interrupt on line 31 */
@@ -4786,14 +4912,14 @@ typedef struct {
 #define EXTI_PR1_PIF30_Pos       (30U)
 #define EXTI_PR1_PIF30_Msk       (0x1UL << EXTI_PR1_PIF30_Pos)                 /*!< 0x40000000 */
 #define EXTI_PR1_PIF30           EXTI_PR1_PIF30_Msk                            /*!< Pending bit for line 30 */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_PR1_PIF31_Pos       (31U)
 #define EXTI_PR1_PIF31_Msk       (0x1UL << EXTI_PR1_PIF31_Pos)                 /*!< 0x80000000 */
 #define EXTI_PR1_PIF31           EXTI_PR1_PIF31_Msk                            /*!< Pending bit for line 31 */
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /*******************  Bit definition for EXTI_IMR2 register  ******************/
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_IMR2_IM32_Pos       (0U)
 #define EXTI_IMR2_IM32_Msk       (0x1UL << EXTI_IMR2_IM32_Pos)                 /*!< 0x00000001 */
 #define EXTI_IMR2_IM32           EXTI_IMR2_IM32_Msk                            /*!< Interrupt Mask on line 32 */
@@ -4804,7 +4930,7 @@ typedef struct {
 #define EXTI_IMR2_IM34_Pos       (2U)
 #define EXTI_IMR2_IM34_Msk       (0x1UL << EXTI_IMR2_IM34_Pos)                 /*!< 0x00000004 */
 #define EXTI_IMR2_IM34           EXTI_IMR2_IM34_Msk                            /*!< Interrupt Mask on line 34 */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define EXTI_IMR2_IM35_Pos       (3U)
 #define EXTI_IMR2_IM35_Msk       (0x1UL << EXTI_IMR2_IM35_Pos)                 /*!< 0x00000008 */
 #define EXTI_IMR2_IM35           EXTI_IMR2_IM35_Msk                            /*!< Interrupt Mask on line 35 */
@@ -4827,16 +4953,16 @@ typedef struct {
 #define EXTI_IMR2_IM41_Pos       (9U)
 #define EXTI_IMR2_IM41_Msk       (0x1UL << EXTI_IMR2_IM41_Pos)                 /*!< 0x00000200 */
 #define EXTI_IMR2_IM41           EXTI_IMR2_IM41_Msk                            /*!< Interrupt Mask on line 41 */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_IMR2_IM42_Pos       (10U)
 #define EXTI_IMR2_IM42_Msk       (0x1UL << EXTI_IMR2_IM42_Pos)                 /*!< 0x00000400 */
 #define EXTI_IMR2_IM42           EXTI_IMR2_IM42_Msk                            /*!< Interrupt Mask on line 42 */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_IMR2_IM_Pos         (0U)
 #define EXTI_IMR2_IM_Msk         (0x7FFUL << EXTI_IMR2_IM_Pos)                 /*!< 0x000007FF */
 #define EXTI_IMR2_IM             EXTI_IMR2_IM_Msk                              /*!< Interrupt Mask all        */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define EXTI_IMR2_IM_Pos         (0U)
 #define EXTI_IMR2_IM_Msk         (0x3F4UL << EXTI_IMR2_IM_Pos)                 /*!< 0x000003F4 */
 #define EXTI_IMR2_IM             EXTI_IMR2_IM_Msk                              /*!< Interrupt Mask all        */
@@ -4847,7 +4973,7 @@ typedef struct {
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /*******************  Bit definition for EXTI_EMR2 register  ******************/
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_EMR2_EM32_Pos       (0U)
 #define EXTI_EMR2_EM32_Msk       (0x1UL << EXTI_EMR2_EM32_Pos)                 /*!< 0x00000001 */
 #define EXTI_EMR2_EM32           EXTI_EMR2_EM32_Msk                            /*!< Event Mask on line 32 */
@@ -4858,7 +4984,7 @@ typedef struct {
 #define EXTI_EMR2_EM34_Pos       (2U)
 #define EXTI_EMR2_EM34_Msk       (0x1UL << EXTI_EMR2_EM34_Pos)                 /*!< 0x00000004 */
 #define EXTI_EMR2_EM34           EXTI_EMR2_EM34_Msk                            /*!< Event Mask on line 34 */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_EMR2_EM35_Pos       (3U)
 #define EXTI_EMR2_EM35_Msk       (0x1UL << EXTI_EMR2_EM35_Pos)                 /*!< 0x00000008 */
 #define EXTI_EMR2_EM35           EXTI_EMR2_EM35_Msk                            /*!< Event Mask on line 35 */
@@ -4881,16 +5007,16 @@ typedef struct {
 #define EXTI_EMR2_EM41_Pos       (9U)
 #define EXTI_EMR2_EM41_Msk       (0x1UL << EXTI_EMR2_EM41_Pos)                 /*!< 0x00000200 */
 #define EXTI_EMR2_EM41           EXTI_EMR2_EM41_Msk                            /*!< Event Mask on line 41 */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_EMR2_EM42_Pos       (10U)
 #define EXTI_EMR2_EM42_Msk       (0x1UL << EXTI_EMR2_EM42_Pos)                 /*!< 0x00000400 */
 #define EXTI_EMR2_EM42           EXTI_EMR2_EM42_Msk                            /*!< Event Mask on line 42 */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_EMR2_EM_Pos         (0U)
 #define EXTI_EMR2_EM_Msk         (0x7FFUL << EXTI_EMR2_EM_Pos)                 /*!< 0x000007FF */
 #define EXTI_EMR2_EM             EXTI_EMR2_EM_Msk                              /*!< Interrupt Mask all        */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define EXTI_EMR2_EM_Pos         (0U)
 #define EXTI_EMR2_EM_Msk         (0x3F4UL << EXTI_EMR2_EM_Pos)                 /*!< 0x000003F4 */
 #define EXTI_EMR2_EM             EXTI_EMR2_EM_Msk                              /*!< Interrupt Mask all        */
@@ -4901,7 +5027,7 @@ typedef struct {
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /******************  Bit definition for EXTI_RTSR2 register  ******************/
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_RTSR2_RT32_Pos      (0U)
 #define EXTI_RTSR2_RT32_Msk      (0x1UL << EXTI_RTSR2_RT32_Pos)                /*!< 0x00000001 */
 #define EXTI_RTSR2_RT32          EXTI_RTSR2_RT32_Msk                           /*!< Rising trigger event configuration bit of line 32 */
@@ -4923,7 +5049,7 @@ typedef struct {
 #define EXTI_RTSR2_RT41          EXTI_RTSR2_RT41_Msk                           /*!< Rising trigger event configuration bit of line 41 */
 
 /******************  Bit definition for EXTI_FTSR2 register  ******************/
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_FTSR2_FT32_Pos      (0U)
 #define EXTI_FTSR2_FT32_Msk      (0x1UL << EXTI_FTSR2_FT32_Pos)                /*!< 0x00000001 */
 #define EXTI_FTSR2_FT32          EXTI_FTSR2_FT32_Msk                           /*!< Falling trigger event configuration bit of line 32 */
@@ -4945,7 +5071,7 @@ typedef struct {
 #define EXTI_FTSR2_FT41          EXTI_FTSR2_FT41_Msk                           /*!< Falling trigger event configuration bit of line 41 */
 
 /******************  Bit definition for EXTI_SWIER2 register  *****************/
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_SWIER2_SWI32_Pos    (0U)
 #define EXTI_SWIER2_SWI32_Msk    (0x1UL << EXTI_SWIER2_SWI32_Pos)              /*!< 0x00000001 */
 #define EXTI_SWIER2_SWI32        EXTI_SWIER2_SWI32_Msk                         /*!< Software Interrupt on line 32 */
@@ -4967,7 +5093,7 @@ typedef struct {
 #define EXTI_SWIER2_SWI41        EXTI_SWIER2_SWI41_Msk                         /*!< Software Interrupt on line 41 */
 
 /*******************  Bit definition for EXTI_PR2 register  *******************/
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define EXTI_PR2_PIF32_Pos       (0U)
 #define EXTI_PR2_PIF32_Msk       (0x1UL << EXTI_PR2_PIF32_Pos)                 /*!< 0x00000001 */
 #define EXTI_PR2_PIF32           EXTI_PR2_PIF32_Msk                            /*!< Pending bit for line 32 */
@@ -5017,7 +5143,7 @@ typedef struct {
 /*****************  Bit definition for FDCAN_ENDN register  *******************/
 #define FDCAN_ENDN_ETV_Pos        (0U)
 #define FDCAN_ENDN_ETV_Msk        (0xFFFFFFFFUL << FDCAN_ENDN_ETV_Pos)         /*!< 0xFFFFFFFF */
-#define FDCAN_ENDN_ETV            FDCAN_ENDN_ETV_Msk                           /*!<Endiannes Test Value                    */
+#define FDCAN_ENDN_ETV            FDCAN_ENDN_ETV_Msk                           /*!<Endianness Test Value                    */
 
 /*****************  Bit definition for FDCAN_DBTP register  *******************/
 #define FDCAN_DBTP_DSJW_Pos       (0U)
@@ -5668,13 +5794,13 @@ typedef struct {
 #define FLASH_CR_PNB_Pos                  (3U)
 #if defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_CR_PNB_Msk                  (0xFFUL << FLASH_CR_PNB_Pos)         /*!< 0x000007F8 */
-#elif defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#elif defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define FLASH_CR_PNB_Msk                  (0x7FUL << FLASH_CR_PNB_Pos)         /*!< 0x000003F8 */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_CR_PNB_Msk                  (0x3FUL << FLASH_CR_PNB_Pos)         /*!< 0x000001F8 */
 #endif /* (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_CR_PNB                      FLASH_CR_PNB_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define FLASH_CR_BKER_Pos                 (11U)
 #define FLASH_CR_BKER_Msk                 (0x1UL << FLASH_CR_BKER_Pos)         /*!< 0x00000800 */
 #define FLASH_CR_BKER                     FLASH_CR_BKER_Msk
@@ -5706,7 +5832,7 @@ typedef struct {
 #define FLASH_CR_SEC_PROT1_Pos            (28U)
 #define FLASH_CR_SEC_PROT1_Msk            (0x1UL << FLASH_CR_SEC_PROT1_Pos)    /*!< 0x10000000 */
 #define FLASH_CR_SEC_PROT1                FLASH_CR_SEC_PROT1_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define FLASH_CR_SEC_PROT2_Pos            (29U)
 #define FLASH_CR_SEC_PROT2_Msk            (0x1UL << FLASH_CR_SEC_PROT2_Pos)    /*!< 0x20000000 */
 #define FLASH_CR_SEC_PROT2                FLASH_CR_SEC_PROT2_Msk
@@ -5720,13 +5846,13 @@ typedef struct {
 
 /*******************  Bits definition for FLASH_ECCR register  ***************/
 #define FLASH_ECCR_ADDR_ECC_Pos           (0U)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_ECCR_ADDR_ECC_Msk           (0x7FFFFUL << FLASH_ECCR_ADDR_ECC_Pos)/*!< 0x0007FFFF */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_ECCR_ADDR_ECC_Msk           (0x3FFFFUL << FLASH_ECCR_ADDR_ECC_Pos)/*!< 0x0003FFFF */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_ECCR_ADDR_ECC               FLASH_ECCR_ADDR_ECC_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_ECCR_BK_ECC_Pos             (21U)
 #define FLASH_ECCR_BK_ECC_Msk             (0x1UL << FLASH_ECCR_BK_ECC_Pos)     /*!< 0x00200000 */
 #define FLASH_ECCR_BK_ECC                 FLASH_ECCR_BK_ECC_Msk
@@ -5737,7 +5863,7 @@ typedef struct {
 #define FLASH_ECCR_ECCIE_Pos              (24U)
 #define FLASH_ECCR_ECCIE_Msk              (0x1UL << FLASH_ECCR_ECCIE_Pos)      /*!< 0x01000000 */
 #define FLASH_ECCR_ECCIE                  FLASH_ECCR_ECCIE_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define FLASH_ECCR_ECCC2_Pos              (28U)
 #define FLASH_ECCR_ECCC2_Msk              (0x1UL << FLASH_ECCR_ECCC2_Pos)      /*!< 0x10000000 */
 #define FLASH_ECCR_ECCC2                  FLASH_ECCR_ECCC2_Msk
@@ -5785,7 +5911,7 @@ typedef struct {
 #define FLASH_OPTR_WWDG_SW_Pos            (19U)
 #define FLASH_OPTR_WWDG_SW_Msk            (0x1UL << FLASH_OPTR_WWDG_SW_Pos)    /*!< 0x00080000 */
 #define FLASH_OPTR_WWDG_SW                FLASH_OPTR_WWDG_SW_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define FLASH_OPTR_BFB2_Pos               (20U)
 #define FLASH_OPTR_BFB2_Msk               (0x1UL << FLASH_OPTR_BFB2_Pos)       /*!< 0x00100000 */
 #define FLASH_OPTR_BFB2                   FLASH_OPTR_BFB2_Msk
@@ -5803,9 +5929,11 @@ typedef struct {
 #define FLASH_OPTR_SRAM_PE_Pos            (24U)
 #define FLASH_OPTR_SRAM_PE_Msk            (0x1UL << FLASH_OPTR_SRAM_PE_Pos)    /*!< 0x01000000 */
 #define FLASH_OPTR_SRAM_PE                FLASH_OPTR_SRAM_PE_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define FLASH_OPTR_CCMSRAM_RST_Pos        (25U)
 #define FLASH_OPTR_CCMSRAM_RST_Msk        (0x1UL << FLASH_OPTR_CCMSRAM_RST_Pos)/*!< 0x02000000 */
 #define FLASH_OPTR_CCMSRAM_RST            FLASH_OPTR_CCMSRAM_RST_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define FLASH_OPTR_nSWBOOT0_Pos           (26U)
 #define FLASH_OPTR_nSWBOOT0_Msk           (0x1UL << FLASH_OPTR_nSWBOOT0_Pos)   /*!< 0x04000000 */
 #define FLASH_OPTR_nSWBOOT0               FLASH_OPTR_nSWBOOT0_Msk
@@ -5823,18 +5951,18 @@ typedef struct {
 
 /******************  Bits definition for FLASH_PCROP1SR register  **********/
 #define FLASH_PCROP1SR_PCROP1_STRT_Pos    (0U)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_PCROP1SR_PCROP1_STRT_Msk    (0x7FFFUL << FLASH_PCROP1SR_PCROP1_STRT_Pos)/*!< 0x00007FFF */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_PCROP1SR_PCROP1_STRT_Msk    (0x3FFFUL << FLASH_PCROP1SR_PCROP1_STRT_Pos)/*!< 0x00003FFF */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_PCROP1SR_PCROP1_STRT        FLASH_PCROP1SR_PCROP1_STRT_Msk
 
 /******************  Bits definition for FLASH_PCROP1ER register  ***********/
 #define FLASH_PCROP1ER_PCROP1_END_Pos     (0U)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_PCROP1ER_PCROP1_END_Msk     (0x7FFFUL << FLASH_PCROP1ER_PCROP1_END_Pos)/*!< 0x00007FFF */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_PCROP1ER_PCROP1_END_Msk     (0x3FFFUL << FLASH_PCROP1ER_PCROP1_END_Pos)/*!< 0x00003FFF */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_PCROP1ER_PCROP1_END         FLASH_PCROP1ER_PCROP1_END_Msk
@@ -5844,37 +5972,37 @@ typedef struct {
 
 /******************  Bits definition for FLASH_WRP1AR register  ***************/
 #define FLASH_WRP1AR_WRP1A_STRT_Pos       (0U)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_WRP1AR_WRP1A_STRT_Msk       (0x7FUL << FLASH_WRP1AR_WRP1A_STRT_Pos)/*!< 0x0000007F */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_WRP1AR_WRP1A_STRT_Msk       (0x3FUL << FLASH_WRP1AR_WRP1A_STRT_Pos)/*!< 0x0000003F */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_WRP1AR_WRP1A_STRT           FLASH_WRP1AR_WRP1A_STRT_Msk
 #define FLASH_WRP1AR_WRP1A_END_Pos        (16U)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_WRP1AR_WRP1A_END_Msk        (0x7FUL << FLASH_WRP1AR_WRP1A_END_Pos)/*!< 0x007F0000 */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_WRP1AR_WRP1A_END_Msk        (0x3FUL << FLASH_WRP1AR_WRP1A_END_Pos)/*!< 0x003F0000 */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_WRP1AR_WRP1A_END            FLASH_WRP1AR_WRP1A_END_Msk
 
 /******************  Bits definition for FLASH_WRPB1R register  ***************/
 #define FLASH_WRP1BR_WRP1B_STRT_Pos       (0U)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_WRP1BR_WRP1B_STRT_Msk       (0x7FUL << FLASH_WRP1BR_WRP1B_STRT_Pos)/*!< 0x0000007F */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_WRP1BR_WRP1B_STRT_Msk       (0x3FUL << FLASH_WRP1BR_WRP1B_STRT_Pos)/*!< 0x0000003F */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_WRP1BR_WRP1B_STRT           FLASH_WRP1BR_WRP1B_STRT_Msk
 #define FLASH_WRP1BR_WRP1B_END_Pos        (16U)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_WRP1BR_WRP1B_END_Msk        (0x7FUL << FLASH_WRP1BR_WRP1B_END_Pos)/*!< 0x007F0000 */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_WRP1BR_WRP1B_END_Msk        (0x3FUL << FLASH_WRP1BR_WRP1B_END_Pos)/*!< 0x003F0000 */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_WRP1BR_WRP1B_END            FLASH_WRP1BR_WRP1B_END_Msk
 
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 /******************  Bits definition for FLASH_PCROP2SR register  **********/
 #define FLASH_PCROP2SR_PCROP2_STRT_Pos    (0U)
 #define FLASH_PCROP2SR_PCROP2_STRT_Msk    (0x07FFFUL << FLASH_PCROP2SR_PCROP2_STRT_Pos)/*!< 0x00007FFF */
@@ -5904,9 +6032,9 @@ typedef struct {
 
 /******************  Bits definition for FLASH_SEC1R register  **************/
 #define FLASH_SEC1R_SEC_SIZE1_Pos         (0U)
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define FLASH_SEC1R_SEC_SIZE1_Msk         (0xFFUL << FLASH_SEC1R_SEC_SIZE1_Pos)/*!< 0x000000FF */
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define FLASH_SEC1R_SEC_SIZE1_Msk         (0x7FUL << FLASH_SEC1R_SEC_SIZE1_Pos)/*!< 0x0000007F */
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 #define FLASH_SEC1R_SEC_SIZE1             FLASH_SEC1R_SEC_SIZE1_Msk
@@ -5914,13 +6042,14 @@ typedef struct {
 #define FLASH_SEC1R_BOOT_LOCK_Msk         (0x1UL << FLASH_SEC1R_BOOT_LOCK_Pos)/*!< 0x00010000 */
 #define FLASH_SEC1R_BOOT_LOCK             FLASH_SEC1R_BOOT_LOCK_Msk
 
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 /******************  Bits definition for FLASH_SEC2R register  **************/
 #define FLASH_SEC2R_SEC_SIZE2_Pos         (0U)
 #define FLASH_SEC2R_SEC_SIZE2_Msk         (0xFFUL << FLASH_SEC2R_SEC_SIZE2_Pos)/*!< 0x000000FF */
 #define FLASH_SEC2R_SEC_SIZE2             FLASH_SEC2R_SEC_SIZE2_Msk
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 /******************************************************************************/
 /*                                                                            */
 /*                Filter Mathematical ACcelerator unit (FMAC)                 */
@@ -6028,6 +6157,7 @@ typedef struct {
 #define FMAC_RDATA_RDATA_Pos          (0U)
 #define FMAC_RDATA_RDATA_Msk          (0xFFFFUL << FMAC_RDATA_RDATA_Pos)       /*!< 0x0000FFFF */
 #define FMAC_RDATA_RDATA              FMAC_RDATA_RDATA_Msk                     /*!< Read data */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 /******************************************************************************/
@@ -6038,7 +6168,7 @@ typedef struct {
 /******************  Bit definition for FMC_BCR1 register  *******************/
 #define FMC_BCR1_CCLKEN_Pos        (20U)
 #define FMC_BCR1_CCLKEN_Msk        (0x1UL << FMC_BCR1_CCLKEN_Pos)              /*!< 0x00100000 */
-#define FMC_BCR1_CCLKEN            FMC_BCR1_CCLKEN_Msk                         /*!<Continous clock enable     */
+#define FMC_BCR1_CCLKEN            FMC_BCR1_CCLKEN_Msk                         /*!<Continuous clock enable     */
 #define FMC_BCR1_WFDIS_Pos         (21U)
 #define FMC_BCR1_WFDIS_Msk         (0x1UL << FMC_BCR1_WFDIS_Pos)               /*!< 0x00200000 */
 #define FMC_BCR1_WFDIS             FMC_BCR1_WFDIS_Msk                          /*!<Write FIFO Disable         */
@@ -7441,7 +7571,7 @@ typedef struct {
 #define GPIO_BRR_BR_14                      GPIO_BRR_BR14
 #define GPIO_BRR_BR_15                      GPIO_BRR_BR15
 
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 /******************************************************************************/
 /*                                                                            */
 /*                        High Resolution Timer (HRTIM)                       */
@@ -7512,7 +7642,7 @@ typedef struct {
 #define HRTIM_MCR_TFCEN               HRTIM_MCR_TFCEN_Msk                      /*!< Timer F counter enable */
 #define HRTIM_MCR_DACSYNC_Pos         (25U)
 #define HRTIM_MCR_DACSYNC_Msk         (0x3UL << HRTIM_MCR_DACSYNC_Pos)         /*!< 0x06000000 */
-#define HRTIM_MCR_DACSYNC             HRTIM_MCR_DACSYNC_Msk                    /*!< DAC sychronization mask */
+#define HRTIM_MCR_DACSYNC             HRTIM_MCR_DACSYNC_Msk                    /*!< DAC synchronization mask */
 #define HRTIM_MCR_DACSYNC_0           (0x1UL << HRTIM_MCR_DACSYNC_Pos)         /*!< 0x02000000 */
 #define HRTIM_MCR_DACSYNC_1           (0x2UL << HRTIM_MCR_DACSYNC_Pos)         /*!< 0x04000000 */
 #define HRTIM_MCR_PREEN_Pos           (27U)
@@ -7729,7 +7859,7 @@ typedef struct {
 #define HRTIM_TIMCR_MSTU              HRTIM_TIMCR_MSTU_Msk                     /*!< Master Update */
 #define HRTIM_TIMCR_DACSYNC_Pos       (25U)
 #define HRTIM_TIMCR_DACSYNC_Msk       (0x3UL << HRTIM_TIMCR_DACSYNC_Pos)       /*!< 0x06000000 */
-#define HRTIM_TIMCR_DACSYNC           HRTIM_TIMCR_DACSYNC_Msk                  /*!< DAC sychronization mask */
+#define HRTIM_TIMCR_DACSYNC           HRTIM_TIMCR_DACSYNC_Msk                  /*!< DAC synchronization mask */
 #define HRTIM_TIMCR_DACSYNC_0         (0x1UL << HRTIM_TIMCR_DACSYNC_Pos)       /*!< 0x02000000 */
 #define HRTIM_TIMCR_DACSYNC_1         (0x2UL << HRTIM_TIMCR_DACSYNC_Pos)       /*!< 0x04000000 */
 #define HRTIM_TIMCR_PREEN_Pos         (27U)
@@ -9642,7 +9772,7 @@ typedef struct {
 /**** Bit definition for Common HRTIM Timer Burst mode control register ********/
 #define HRTIM_BMCR_BME_Pos            (0U)
 #define HRTIM_BMCR_BME_Msk            (0x1UL << HRTIM_BMCR_BME_Pos)            /*!< 0x00000001 */
-#define HRTIM_BMCR_BME                HRTIM_BMCR_BME_Msk                       /*!< Burst mode enbale */
+#define HRTIM_BMCR_BME                HRTIM_BMCR_BME_Msk                       /*!< Burst mode enable */
 #define HRTIM_BMCR_BMOM_Pos           (1U)
 #define HRTIM_BMCR_BMOM_Msk           (0x1UL << HRTIM_BMCR_BMOM_Pos)           /*!< 0x00000002 */
 #define HRTIM_BMCR_BMOM               HRTIM_BMCR_BMOM_Msk                      /*!< Burst mode operating mode */
@@ -11200,6 +11330,7 @@ typedef struct {
 #define IWDG_WINR_WIN_Msk    (0xFFFUL << IWDG_WINR_WIN_Pos)                    /*!< 0x00000FFF */
 #define IWDG_WINR_WIN        IWDG_WINR_WIN_Msk                                 /*!< Watchdog counter window value */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G411xB) || defined (STM32G411xC)
 /******************************************************************************/
 /*                                                                            */
 /*                         Operational Amplifier (OPAMP)                      */
@@ -11255,7 +11386,7 @@ typedef struct {
 #define OPAMP_CSR_TRIMOFFSETN        OPAMP_CSR_TRIMOFFSETN_Msk                 /*!< Offset trimming value (NMOS) */
 #define OPAMP_CSR_OUTCAL_Pos         (30U)
 #define OPAMP_CSR_OUTCAL_Msk         (0x1UL << OPAMP_CSR_OUTCAL_Pos)           /*!< 0x40000000 */
-#define OPAMP_CSR_OUTCAL             OPAMP_CSR_OUTCAL_Msk                      /*!< OPAMP ouput status flag */
+#define OPAMP_CSR_OUTCAL             OPAMP_CSR_OUTCAL_Msk                      /*!< OPAMP output status flag */
 #define OPAMP_CSR_LOCK_Pos           (31U)
 #define OPAMP_CSR_LOCK_Msk           (0x1UL << OPAMP_CSR_LOCK_Pos)             /*!< 0x80000000 */
 #define OPAMP_CSR_LOCK               OPAMP_CSR_LOCK_Msk                        /*!< OPAMP control/status register lock */
@@ -11282,6 +11413,7 @@ typedef struct {
 #define OPAMP_TCMR_LOCK_Pos          (31U)
 #define OPAMP_TCMR_LOCK_Msk          (0x1UL << OPAMP_TCMR_LOCK_Pos)            /*!< 0x80000000 */
 #define OPAMP_TCMR_LOCK              OPAMP_TCMR_LOCK_Msk                       /*!< OPAMP SW control register lock */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G411xB) || (STM32G411xC) */
 
 
 /******************************************************************************/
@@ -11371,18 +11503,22 @@ typedef struct {
 #define PWR_CR3_EIWF_Pos             (15U)
 #define PWR_CR3_EIWF_Msk             (0x1UL << PWR_CR3_EIWF_Pos)               /*!< 0x00008000 */
 #define PWR_CR3_EIWF                 PWR_CR3_EIWF_Msk                          /*!< Enable Internal Wake-up line */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define PWR_CR3_UCPD_DBDIS_Pos       (14U)
 #define PWR_CR3_UCPD_DBDIS_Msk       (0x1UL << PWR_CR3_UCPD_DBDIS_Pos)         /*!< 0x00004000 */
 #define PWR_CR3_UCPD_DBDIS           PWR_CR3_UCPD_DBDIS_Msk                    /*!< USB Type-C and Power Delivery Dead Battery disable. */
 #define PWR_CR3_UCPD_STDBY_Pos       (13U)
 #define PWR_CR3_UCPD_STDBY_Msk       (0x1UL << PWR_CR3_UCPD_STDBY_Pos)         /*!< 0x00002000 */
 #define PWR_CR3_UCPD_STDBY           PWR_CR3_UCPD_STDBY_Msk                    /*!< USB Type-C and Power Delivery standby mode. */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define PWR_CR3_APC_Pos              (10U)
 #define PWR_CR3_APC_Msk              (0x1UL << PWR_CR3_APC_Pos)                /*!< 0x00000400 */
 #define PWR_CR3_APC                  PWR_CR3_APC_Msk                           /*!< Apply pull-up and pull-down configuration */
+#if defined (STM32G411xB) || defined (STM32G411xC)|| defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define PWR_CR3_RRS_Pos              (8U)
 #define PWR_CR3_RRS_Msk              (0x1UL << PWR_CR3_RRS_Pos)                /*!< 0x00000100 */
 #define PWR_CR3_RRS                  PWR_CR3_RRS_Msk                           /*!< SRAM2 Retention in Stand-by mode */
+#endif /* (STM32G411xB) || (STM32G411xC) || (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define PWR_CR3_EWUP5_Pos            (4U)
 #define PWR_CR3_EWUP5_Msk            (0x1UL << PWR_CR3_EWUP5_Pos)              /*!< 0x00000010 */
 #define PWR_CR3_EWUP5                PWR_CR3_EWUP5_Msk                         /*!< Enable Wake-Up Pin 5 */
@@ -12040,7 +12176,7 @@ typedef struct {
 #define PWR_PUCRF_PF0                PWR_PUCRF_PF0_Msk                         /*!< Port PF0 Pull-Up set  */
 
 /********************  Bit definition for PWR_PDCRF register  ********************/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define PWR_PDCRF_PF15_Pos           (15U)
 #define PWR_PDCRF_PF15_Msk           (0x1UL << PWR_PDCRF_PF15_Pos)             /*!< 0x00008000 */
 #define PWR_PDCRF_PF15               PWR_PDCRF_PF15_Msk                        /*!< Port PF15 Pull-Down set */
@@ -12063,7 +12199,7 @@ typedef struct {
 #define PWR_PDCRF_PF9_Pos            (9U)
 #define PWR_PDCRF_PF9_Msk            (0x1UL << PWR_PDCRF_PF9_Pos)              /*!< 0x00000200 */
 #define PWR_PDCRF_PF9                PWR_PDCRF_PF9_Msk                         /*!< Port PF9 Pull-Down set  */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define PWR_PDCRF_PF8_Pos            (8U)
 #define PWR_PDCRF_PF8_Msk            (0x1UL << PWR_PDCRF_PF8_Pos)              /*!< 0x00000100 */
 #define PWR_PDCRF_PF8                PWR_PDCRF_PF8_Msk                         /*!< Port PF8 Pull-Down set  */
@@ -12094,7 +12230,7 @@ typedef struct {
 #define PWR_PDCRF_PF0                PWR_PDCRF_PF0_Msk                         /*!< Port PF0 Pull-Down set  */
 
 /********************  Bit definition for PWR_PUCRG register  ********************/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define PWR_PUCRG_PG15_Pos           (15U)
 #define PWR_PUCRG_PG15_Msk           (0x1UL << PWR_PUCRG_PG15_Pos)             /*!< 0x00008000 */
 #define PWR_PUCRG_PG15               PWR_PUCRG_PG15_Msk                        /*!< Port PG15 Pull-Up set */
@@ -12114,7 +12250,7 @@ typedef struct {
 #define PWR_PUCRG_PG10_Pos           (10U)
 #define PWR_PUCRG_PG10_Msk           (0x1UL << PWR_PUCRG_PG10_Pos)             /*!< 0x00000400 */
 #define PWR_PUCRG_PG10               PWR_PUCRG_PG10_Msk                        /*!< Port PG10 Pull-Up set */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define PWR_PUCRG_PG9_Pos            (9U)
 #define PWR_PUCRG_PG9_Msk            (0x1UL << PWR_PUCRG_PG9_Pos)              /*!< 0x00000200 */
 #define PWR_PUCRG_PG9                PWR_PUCRG_PG9_Msk                         /*!< Port PG9 Pull-Up set  */
@@ -12393,7 +12529,7 @@ typedef struct {
 /*                                                                            */
 /******************************************************************************/
 /*
-* @brief Specific device feature definitions  (not present on all devices in the STM32G4 serie)
+* @brief Specific device feature definitions  (not present on all devices in the STM32G4 series)
 */
 
 #define RCC_HSI48_SUPPORT
@@ -12711,9 +12847,11 @@ typedef struct {
 #define RCC_AHB1RSTR_CORDICRST_Pos           (3U)
 #define RCC_AHB1RSTR_CORDICRST_Msk           (0x1UL << RCC_AHB1RSTR_CORDICRST_Pos)/*!< 0x00000008 */
 #define RCC_AHB1RSTR_CORDICRST               RCC_AHB1RSTR_CORDICRST_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_AHB1RSTR_FMACRST_Pos             (4U)
 #define RCC_AHB1RSTR_FMACRST_Msk             (0x1UL << RCC_AHB1RSTR_FMACRST_Pos)  /*!< 0x00000010 */
 #define RCC_AHB1RSTR_FMACRST                 RCC_AHB1RSTR_FMACRST_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_AHB1RSTR_FLASHRST_Pos            (8U)
 #define RCC_AHB1RSTR_FLASHRST_Msk            (0x1UL << RCC_AHB1RSTR_FLASHRST_Pos)/*!< 0x00000100 */
 #define RCC_AHB1RSTR_FLASHRST                RCC_AHB1RSTR_FLASHRST_Msk
@@ -12746,15 +12884,15 @@ typedef struct {
 #define RCC_AHB2RSTR_ADC12RST_Pos            (13U)
 #define RCC_AHB2RSTR_ADC12RST_Msk            (0x1UL << RCC_AHB2RSTR_ADC12RST_Pos)/*!< 0x00002000 */
 #define RCC_AHB2RSTR_ADC12RST                RCC_AHB2RSTR_ADC12RST_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define RCC_AHB2RSTR_ADC345RST_Pos           (14U)
 #define RCC_AHB2RSTR_ADC345RST_Msk           (0x1UL << RCC_AHB2RSTR_ADC345RST_Pos)/*!< 0x00004000 */
 #define RCC_AHB2RSTR_ADC345RST               RCC_AHB2RSTR_ADC345RST_Msk
-#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32G411xC)*/
 #define RCC_AHB2RSTR_DAC1RST_Pos             (16U)
 #define RCC_AHB2RSTR_DAC1RST_Msk             (0x1UL << RCC_AHB2RSTR_DAC1RST_Pos)/*!< 0x00010000 */
 #define RCC_AHB2RSTR_DAC1RST                 RCC_AHB2RSTR_DAC1RST_Msk
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define RCC_AHB2RSTR_DAC2RST_Pos             (17U)
 #define RCC_AHB2RSTR_DAC2RST_Msk             (0x1UL << RCC_AHB2RSTR_DAC2RST_Pos)/*!< 0x00020000 */
 #define RCC_AHB2RSTR_DAC2RST                 RCC_AHB2RSTR_DAC2RST_Msk
@@ -12762,16 +12900,16 @@ typedef struct {
 #define RCC_AHB2RSTR_DAC3RST_Pos             (18U)
 #define RCC_AHB2RSTR_DAC3RST_Msk             (0x1UL << RCC_AHB2RSTR_DAC3RST_Pos)/*!< 0x00040000 */
 #define RCC_AHB2RSTR_DAC3RST                 RCC_AHB2RSTR_DAC3RST_Msk
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define RCC_AHB2RSTR_DAC4RST_Pos             (19U)
 #define RCC_AHB2RSTR_DAC4RST_Msk             (0x1UL << RCC_AHB2RSTR_DAC4RST_Pos)/*!< 0x00080000 */
 #define RCC_AHB2RSTR_DAC4RST                 RCC_AHB2RSTR_DAC4RST_Msk
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
 #define RCC_AHB2RSTR_AESRST_Pos              (24U)
 #define RCC_AHB2RSTR_AESRST_Msk              (0x1UL << RCC_AHB2RSTR_AESRST_Pos)/*!< 0x01000000 */
 #define RCC_AHB2RSTR_AESRST                  RCC_AHB2RSTR_AESRST_Msk
-#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) || (STM32G414xx) */
 #define RCC_AHB2RSTR_RNGRST_Pos              (26U)
 #define RCC_AHB2RSTR_RNGRST_Msk              (0x1UL << RCC_AHB2RSTR_RNGRST_Pos)/*!< 0x04000000 */
 #define RCC_AHB2RSTR_RNGRST                  RCC_AHB2RSTR_RNGRST_Msk
@@ -12815,21 +12953,25 @@ typedef struct {
 #define RCC_APB1RSTR1_SPI2RST_Pos            (14U)
 #define RCC_APB1RSTR1_SPI2RST_Msk            (0x1UL << RCC_APB1RSTR1_SPI2RST_Pos)/*!< 0x00004000 */
 #define RCC_APB1RSTR1_SPI2RST                RCC_APB1RSTR1_SPI2RST_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_APB1RSTR1_SPI3RST_Pos            (15U)
 #define RCC_APB1RSTR1_SPI3RST_Msk            (0x1UL << RCC_APB1RSTR1_SPI3RST_Pos)/*!< 0x00008000 */
 #define RCC_APB1RSTR1_SPI3RST                RCC_APB1RSTR1_SPI3RST_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_APB1RSTR1_USART2RST_Pos          (17U)
 #define RCC_APB1RSTR1_USART2RST_Msk          (0x1UL << RCC_APB1RSTR1_USART2RST_Pos)/*!< 0x00020000 */
 #define RCC_APB1RSTR1_USART2RST              RCC_APB1RSTR1_USART2RST_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1RSTR1_USART3RST_Pos          (18U)
 #define RCC_APB1RSTR1_USART3RST_Msk          (0x1UL << RCC_APB1RSTR1_USART3RST_Pos)/*!< 0x00040000 */
 #define RCC_APB1RSTR1_USART3RST              RCC_APB1RSTR1_USART3RST_Msk
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RCC_APB1RSTR1_UART4RST_Pos           (19U)
 #define RCC_APB1RSTR1_UART4RST_Msk           (0x1UL << RCC_APB1RSTR1_UART4RST_Pos)/*!< 0x00080000 */
 #define RCC_APB1RSTR1_UART4RST               RCC_APB1RSTR1_UART4RST_Msk
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RCC_APB1RSTR1_UART5RST_Pos           (20U)
 #define RCC_APB1RSTR1_UART5RST_Msk           (0x1UL << RCC_APB1RSTR1_UART5RST_Pos)/*!< 0x00100000 */
 #define RCC_APB1RSTR1_UART5RST               RCC_APB1RSTR1_UART5RST_Msk
@@ -12840,18 +12982,22 @@ typedef struct {
 #define RCC_APB1RSTR1_I2C2RST_Pos            (22U)
 #define RCC_APB1RSTR1_I2C2RST_Msk            (0x1UL << RCC_APB1RSTR1_I2C2RST_Pos)/*!< 0x00400000 */
 #define RCC_APB1RSTR1_I2C2RST                RCC_APB1RSTR1_I2C2RST_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1RSTR1_USBRST_Pos             (23U)
 #define RCC_APB1RSTR1_USBRST_Msk             (0x1UL << RCC_APB1RSTR1_USBRST_Pos)/*!< 0x00800000 */
 #define RCC_APB1RSTR1_USBRST                 RCC_APB1RSTR1_USBRST_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define RCC_APB1RSTR1_FDCANRST_Pos           (25U)
 #define RCC_APB1RSTR1_FDCANRST_Msk           (0x1UL << RCC_APB1RSTR1_FDCANRST_Pos)/*!< 0x02000000 */
 #define RCC_APB1RSTR1_FDCANRST               RCC_APB1RSTR1_FDCANRST_Msk
 #define RCC_APB1RSTR1_PWRRST_Pos             (28U)
 #define RCC_APB1RSTR1_PWRRST_Msk             (0x1UL << RCC_APB1RSTR1_PWRRST_Pos)/*!< 0x10000000 */
 #define RCC_APB1RSTR1_PWRRST                 RCC_APB1RSTR1_PWRRST_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_APB1RSTR1_I2C3RST_Pos            (30U)
 #define RCC_APB1RSTR1_I2C3RST_Msk            (0x1UL << RCC_APB1RSTR1_I2C3RST_Pos)/*!< 0x40000000 */
 #define RCC_APB1RSTR1_I2C3RST                RCC_APB1RSTR1_I2C3RST_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_APB1RSTR1_LPTIM1RST_Pos          (31U)
 #define RCC_APB1RSTR1_LPTIM1RST_Msk          (0x1UL << RCC_APB1RSTR1_LPTIM1RST_Pos)/*!< 0x80000000 */
 #define RCC_APB1RSTR1_LPTIM1RST              RCC_APB1RSTR1_LPTIM1RST_Msk
@@ -12865,9 +13011,11 @@ typedef struct {
 #define RCC_APB1RSTR2_I2C4RST_Msk            (0x1UL << RCC_APB1RSTR2_I2C4RST_Pos)/*!< 0x00000002 */
 #define RCC_APB1RSTR2_I2C4RST                RCC_APB1RSTR2_I2C4RST_Msk
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1RSTR2_UCPD1RST_Pos           (8U)
 #define RCC_APB1RSTR2_UCPD1RST_Msk           (0x1UL << RCC_APB1RSTR2_UCPD1RST_Pos)/*!< 0x00000100 */
 #define RCC_APB1RSTR2_UCPD1RST               RCC_APB1RSTR2_UCPD1RST_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /********************  Bit definition for RCC_APB2RSTR register  **************/
 #define RCC_APB2RSTR_SYSCFGRST_Pos           (0U)
@@ -12899,15 +13047,17 @@ typedef struct {
 #define RCC_APB2RSTR_TIM17RST_Pos            (18U)
 #define RCC_APB2RSTR_TIM17RST_Msk            (0x1UL << RCC_APB2RSTR_TIM17RST_Pos)/*!< 0x00040000 */
 #define RCC_APB2RSTR_TIM17RST                RCC_APB2RSTR_TIM17RST_Msk
-#if defined (STM32G471xx) ||defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) ||defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define RCC_APB2RSTR_TIM20RST_Pos            (20U)
 #define RCC_APB2RSTR_TIM20RST_Msk            (0x1UL << RCC_APB2RSTR_TIM20RST_Pos)/*!< 0x00100000 */
 #define RCC_APB2RSTR_TIM20RST                RCC_APB2RSTR_TIM20RST_Msk
 #endif /* (STM32G471xx) ||(STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB2RSTR_SAI1RST_Pos             (21U)
 #define RCC_APB2RSTR_SAI1RST_Msk             (0x1UL << RCC_APB2RSTR_SAI1RST_Pos)/*!< 0x00200000 */
 #define RCC_APB2RSTR_SAI1RST                 RCC_APB2RSTR_SAI1RST_Msk
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 #define RCC_APB2RSTR_HRTIM1RST_Pos           (26U)
 #define RCC_APB2RSTR_HRTIM1RST_Msk           (0x1UL << RCC_APB2RSTR_HRTIM1RST_Pos)/*!< 0x04000000 */
 #define RCC_APB2RSTR_HRTIM1RST               RCC_APB2RSTR_HRTIM1RST_Msk
@@ -12926,9 +13076,11 @@ typedef struct {
 #define RCC_AHB1ENR_CORDICEN_Pos             (3U)
 #define RCC_AHB1ENR_CORDICEN_Msk             (0x1UL << RCC_AHB1ENR_CORDICEN_Pos)/*!< 0x00000008 */
 #define RCC_AHB1ENR_CORDICEN                 RCC_AHB1ENR_CORDICEN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_AHB1ENR_FMACEN_Pos               (4U)
 #define RCC_AHB1ENR_FMACEN_Msk               (0x1UL << RCC_AHB1ENR_FMACEN_Pos)  /*!< 0x00000010 */
 #define RCC_AHB1ENR_FMACEN                   RCC_AHB1ENR_FMACEN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_AHB1ENR_FLASHEN_Pos              (8U)
 #define RCC_AHB1ENR_FLASHEN_Msk              (0x1UL << RCC_AHB1ENR_FLASHEN_Pos)/*!< 0x00000100 */
 #define RCC_AHB1ENR_FLASHEN                  RCC_AHB1ENR_FLASHEN_Msk
@@ -12961,15 +13113,15 @@ typedef struct {
 #define RCC_AHB2ENR_ADC12EN_Pos              (13U)
 #define RCC_AHB2ENR_ADC12EN_Msk              (0x1UL << RCC_AHB2ENR_ADC12EN_Pos)  /*!< 0x00002000 */
 #define RCC_AHB2ENR_ADC12EN                  RCC_AHB2ENR_ADC12EN_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define RCC_AHB2ENR_ADC345EN_Pos             (14U)
 #define RCC_AHB2ENR_ADC345EN_Msk             (0x1UL << RCC_AHB2ENR_ADC345EN_Pos)  /*!< 0x00004000 */
 #define RCC_AHB2ENR_ADC345EN                 RCC_AHB2ENR_ADC345EN_Msk
-#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32G411xC) */
 #define RCC_AHB2ENR_DAC1EN_Pos               (16U)
 #define RCC_AHB2ENR_DAC1EN_Msk               (0x1UL << RCC_AHB2ENR_DAC1EN_Pos)  /*!< 0x00010000 */
 #define RCC_AHB2ENR_DAC1EN                   RCC_AHB2ENR_DAC1EN_Msk
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define RCC_AHB2ENR_DAC2EN_Pos               (17U)
 #define RCC_AHB2ENR_DAC2EN_Msk               (0x1UL << RCC_AHB2ENR_DAC2EN_Pos)  /*!< 0x00020000 */
 #define RCC_AHB2ENR_DAC2EN                   RCC_AHB2ENR_DAC2EN_Msk
@@ -12977,16 +13129,16 @@ typedef struct {
 #define RCC_AHB2ENR_DAC3EN_Pos               (18U)
 #define RCC_AHB2ENR_DAC3EN_Msk               (0x1UL << RCC_AHB2ENR_DAC3EN_Pos)  /*!< 0x00040000 */
 #define RCC_AHB2ENR_DAC3EN                   RCC_AHB2ENR_DAC3EN_Msk
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define RCC_AHB2ENR_DAC4EN_Pos               (19U)
 #define RCC_AHB2ENR_DAC4EN_Msk               (0x1UL << RCC_AHB2ENR_DAC4EN_Pos)  /*!< 0x00080000 */
 #define RCC_AHB2ENR_DAC4EN                   RCC_AHB2ENR_DAC4EN_Msk
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
 #define RCC_AHB2ENR_AESEN_Pos                (24U)
 #define RCC_AHB2ENR_AESEN_Msk                (0x1UL << RCC_AHB2ENR_AESEN_Pos)  /*!< 0x01000000 */
 #define RCC_AHB2ENR_AESEN                    RCC_AHB2ENR_AESEN_Msk
-#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) || (STM32G414xx) */
 #define RCC_AHB2ENR_RNGEN_Pos                (26U)
 #define RCC_AHB2ENR_RNGEN_Msk                (0x1UL << RCC_AHB2ENR_RNGEN_Pos)  /*!< 0x04000000 */
 #define RCC_AHB2ENR_RNGEN                    RCC_AHB2ENR_RNGEN_Msk
@@ -13036,21 +13188,25 @@ typedef struct {
 #define RCC_APB1ENR1_SPI2EN_Pos              (14U)
 #define RCC_APB1ENR1_SPI2EN_Msk              (0x1UL << RCC_APB1ENR1_SPI2EN_Pos)/*!< 0x00004000 */
 #define RCC_APB1ENR1_SPI2EN                  RCC_APB1ENR1_SPI2EN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_APB1ENR1_SPI3EN_Pos              (15U)
 #define RCC_APB1ENR1_SPI3EN_Msk              (0x1UL << RCC_APB1ENR1_SPI3EN_Pos)/*!< 0x00008000 */
 #define RCC_APB1ENR1_SPI3EN                  RCC_APB1ENR1_SPI3EN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_APB1ENR1_USART2EN_Pos            (17U)
 #define RCC_APB1ENR1_USART2EN_Msk            (0x1UL << RCC_APB1ENR1_USART2EN_Pos)/*!< 0x00020000 */
 #define RCC_APB1ENR1_USART2EN                RCC_APB1ENR1_USART2EN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1ENR1_USART3EN_Pos            (18U)
 #define RCC_APB1ENR1_USART3EN_Msk            (0x1UL << RCC_APB1ENR1_USART3EN_Pos)/*!< 0x00040000 */
 #define RCC_APB1ENR1_USART3EN                RCC_APB1ENR1_USART3EN_Msk
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RCC_APB1ENR1_UART4EN_Pos             (19U)
 #define RCC_APB1ENR1_UART4EN_Msk             (0x1UL << RCC_APB1ENR1_UART4EN_Pos)/*!< 0x00080000 */
 #define RCC_APB1ENR1_UART4EN                 RCC_APB1ENR1_UART4EN_Msk
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RCC_APB1ENR1_UART5EN_Pos             (20U)
 #define RCC_APB1ENR1_UART5EN_Msk             (0x1UL << RCC_APB1ENR1_UART5EN_Pos)/*!< 0x00100000 */
 #define RCC_APB1ENR1_UART5EN                 RCC_APB1ENR1_UART5EN_Msk
@@ -13061,18 +13217,22 @@ typedef struct {
 #define RCC_APB1ENR1_I2C2EN_Pos              (22U)
 #define RCC_APB1ENR1_I2C2EN_Msk              (0x1UL << RCC_APB1ENR1_I2C2EN_Pos)/*!< 0x00400000 */
 #define RCC_APB1ENR1_I2C2EN                  RCC_APB1ENR1_I2C2EN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1ENR1_USBEN_Pos               (23U)
 #define RCC_APB1ENR1_USBEN_Msk               (0x1UL << RCC_APB1ENR1_USBEN_Pos)/*!< 0x00800000 */
 #define RCC_APB1ENR1_USBEN                   RCC_APB1ENR1_USBEN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define RCC_APB1ENR1_FDCANEN_Pos             (25U)
 #define RCC_APB1ENR1_FDCANEN_Msk             (0x1UL << RCC_APB1ENR1_FDCANEN_Pos)/*!< 0x02000000 */
 #define RCC_APB1ENR1_FDCANEN                 RCC_APB1ENR1_FDCANEN_Msk
 #define RCC_APB1ENR1_PWREN_Pos               (28U)
 #define RCC_APB1ENR1_PWREN_Msk               (0x1UL << RCC_APB1ENR1_PWREN_Pos) /*!< 0x10000000 */
 #define RCC_APB1ENR1_PWREN                   RCC_APB1ENR1_PWREN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_APB1ENR1_I2C3EN_Pos              (30U)
 #define RCC_APB1ENR1_I2C3EN_Msk              (0x1UL << RCC_APB1ENR1_I2C3EN_Pos)/*!< 0x40000000 */
 #define RCC_APB1ENR1_I2C3EN                  RCC_APB1ENR1_I2C3EN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_APB1ENR1_LPTIM1EN_Pos            (31U)
 #define RCC_APB1ENR1_LPTIM1EN_Msk            (0x1UL << RCC_APB1ENR1_LPTIM1EN_Pos)/*!< 0x80000000 */
 #define RCC_APB1ENR1_LPTIM1EN                RCC_APB1ENR1_LPTIM1EN_Msk
@@ -13086,9 +13246,11 @@ typedef struct {
 #define RCC_APB1ENR2_I2C4EN_Msk              (0x1UL << RCC_APB1ENR2_I2C4EN_Pos)/*!< 0x00000002 */
 #define RCC_APB1ENR2_I2C4EN                  RCC_APB1ENR2_I2C4EN_Msk
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1ENR2_UCPD1EN_Pos             (8U)
 #define RCC_APB1ENR2_UCPD1EN_Msk             (0x1UL << RCC_APB1ENR2_UCPD1EN_Pos)/*!< 0x00000100 */
 #define RCC_APB1ENR2_UCPD1EN                 RCC_APB1ENR2_UCPD1EN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /********************  Bit definition for RCC_APB2ENR register  ***************/
 #define RCC_APB2ENR_SYSCFGEN_Pos             (0U)
@@ -13120,15 +13282,17 @@ typedef struct {
 #define RCC_APB2ENR_TIM17EN_Pos              (18U)
 #define RCC_APB2ENR_TIM17EN_Msk              (0x1UL << RCC_APB2ENR_TIM17EN_Pos)/*!< 0x00040000 */
 #define RCC_APB2ENR_TIM17EN                  RCC_APB2ENR_TIM17EN_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define RCC_APB2ENR_TIM20EN_Pos              (20U)
 #define RCC_APB2ENR_TIM20EN_Msk              (0x1UL << RCC_APB2ENR_TIM20EN_Pos)/*!< 0x00100000 */
 #define RCC_APB2ENR_TIM20EN                  RCC_APB2ENR_TIM20EN_Msk
 #endif /* (STM32G471xx) ||(STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB2ENR_SAI1EN_Pos               (21U)
 #define RCC_APB2ENR_SAI1EN_Msk               (0x1UL << RCC_APB2ENR_SAI1EN_Pos)/*!< 0x00200000 */
 #define RCC_APB2ENR_SAI1EN                   RCC_APB2ENR_SAI1EN_Msk
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 #define RCC_APB2ENR_HRTIM1EN_Pos              (26U)
 #define RCC_APB2ENR_HRTIM1EN_Msk              (0x1UL << RCC_APB2ENR_HRTIM1EN_Pos)/*!< 0x04000000 */
 #define RCC_APB2ENR_HRTIM1EN                  RCC_APB2ENR_HRTIM1EN_Msk
@@ -13147,9 +13311,11 @@ typedef struct {
 #define RCC_AHB1SMENR_CORDICSMEN_Pos         (3U)
 #define RCC_AHB1SMENR_CORDICSMEN_Msk         (0x1UL << RCC_AHB1SMENR_CORDICSMEN_Pos)/*!< 0x00000008 */
 #define RCC_AHB1SMENR_CORDICSMEN             RCC_AHB1SMENR_CORDICSMEN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_AHB1SMENR_FMACSMEN_Pos           (4U)
 #define RCC_AHB1SMENR_FMACSMEN_Msk           (0x1UL << RCC_AHB1SMENR_FMACSMEN_Pos)  /*!< 0x00000010 */
 #define RCC_AHB1SMENR_FMACSMEN               RCC_AHB1SMENR_FMACSMEN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_AHB1SMENR_FLASHSMEN_Pos          (8U)
 #define RCC_AHB1SMENR_FLASHSMEN_Msk          (0x1UL << RCC_AHB1SMENR_FLASHSMEN_Pos)/*!< 0x00000100 */
 #define RCC_AHB1SMENR_FLASHSMEN              RCC_AHB1SMENR_FLASHSMEN_Msk
@@ -13182,24 +13348,28 @@ typedef struct {
 #define RCC_AHB2SMENR_GPIOGSMEN_Pos          (6U)
 #define RCC_AHB2SMENR_GPIOGSMEN_Msk          (0x1UL << RCC_AHB2SMENR_GPIOGSMEN_Pos)/*!< 0x00000040 */
 #define RCC_AHB2SMENR_GPIOGSMEN              RCC_AHB2SMENR_GPIOGSMEN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_AHB2SMENR_CCMSRAMSMEN_Pos        (9U)
 #define RCC_AHB2SMENR_CCMSRAMSMEN_Msk        (0x1UL << RCC_AHB2SMENR_CCMSRAMSMEN_Pos)  /*!< 0x00000200 */
 #define RCC_AHB2SMENR_CCMSRAMSMEN            RCC_AHB2SMENR_CCMSRAMSMEN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
+#if defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_AHB2SMENR_SRAM2SMEN_Pos          (10U)
 #define RCC_AHB2SMENR_SRAM2SMEN_Msk          (0x1UL << RCC_AHB2SMENR_SRAM2SMEN_Pos)/*!< 0x00000400 */
 #define RCC_AHB2SMENR_SRAM2SMEN              RCC_AHB2SMENR_SRAM2SMEN_Msk
+#endif /* (STM32G411xB) || (STM32G411xC) || (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define RCC_AHB2SMENR_ADC12SMEN_Pos          (13U)
 #define RCC_AHB2SMENR_ADC12SMEN_Msk          (0x1UL << RCC_AHB2SMENR_ADC12SMEN_Pos)/*!< 0x00002000 */
 #define RCC_AHB2SMENR_ADC12SMEN              RCC_AHB2SMENR_ADC12SMEN_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define RCC_AHB2SMENR_ADC345SMEN_Pos         (14U)
 #define RCC_AHB2SMENR_ADC345SMEN_Msk         (0x1UL << RCC_AHB2SMENR_ADC345SMEN_Pos)/*!< 0x00004000 */
 #define RCC_AHB2SMENR_ADC345SMEN             RCC_AHB2SMENR_ADC345SMEN_Msk
-#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32G411xC)*/
 #define RCC_AHB2SMENR_DAC1SMEN_Pos           (16U)
 #define RCC_AHB2SMENR_DAC1SMEN_Msk           (0x1UL << RCC_AHB2SMENR_DAC1SMEN_Pos)/*!< 0x00010000 */
 #define RCC_AHB2SMENR_DAC1SMEN               RCC_AHB2SMENR_DAC1SMEN_Msk
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define RCC_AHB2SMENR_DAC2SMEN_Pos           (17U)
 #define RCC_AHB2SMENR_DAC2SMEN_Msk           (0x1UL << RCC_AHB2SMENR_DAC2SMEN_Pos)/*!< 0x00020000 */
 #define RCC_AHB2SMENR_DAC2SMEN               RCC_AHB2SMENR_DAC2SMEN_Msk
@@ -13207,16 +13377,16 @@ typedef struct {
 #define RCC_AHB2SMENR_DAC3SMEN_Pos           (18U)
 #define RCC_AHB2SMENR_DAC3SMEN_Msk           (0x1UL << RCC_AHB2SMENR_DAC3SMEN_Pos)/*!< 0x00040000 */
 #define RCC_AHB2SMENR_DAC3SMEN               RCC_AHB2SMENR_DAC3SMEN_Msk
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define RCC_AHB2SMENR_DAC4SMEN_Pos           (19U)
 #define RCC_AHB2SMENR_DAC4SMEN_Msk           (0x1UL << RCC_AHB2SMENR_DAC4SMEN_Pos)/*!< 0x00080000 */
 #define RCC_AHB2SMENR_DAC4SMEN               RCC_AHB2SMENR_DAC4SMEN_Msk
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
 #define RCC_AHB2SMENR_AESSMEN_Pos            (24U)
 #define RCC_AHB2SMENR_AESSMEN_Msk            (0x1UL << RCC_AHB2SMENR_AESSMEN_Pos)/*!< 0x01000000 */
 #define RCC_AHB2SMENR_AESSMEN                RCC_AHB2SMENR_AESSMEN_Msk
-#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || (STM32G4A1xx) || (STM32G414xx) */
 #define RCC_AHB2SMENR_RNGSMEN_Pos            (26U)
 #define RCC_AHB2SMENR_RNGSMEN_Msk            (0x1UL << RCC_AHB2SMENR_RNGSMEN_Pos)/*!< 0x04000000 */
 #define RCC_AHB2SMENR_RNGSMEN                RCC_AHB2SMENR_RNGSMEN_Msk
@@ -13266,21 +13436,25 @@ typedef struct {
 #define RCC_APB1SMENR1_SPI2SMEN_Pos          (14U)
 #define RCC_APB1SMENR1_SPI2SMEN_Msk          (0x1UL << RCC_APB1SMENR1_SPI2SMEN_Pos)/*!< 0x00004000 */
 #define RCC_APB1SMENR1_SPI2SMEN              RCC_APB1SMENR1_SPI2SMEN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_APB1SMENR1_SPI3SMEN_Pos          (15U)
 #define RCC_APB1SMENR1_SPI3SMEN_Msk          (0x1UL << RCC_APB1SMENR1_SPI3SMEN_Pos)/*!< 0x00008000 */
 #define RCC_APB1SMENR1_SPI3SMEN              RCC_APB1SMENR1_SPI3SMEN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_APB1SMENR1_USART2SMEN_Pos        (17U)
 #define RCC_APB1SMENR1_USART2SMEN_Msk        (0x1UL << RCC_APB1SMENR1_USART2SMEN_Pos)/*!< 0x00020000 */
 #define RCC_APB1SMENR1_USART2SMEN            RCC_APB1SMENR1_USART2SMEN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1SMENR1_USART3SMEN_Pos        (18U)
 #define RCC_APB1SMENR1_USART3SMEN_Msk        (0x1UL << RCC_APB1SMENR1_USART3SMEN_Pos)/*!< 0x00040000 */
 #define RCC_APB1SMENR1_USART3SMEN            RCC_APB1SMENR1_USART3SMEN_Msk
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RCC_APB1SMENR1_UART4SMEN_Pos         (19U)
 #define RCC_APB1SMENR1_UART4SMEN_Msk         (0x1UL << RCC_APB1SMENR1_UART4SMEN_Pos)/*!< 0x00080000 */
 #define RCC_APB1SMENR1_UART4SMEN             RCC_APB1SMENR1_UART4SMEN_Msk
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RCC_APB1SMENR1_UART5SMEN_Pos         (20U)
 #define RCC_APB1SMENR1_UART5SMEN_Msk         (0x1UL << RCC_APB1SMENR1_UART5SMEN_Pos)/*!< 0x00100000 */
 #define RCC_APB1SMENR1_UART5SMEN             RCC_APB1SMENR1_UART5SMEN_Msk
@@ -13291,18 +13465,22 @@ typedef struct {
 #define RCC_APB1SMENR1_I2C2SMEN_Pos          (22U)
 #define RCC_APB1SMENR1_I2C2SMEN_Msk          (0x1UL << RCC_APB1SMENR1_I2C2SMEN_Pos)/*!< 0x00400000 */
 #define RCC_APB1SMENR1_I2C2SMEN              RCC_APB1SMENR1_I2C2SMEN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1SMENR1_USBSMEN_Pos           (23U)
 #define RCC_APB1SMENR1_USBSMEN_Msk           (0x1UL << RCC_APB1SMENR1_USBSMEN_Pos)/*!< 0x00800000 */
 #define RCC_APB1SMENR1_USBSMEN               RCC_APB1SMENR1_USBSMEN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 #define RCC_APB1SMENR1_FDCANSMEN_Pos         (25U)
 #define RCC_APB1SMENR1_FDCANSMEN_Msk         (0x1UL << RCC_APB1SMENR1_FDCANSMEN_Pos)/*!< 0x02000000 */
 #define RCC_APB1SMENR1_FDCANSMEN             RCC_APB1SMENR1_FDCANSMEN_Msk
 #define RCC_APB1SMENR1_PWRSMEN_Pos           (28U)
 #define RCC_APB1SMENR1_PWRSMEN_Msk           (0x1UL << RCC_APB1SMENR1_PWRSMEN_Pos)/*!< 0x10000000 */
 #define RCC_APB1SMENR1_PWRSMEN               RCC_APB1SMENR1_PWRSMEN_Msk
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_APB1SMENR1_I2C3SMEN_Pos          (30U)
 #define RCC_APB1SMENR1_I2C3SMEN_Msk          (0x1UL << RCC_APB1SMENR1_I2C3SMEN_Pos)/*!< 0x40000000 */
 #define RCC_APB1SMENR1_I2C3SMEN              RCC_APB1SMENR1_I2C3SMEN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #define RCC_APB1SMENR1_LPTIM1SMEN_Pos        (31U)
 #define RCC_APB1SMENR1_LPTIM1SMEN_Msk        (0x1UL << RCC_APB1SMENR1_LPTIM1SMEN_Pos)/*!< 0x80000000 */
 #define RCC_APB1SMENR1_LPTIM1SMEN            RCC_APB1SMENR1_LPTIM1SMEN_Msk
@@ -13316,9 +13494,11 @@ typedef struct {
 #define RCC_APB1SMENR2_I2C4SMEN_Msk          (0x1UL << RCC_APB1SMENR2_I2C4SMEN_Pos)/*!< 0x00000002 */
 #define RCC_APB1SMENR2_I2C4SMEN              RCC_APB1SMENR2_I2C4SMEN_Msk
 #endif
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB1SMENR2_UCPD1SMEN_Pos         (8U)
 #define RCC_APB1SMENR2_UCPD1SMEN_Msk         (0x1UL << RCC_APB1SMENR2_UCPD1SMEN_Pos)/*!< 0x00000100 */
 #define RCC_APB1SMENR2_UCPD1SMEN             RCC_APB1SMENR2_UCPD1SMEN_Msk
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /********************  Bit definition for RCC_APB2SMENR register  *************/
 #define RCC_APB2SMENR_SYSCFGSMEN_Pos         (0U)
@@ -13350,15 +13530,17 @@ typedef struct {
 #define RCC_APB2SMENR_TIM17SMEN_Pos          (18U)
 #define RCC_APB2SMENR_TIM17SMEN_Msk          (0x1UL << RCC_APB2SMENR_TIM17SMEN_Pos)/*!< 0x00040000 */
 #define RCC_APB2SMENR_TIM17SMEN              RCC_APB2SMENR_TIM17SMEN_Msk
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined(STM32G411xC)
 #define RCC_APB2SMENR_TIM20SMEN_Pos          (20U)
 #define RCC_APB2SMENR_TIM20SMEN_Msk          (0x1UL << RCC_APB2SMENR_TIM20SMEN_Pos)/*!< 0x00100000 */
 #define RCC_APB2SMENR_TIM20SMEN              RCC_APB2SMENR_TIM20SMEN_Msk
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_APB2SMENR_SAI1SMEN_Pos           (21U)
 #define RCC_APB2SMENR_SAI1SMEN_Msk           (0x1UL << RCC_APB2SMENR_SAI1SMEN_Pos)/*!< 0x00200000 */
 #define RCC_APB2SMENR_SAI1SMEN               RCC_APB2SMENR_SAI1SMEN_Msk
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 #define RCC_APB2SMENR_HRTIM1SMEN_Pos          (26U)
 #define RCC_APB2SMENR_HRTIM1SMEN_Msk          (0x1UL << RCC_APB2SMENR_HRTIM1SMEN_Pos)/*!< 0x04000000 */
 #define RCC_APB2SMENR_HRTIM1SMEN              RCC_APB2SMENR_HRTIM1SMEN_Msk
@@ -13377,13 +13559,15 @@ typedef struct {
 #define RCC_CCIPR_USART2SEL_0                (0x1UL << RCC_CCIPR_USART2SEL_Pos)/*!< 0x00000004 */
 #define RCC_CCIPR_USART2SEL_1                (0x2UL << RCC_CCIPR_USART2SEL_Pos)/*!< 0x00000008 */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_CCIPR_USART3SEL_Pos              (4U)
 #define RCC_CCIPR_USART3SEL_Msk              (0x3UL << RCC_CCIPR_USART3SEL_Pos)/*!< 0x00000030 */
 #define RCC_CCIPR_USART3SEL                  RCC_CCIPR_USART3SEL_Msk
 #define RCC_CCIPR_USART3SEL_0                (0x1UL << RCC_CCIPR_USART3SEL_Pos)/*!< 0x00000010 */
 #define RCC_CCIPR_USART3SEL_1                (0x2UL << RCC_CCIPR_USART3SEL_Pos)/*!< 0x00000020 */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RCC_CCIPR_UART4SEL_Pos               (6U)
 #define RCC_CCIPR_UART4SEL_Msk               (0x3UL << RCC_CCIPR_UART4SEL_Pos) /*!< 0x000000C0 */
 #define RCC_CCIPR_UART4SEL                   RCC_CCIPR_UART4SEL_Msk
@@ -13391,7 +13575,7 @@ typedef struct {
 #define RCC_CCIPR_UART4SEL_1                 (0x2UL << RCC_CCIPR_UART4SEL_Pos) /*!< 0x00000080 */
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define RCC_CCIPR_UART5SEL_Pos               (8U)
 #define RCC_CCIPR_UART5SEL_Msk               (0x3UL << RCC_CCIPR_UART5SEL_Pos) /*!< 0x00000300 */
 #define RCC_CCIPR_UART5SEL                   RCC_CCIPR_UART5SEL_Msk
@@ -13417,11 +13601,13 @@ typedef struct {
 #define RCC_CCIPR_I2C2SEL_0                  (0x1UL << RCC_CCIPR_I2C2SEL_Pos)  /*!< 0x00004000 */
 #define RCC_CCIPR_I2C2SEL_1                  (0x2UL << RCC_CCIPR_I2C2SEL_Pos)  /*!< 0x00008000 */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define RCC_CCIPR_I2C3SEL_Pos                (16U)
 #define RCC_CCIPR_I2C3SEL_Msk                (0x3UL << RCC_CCIPR_I2C3SEL_Pos)  /*!< 0x00030000 */
 #define RCC_CCIPR_I2C3SEL                    RCC_CCIPR_I2C3SEL_Msk
 #define RCC_CCIPR_I2C3SEL_0                  (0x1UL << RCC_CCIPR_I2C3SEL_Pos)  /*!< 0x00010000 */
 #define RCC_CCIPR_I2C3SEL_1                  (0x2UL << RCC_CCIPR_I2C3SEL_Pos)  /*!< 0x00020000 */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 
 #define RCC_CCIPR_LPTIM1SEL_Pos              (18U)
 #define RCC_CCIPR_LPTIM1SEL_Msk              (0x3UL << RCC_CCIPR_LPTIM1SEL_Pos)/*!< 0x000C0000 */
@@ -13429,17 +13615,21 @@ typedef struct {
 #define RCC_CCIPR_LPTIM1SEL_0                (0x1UL << RCC_CCIPR_LPTIM1SEL_Pos)/*!< 0x00040000 */
 #define RCC_CCIPR_LPTIM1SEL_1                (0x2UL << RCC_CCIPR_LPTIM1SEL_Pos)/*!< 0x00080000 */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_CCIPR_SAI1SEL_Pos                (20U)
 #define RCC_CCIPR_SAI1SEL_Msk                (0x3UL << RCC_CCIPR_SAI1SEL_Pos)/*!< 0x00300000 */
 #define RCC_CCIPR_SAI1SEL                    RCC_CCIPR_SAI1SEL_Msk
 #define RCC_CCIPR_SAI1SEL_0                  (0x1UL << RCC_CCIPR_SAI1SEL_Pos)/*!< 0x00100000 */
 #define RCC_CCIPR_SAI1SEL_1                  (0x2UL << RCC_CCIPR_SAI1SEL_Pos)/*!< 0x00200000 */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
+#if defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define RCC_CCIPR_I2S23SEL_Pos               (22U)
 #define RCC_CCIPR_I2S23SEL_Msk               (0x3UL << RCC_CCIPR_I2S23SEL_Pos)/*!< 0x00C00000 */
 #define RCC_CCIPR_I2S23SEL                   RCC_CCIPR_I2S23SEL_Msk
 #define RCC_CCIPR_I2S23SEL_0                 (0x1UL << RCC_CCIPR_I2S23SEL_Pos)/*!< 0x00400000 */
 #define RCC_CCIPR_I2S23SEL_1                 (0x2UL << RCC_CCIPR_I2S23SEL_Pos)/*!< 0x00800000 */
+#endif /* (STM32G411xB) || (STM32G411xC) || (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 #define RCC_CCIPR_FDCANSEL_Pos               (24U)
 #define RCC_CCIPR_FDCANSEL_Msk               (0x3UL << RCC_CCIPR_FDCANSEL_Pos) /*!< 0x03000000 */
@@ -13459,13 +13649,13 @@ typedef struct {
 #define RCC_CCIPR_ADC12SEL_0                 (0x1UL << RCC_CCIPR_ADC12SEL_Pos)   /*!< 0x10000000 */
 #define RCC_CCIPR_ADC12SEL_1                 (0x2UL << RCC_CCIPR_ADC12SEL_Pos)   /*!< 0x20000000 */
 
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define RCC_CCIPR_ADC345SEL_Pos              (30U)
 #define RCC_CCIPR_ADC345SEL_Msk              (0x3UL << RCC_CCIPR_ADC345SEL_Pos)   /*!< 0x80000000 */
 #define RCC_CCIPR_ADC345SEL                  RCC_CCIPR_ADC345SEL_Msk
 #define RCC_CCIPR_ADC345SEL_0                (0x1UL << RCC_CCIPR_ADC345SEL_Pos)   /*!< 0x40000000 */
 #define RCC_CCIPR_ADC345SEL_1                (0x2UL << RCC_CCIPR_ADC345SEL_Pos)   /*!< 0x80000000 */
-#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
+#endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32G411xC) */
 
 /********************  Bit definition for RCC_BDCR register  ******************/
 #define RCC_BDCR_LSEON_Pos                   (0U)
@@ -14428,7 +14618,7 @@ typedef struct {
 #define TAMP_BKP15R_Msk               (0xFFFFFFFFUL << TAMP_BKP15R_Pos)          /*!< 0xFFFFFFFF */
 #define TAMP_BKP15R                   TAMP_BKP15R_Msk
 
- #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+ #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 /********************  Bits definition for TAMP_BKP16R register  ***************/
 #define TAMP_BKP16R_Pos               (0U)
 #define TAMP_BKP16R_Msk               (0xFFFFFFFFUL << TAMP_BKP16R_Pos)          /*!< 0xFFFFFFFF */
@@ -14511,24 +14701,12 @@ typedef struct {
 
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /******************************************************************************/
 /*                                                                            */
 /*                          Serial Audio Interface                            */
 /*                                                                            */
 /******************************************************************************/
-/********************  Bit definition for SAI_GCR register  *******************/
-#define SAI_GCR_SYNCIN_Pos         (0U)
-#define SAI_GCR_SYNCIN_Msk         (0x3UL << SAI_GCR_SYNCIN_Pos)               /*!< 0x00000003 */
-#define SAI_GCR_SYNCIN             SAI_GCR_SYNCIN_Msk                          /*!<SYNCIN[1:0] bits (Synchronization Inputs)   */
-#define SAI_GCR_SYNCIN_0           (0x1UL << SAI_GCR_SYNCIN_Pos)               /*!< 0x00000001 */
-#define SAI_GCR_SYNCIN_1           (0x2UL << SAI_GCR_SYNCIN_Pos)               /*!< 0x00000002 */
-
-#define SAI_GCR_SYNCOUT_Pos        (4U)
-#define SAI_GCR_SYNCOUT_Msk        (0x3UL << SAI_GCR_SYNCOUT_Pos)              /*!< 0x00000030 */
-#define SAI_GCR_SYNCOUT            SAI_GCR_SYNCOUT_Msk                         /*!<SYNCOUT[1:0] bits (Synchronization Outputs) */
-#define SAI_GCR_SYNCOUT_0          (0x1UL << SAI_GCR_SYNCOUT_Pos)              /*!< 0x00000010 */
-#define SAI_GCR_SYNCOUT_1          (0x2UL << SAI_GCR_SYNCOUT_Pos)              /*!< 0x00000020 */
-
 /*******************  Bit definition for SAI_xCR1 register  *******************/
 #define SAI_xCR1_MODE_Pos          (0U)
 #define SAI_xCR1_MODE_Msk          (0x3UL << SAI_xCR1_MODE_Pos)                /*!< 0x00000003 */
@@ -14861,6 +15039,7 @@ typedef struct {
 #define SAI_PDMDLY_DLYM4R_0        (0x1UL << SAI_PDMDLY_DLYM4R_Pos)            /*!< 0x10000000 */
 #define SAI_PDMDLY_DLYM4R_1        (0x2UL << SAI_PDMDLY_DLYM4R_Pos)            /*!< 0x20000000 */
 #define SAI_PDMDLY_DLYM4R_2        (0x4UL << SAI_PDMDLY_DLYM4R_Pos)            /*!< 0x40000000 */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 
 /******************************************************************************/
@@ -14868,10 +15047,12 @@ typedef struct {
 /*                        Serial Peripheral Interface (SPI)                   */
 /*                                                                            */
 /******************************************************************************/
+#if defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /*
- * @brief Specific device feature definitions (not present on all devices in the STM32G4 serie)
+ * @brief Specific device feature definitions (not present on all devices in the STM32G4 series)
  */
 #define SPI_I2S_SUPPORT                       /*!< I2S support */
+#endif /* (STM32G411xB) || (STM32G411xC) || (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /*******************  Bit definition for SPI_CR1 register  ********************/
 #define SPI_CR1_CPHA_Pos            (0U)
@@ -15111,9 +15292,11 @@ typedef struct {
 #define SYSCFG_CFGR1_I2C2_FMP_Pos       (21U)
 #define SYSCFG_CFGR1_I2C2_FMP_Msk       (0x1UL << SYSCFG_CFGR1_I2C2_FMP_Pos)   /*!< 0x00200000 */
 #define SYSCFG_CFGR1_I2C2_FMP           SYSCFG_CFGR1_I2C2_FMP_Msk              /*!< I2C2 Fast mode plus */
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define SYSCFG_CFGR1_I2C3_FMP_Pos       (22U)
 #define SYSCFG_CFGR1_I2C3_FMP_Msk       (0x1UL << SYSCFG_CFGR1_I2C3_FMP_Pos)   /*!< 0x00400000 */
 #define SYSCFG_CFGR1_I2C3_FMP           SYSCFG_CFGR1_I2C3_FMP_Msk              /*!< I2C3 Fast mode plus */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define SYSCFG_CFGR1_I2C4_FMP_Pos       (23U)
 #define SYSCFG_CFGR1_I2C4_FMP_Msk       (0x1UL << SYSCFG_CFGR1_I2C4_FMP_Pos)   /*!< 0x00800000 */
@@ -15352,6 +15535,7 @@ typedef struct {
 #define SYSCFG_EXTICR4_EXTI15_PE            (0x00004000U)                      /*!<PE[15] pin */
 #define SYSCFG_EXTICR4_EXTI15_PF            (0x00005000U)                      /*!<PF[15] pin */
 
+#if defined (STM32G414xx) || defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /******************  Bit definition for SYSCFG_SCSR register  ****************/
 #define SYSCFG_SCSR_CCMER_Pos         (0U)
 #define SYSCFG_SCSR_CCMER_Msk         (0x1UL << SYSCFG_SCSR_CCMER_Pos)      /*!< 0x00000001 */
@@ -15359,6 +15543,7 @@ typedef struct {
 #define SYSCFG_SCSR_CCMBSY_Pos        (1U)
 #define SYSCFG_SCSR_CCMBSY_Msk        (0x1UL << SYSCFG_SCSR_CCMBSY_Pos)     /*!< 0x00000002 */
 #define SYSCFG_SCSR_CCMBSY            SYSCFG_SCSR_CCMBSY_Msk                /*!< CCMSRAM  Erase Ongoing */
+#endif /* (STM32G414xx) || (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /******************  Bit definition for SYSCFG_CFGR2 register  ****************/
 #define SYSCFG_CFGR2_CLL_Pos            (0U)
@@ -15377,6 +15562,7 @@ typedef struct {
 #define SYSCFG_CFGR2_SPF_Msk            (0x1UL << SYSCFG_CFGR2_SPF_Pos)        /*!< 0x00000100 */
 #define SYSCFG_CFGR2_SPF                SYSCFG_CFGR2_SPF_Msk                   /*!< SRAM Parity Flag */
 
+#if defined (STM32G414xx) || defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /******************  Bit definition for SYSCFG_SWPR register  ****************/
 #define SYSCFG_SWPR_PAGE0_Pos          (0U)
 #define SYSCFG_SWPR_PAGE0_Msk          (0x1UL << SYSCFG_SWPR_PAGE0_Pos)       /*!< 0x00000001 */
@@ -15408,7 +15594,7 @@ typedef struct {
 #define SYSCFG_SWPR_PAGE9_Pos          (9U)
 #define SYSCFG_SWPR_PAGE9_Msk          (0x1UL << SYSCFG_SWPR_PAGE9_Pos)       /*!< 0x00000200 */
 #define SYSCFG_SWPR_PAGE9              (SYSCFG_SWPR_PAGE9_Msk)                /*!< CCMSRAM  Write protection page 9 */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define SYSCFG_SWPR_PAGE10_Pos         (10U)
 #define SYSCFG_SWPR_PAGE10_Msk         (0x1UL << SYSCFG_SWPR_PAGE10_Pos)      /*!< 0x00000400 */
 #define SYSCFG_SWPR_PAGE10             (SYSCFG_SWPR_PAGE10_Msk)               /*!< CCMSRAM  Write protection page 10*/
@@ -15428,7 +15614,7 @@ typedef struct {
 #define SYSCFG_SWPR_PAGE15_Msk         (0x1UL << SYSCFG_SWPR_PAGE15_Pos)      /*!< 0x00008000 */
 #define SYSCFG_SWPR_PAGE15             (SYSCFG_SWPR_PAGE15_Msk)               /*!< CCMSRAM  Write protection page 15*/
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define SYSCFG_SWPR_PAGE16_Pos         (16U)
 #define SYSCFG_SWPR_PAGE16_Msk         (0x1UL << SYSCFG_SWPR_PAGE16_Pos)      /*!< 0x00010000 */
 #define SYSCFG_SWPR_PAGE16             (SYSCFG_SWPR_PAGE16_Msk)               /*!< CCMSRAM  Write protection page 16*/
@@ -15484,6 +15670,7 @@ typedef struct {
 #define SYSCFG_SKR_KEY_Msk              (0xFFUL << SYSCFG_SKR_KEY_Pos)         /*!< 0x000000FF */
 #define SYSCFG_SKR_KEY                  SYSCFG_SKR_KEY_Msk                     /*!< CCMSRAM  write protection key for software erase  */
 
+#endif /* (STM32G414xx) || (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 /******************************************************************************/
 /*                                                                            */
 /*                                    TIM                                     */
@@ -16209,6 +16396,14 @@ typedef struct {
 #define TIM1_AF1_BKINE_Pos        (0U)
 #define TIM1_AF1_BKINE_Msk        (0x1UL << TIM1_AF1_BKINE_Pos)                /*!< 0x00000001 */
 #define TIM1_AF1_BKINE            TIM1_AF1_BKINE_Msk                           /*!<BRK BKIN input enable */
+#if defined (STM32G411xB) || defined (STM32G411xC)
+#define TIM1_AF1_BKCMP1E_Pos      (1U)
+#define TIM1_AF1_BKCMP1E_Msk      (0x1UL << TIM1_AF1_BKCMP1E_Pos)              /*!< 0x00000002 */
+#define TIM1_AF1_BKCMP1E          TIM1_AF1_BKCMP1E_Msk                         /*!<BRK COMP1 enable */
+#define TIM1_AF1_BKCMP2E_Pos      (2U)
+#define TIM1_AF1_BKCMP2E_Msk      (0x1UL << TIM1_AF1_BKCMP2E_Pos)              /*!< 0x00000004 */
+#define TIM1_AF1_BKCMP2E          TIM1_AF1_BKCMP2E_Msk                         /*!<BRK COMP2 enable */
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define TIM1_AF1_BKCMP1E_Pos      (1U)
 #define TIM1_AF1_BKCMP1E_Msk      (0x1UL << TIM1_AF1_BKCMP1E_Pos)              /*!< 0x00000002 */
 #define TIM1_AF1_BKCMP1E          TIM1_AF1_BKCMP1E_Msk                         /*!<BRK COMP1 enable */
@@ -16221,7 +16416,19 @@ typedef struct {
 #define TIM1_AF1_BKCMP4E_Pos      (4U)
 #define TIM1_AF1_BKCMP4E_Msk      (0x1UL << TIM1_AF1_BKCMP4E_Pos)              /*!< 0x00000010 */
 #define TIM1_AF1_BKCMP4E          TIM1_AF1_BKCMP4E_Msk                         /*!<BRK COMP4 enable */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#define TIM1_AF1_BKCMP1E_Pos      (1U)
+#define TIM1_AF1_BKCMP1E_Msk      (0x1UL << TIM1_AF1_BKCMP1E_Pos)              /*!< 0x00000002 */
+#define TIM1_AF1_BKCMP1E          TIM1_AF1_BKCMP1E_Msk                         /*!<BRK COMP1 enable */
+#define TIM1_AF1_BKCMP2E_Pos      (2U)
+#define TIM1_AF1_BKCMP2E_Msk      (0x1UL << TIM1_AF1_BKCMP2E_Pos)              /*!< 0x00000004 */
+#define TIM1_AF1_BKCMP2E          TIM1_AF1_BKCMP2E_Msk                         /*!<BRK COMP2 enable */
+#define TIM1_AF1_BKCMP3E_Pos      (3U)
+#define TIM1_AF1_BKCMP3E_Msk      (0x1UL << TIM1_AF1_BKCMP3E_Pos)              /*!< 0x00000008 */
+#define TIM1_AF1_BKCMP3E          TIM1_AF1_BKCMP3E_Msk                         /*!<BRK COMP3 enable */
+#define TIM1_AF1_BKCMP4E_Pos      (4U)
+#define TIM1_AF1_BKCMP4E_Msk      (0x1UL << TIM1_AF1_BKCMP4E_Pos)              /*!< 0x00000010 */
+#define TIM1_AF1_BKCMP4E          TIM1_AF1_BKCMP4E_Msk                         /*!<BRK COMP4 enable */
 #define TIM1_AF1_BKCMP5E_Pos      (5U)
 #define TIM1_AF1_BKCMP5E_Msk      (0x1UL << TIM1_AF1_BKCMP5E_Pos)              /*!< 0x00000020 */
 #define TIM1_AF1_BKCMP5E          TIM1_AF1_BKCMP5E_Msk                         /*!<BRK COMP5 enable */
@@ -16235,6 +16442,14 @@ typedef struct {
 #define TIM1_AF1_BKINP_Pos        (9U)
 #define TIM1_AF1_BKINP_Msk        (0x1UL << TIM1_AF1_BKINP_Pos)                /*!< 0x00000200 */
 #define TIM1_AF1_BKINP            TIM1_AF1_BKINP_Msk                           /*!<BRK BKIN input polarity */
+#if defined (STM32G411xB) || defined (STM32G411xC)
+#define TIM1_AF1_BKCMP1P_Pos      (10U)
+#define TIM1_AF1_BKCMP1P_Msk      (0x1UL << TIM1_AF1_BKCMP1P_Pos)              /*!< 0x00000400 */
+#define TIM1_AF1_BKCMP1P          TIM1_AF1_BKCMP1P_Msk                         /*!<BRK COMP1 input polarity */
+#define TIM1_AF1_BKCMP2P_Pos      (11U)
+#define TIM1_AF1_BKCMP2P_Msk      (0x1UL << TIM1_AF1_BKCMP2P_Pos)              /*!< 0x00000800 */
+#define TIM1_AF1_BKCMP2P          TIM1_AF1_BKCMP2P_Msk                         /*!<BRK COMP2 input polarity */
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define TIM1_AF1_BKCMP1P_Pos      (10U)
 #define TIM1_AF1_BKCMP1P_Msk      (0x1UL << TIM1_AF1_BKCMP1P_Pos)              /*!< 0x00000400 */
 #define TIM1_AF1_BKCMP1P          TIM1_AF1_BKCMP1P_Msk                         /*!<BRK COMP1 input polarity */
@@ -16247,6 +16462,7 @@ typedef struct {
 #define TIM1_AF1_BKCMP4P_Pos      (13U)
 #define TIM1_AF1_BKCMP4P_Msk      (0x1UL << TIM1_AF1_BKCMP4P_Pos)              /*!< 0x00002000 */
 #define TIM1_AF1_BKCMP4P          TIM1_AF1_BKCMP4P_Msk                         /*!<BRK COMP4 input polarity */
+#endif /* (STM32G411xB) || (STM32G411xC) */
 #define TIM1_AF1_ETRSEL_Pos       (14U)
 #define TIM1_AF1_ETRSEL_Msk       (0xFUL << TIM1_AF1_ETRSEL_Pos)               /*!< 0x0003C000 */
 #define TIM1_AF1_ETRSEL           TIM1_AF1_ETRSEL_Msk                          /*!<ETRSEL[3:0] bits (TIM1 ETR source selection) */
@@ -16259,6 +16475,14 @@ typedef struct {
 #define TIM1_AF2_BK2INE_Pos        (0U)
 #define TIM1_AF2_BK2INE_Msk        (0x1UL << TIM1_AF2_BK2INE_Pos)                /*!< 0x00000001 */
 #define TIM1_AF2_BK2INE            TIM1_AF2_BK2INE_Msk                           /*!<BRK2 BKIN input enable */
+#if defined (STM32G411xB) || defined (STM32G411xC)
+#define TIM1_AF2_BK2CMP1E_Pos      (1U)
+#define TIM1_AF2_BK2CMP1E_Msk      (0x1UL << TIM1_AF2_BK2CMP1E_Pos)              /*!< 0x00000002 */
+#define TIM1_AF2_BK2CMP1E          TIM1_AF2_BK2CMP1E_Msk                         /*!<BRK2 COMP1 enable */
+#define TIM1_AF2_BK2CMP2E_Pos      (2U)
+#define TIM1_AF2_BK2CMP2E_Msk      (0x1UL << TIM1_AF2_BK2CMP2E_Pos)              /*!< 0x00000004 */
+#define TIM1_AF2_BK2CMP2E          TIM1_AF2_BK2CMP2E_Msk                         /*!<BRK2 COMP2 enable */
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define TIM1_AF2_BK2CMP1E_Pos      (1U)
 #define TIM1_AF2_BK2CMP1E_Msk      (0x1UL << TIM1_AF2_BK2CMP1E_Pos)              /*!< 0x00000002 */
 #define TIM1_AF2_BK2CMP1E          TIM1_AF2_BK2CMP1E_Msk                         /*!<BRK2 COMP1 enable */
@@ -16271,7 +16495,19 @@ typedef struct {
 #define TIM1_AF2_BK2CMP4E_Pos      (4U)
 #define TIM1_AF2_BK2CMP4E_Msk      (0x1UL << TIM1_AF2_BK2CMP4E_Pos)              /*!< 0x00000010 */
 #define TIM1_AF2_BK2CMP4E          TIM1_AF2_BK2CMP4E_Msk                         /*!<BRK2 COMP4 enable */
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#define TIM1_AF2_BK2CMP1E_Pos      (1U)
+#define TIM1_AF2_BK2CMP1E_Msk      (0x1UL << TIM1_AF2_BK2CMP1E_Pos)              /*!< 0x00000002 */
+#define TIM1_AF2_BK2CMP1E          TIM1_AF2_BK2CMP1E_Msk                         /*!<BRK2 COMP1 enable */
+#define TIM1_AF2_BK2CMP2E_Pos      (2U)
+#define TIM1_AF2_BK2CMP2E_Msk      (0x1UL << TIM1_AF2_BK2CMP2E_Pos)              /*!< 0x00000004 */
+#define TIM1_AF2_BK2CMP2E          TIM1_AF2_BK2CMP2E_Msk                         /*!<BRK2 COMP2 enable */
+#define TIM1_AF2_BK2CMP3E_Pos      (3U)
+#define TIM1_AF2_BK2CMP3E_Msk      (0x1UL << TIM1_AF2_BK2CMP3E_Pos)              /*!< 0x00000008 */
+#define TIM1_AF2_BK2CMP3E          TIM1_AF2_BK2CMP3E_Msk                         /*!<BRK2 COMP3 enable */
+#define TIM1_AF2_BK2CMP4E_Pos      (4U)
+#define TIM1_AF2_BK2CMP4E_Msk      (0x1UL << TIM1_AF2_BK2CMP4E_Pos)              /*!< 0x00000010 */
+#define TIM1_AF2_BK2CMP4E          TIM1_AF2_BK2CMP4E_Msk                         /*!<BRK2 COMP4 enable */
 #define TIM1_AF2_BK2CMP5E_Pos      (5U)
 #define TIM1_AF2_BK2CMP5E_Msk      (0x1UL << TIM1_AF2_BK2CMP5E_Pos)              /*!< 0x00000020 */
 #define TIM1_AF2_BK2CMP5E          TIM1_AF2_BK2CMP5E_Msk                         /*!<BRK2 COMP5 enable */
@@ -16285,6 +16521,14 @@ typedef struct {
 #define TIM1_AF2_BK2INP_Pos        (9U)
 #define TIM1_AF2_BK2INP_Msk        (0x1UL << TIM1_AF2_BK2INP_Pos)                /*!< 0x00000200 */
 #define TIM1_AF2_BK2INP            TIM1_AF2_BK2INP_Msk                           /*!<BRK2 BKIN input polarity */
+#if defined (STM32G411xB) || defined (STM32G411xC)
+#define TIM1_AF2_BK2CMP1P_Pos      (10U)
+#define TIM1_AF2_BK2CMP1P_Msk      (0x1UL << TIM1_AF2_BK2CMP1P_Pos)              /*!< 0x00000400 */
+#define TIM1_AF2_BK2CMP1P          TIM1_AF2_BK2CMP1P_Msk                         /*!<BRK2 COMP1 input polarity */
+#define TIM1_AF2_BK2CMP2P_Pos      (11U)
+#define TIM1_AF2_BK2CMP2P_Msk      (0x1UL << TIM1_AF2_BK2CMP2P_Pos)              /*!< 0x00000800 */
+#define TIM1_AF2_BK2CMP2P          TIM1_AF2_BK2CMP2P_Msk                         /*!<BRK2 COMP2 input polarity */
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define TIM1_AF2_BK2CMP1P_Pos      (10U)
 #define TIM1_AF2_BK2CMP1P_Msk      (0x1UL << TIM1_AF2_BK2CMP1P_Pos)              /*!< 0x00000400 */
 #define TIM1_AF2_BK2CMP1P          TIM1_AF2_BK2CMP1P_Msk                         /*!<BRK2 COMP1 input polarity */
@@ -16297,6 +16541,7 @@ typedef struct {
 #define TIM1_AF2_BK2CMP4P_Pos      (13U)
 #define TIM1_AF2_BK2CMP4P_Msk      (0x1UL << TIM1_AF2_BK2CMP4P_Pos)              /*!< 0x00000800 */
 #define TIM1_AF2_BK2CMP4P          TIM1_AF2_BK2CMP4P_Msk                         /*!<BRK2 COMP4 input polarity */
+#endif /* (STM32G411xB) || (STM32G411xC) */
 #define TIM1_AF2_OCRSEL_Pos        (16U)
 #define TIM1_AF2_OCRSEL_Msk        (0x7UL << TIM1_AF2_OCRSEL_Pos)                /*!< 0x00070000 */
 #define TIM1_AF2_OCRSEL            TIM1_AF2_OCRSEL_Msk                           /*!<BRK2 COMP2 input polarity */
@@ -17066,6 +17311,7 @@ typedef struct {
 #define VREFBUF_CCR_TRIM        VREFBUF_CCR_TRIM_Msk                           /*!<TRIM[5:0] bits (Trimming code)  */
 #endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /******************************************************************************/
 /*                                                                            */
 /*                         USB Device FS Endpoint registers                   */
@@ -17726,7 +17972,9 @@ typedef struct {
 #define USB_COUNT7_RX_1_NUM_BLOCK_1_4            (0x40000000U)           /*!< Bit 4 */
 
 #define USB_COUNT7_RX_1_BLSIZE_1                 (0x80000000U)           /*!< BLock SIZE (high) */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /******************************************************************************/
 /*                                                                            */
 /*                                    UCPD                                    */
@@ -18046,6 +18294,7 @@ typedef struct {
 #define UCPD_RX_ORDEXT2_RXSOPX2_Pos         (0U)
 #define UCPD_RX_ORDEXT2_RXSOPX2_Msk         (0xFFFFFUL << UCPD_RX_ORDEXT2_RXSOPX2_Pos)/*!< 0x000FFFFF */
 #define UCPD_RX_ORDEXT2_RXSOPX2             UCPD_RX_ORDEXT2_RXSOPX2_Msk               /*!< RX Ordered Set Extension Register 1 */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /******************************************************************************/
 /*                                                                            */
@@ -18109,7 +18358,7 @@ typedef struct {
   */
 
 /******************************* ADC Instances ********************************/
-#if defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define IS_ADC_ALL_INSTANCE(INSTANCE) (((INSTANCE) == ADC1) || \
                                        ((INSTANCE) == ADC2) || \
                                        ((INSTANCE) == ADC3))
@@ -18118,7 +18367,7 @@ typedef struct {
 
 #define IS_ADC_COMMON_INSTANCE(INSTANCE) (((INSTANCE) == ADC12_COMMON) || \
                                           ((INSTANCE) == ADC345_COMMON) )
-#elif defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#elif defined (STM32G473xx) || defined (STM32G474xx)  || defined (STM32G483xx) || defined (STM32G484xx)
 #define IS_ADC_ALL_INSTANCE(INSTANCE) (((INSTANCE) == ADC1) || \
                                        ((INSTANCE) == ADC2) || \
                                        ((INSTANCE) == ADC3) || \
@@ -18130,7 +18379,7 @@ typedef struct {
 
 #define IS_ADC_COMMON_INSTANCE(INSTANCE) (((INSTANCE) == ADC12_COMMON) || \
                                           ((INSTANCE) == ADC345_COMMON) )
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_ADC_ALL_INSTANCE(INSTANCE) (((INSTANCE) == ADC1) || \
                                        ((INSTANCE) == ADC2))
 
@@ -18139,10 +18388,10 @@ typedef struct {
 #define IS_ADC_COMMON_INSTANCE(INSTANCE) ((INSTANCE) == ADC12_COMMON)
 #endif /* (STM32G471xx) || (STM32G491xx) || (STM32G4A1xx) */
 
-#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx)
+#if defined (STM32G441xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G4A1xx) || defined (STM32G414xx)
 /******************************* AES Instances ********************************/
 #define IS_AES_ALL_INSTANCE(INSTANCE) ((INSTANCE) == AES)
-#endif /* (STM32G441xx) || (STM32G483xx) || (STM32G484xx) || (STM32G4A1xx) */
+#endif /* (STM32G441xx) || (STM32G483xx) || (STM32G484xx) || (STM32G4A1xx) || (STM32G414xx)*/
 
 /******************************** FDCAN Instances ******************************/
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
@@ -18152,13 +18401,13 @@ typedef struct {
 #elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define IS_FDCAN_ALL_INSTANCE(INSTANCE) (((INSTANCE) == FDCAN1) || \
                                          ((INSTANCE) == FDCAN2))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_FDCAN_ALL_INSTANCE(INSTANCE) ((INSTANCE) == FDCAN1)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 #define IS_FDCAN_CONFIG_INSTANCE(INSTANCE) ((INSTANCE) == FDCAN_CONFIG)
 /******************************** COMP Instances ******************************/
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define IS_COMP_ALL_INSTANCE(INSTANCE) (((INSTANCE) == COMP1) || \
                                         ((INSTANCE) == COMP2) || \
                                         ((INSTANCE) == COMP3) || \
@@ -18171,6 +18420,9 @@ typedef struct {
                                         ((INSTANCE) == COMP2) || \
                                         ((INSTANCE) == COMP3) || \
                                         ((INSTANCE) == COMP4))
+#elif defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_COMP_ALL_INSTANCE(INSTANCE) (((INSTANCE) == COMP1) || \
+                                        ((INSTANCE) == COMP2))
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /******************************* CORDIC Instances *****************************/
@@ -18180,19 +18432,19 @@ typedef struct {
 #define IS_CRC_ALL_INSTANCE(INSTANCE) ((INSTANCE) == CRC)
 
 /******************************* DAC Instances ********************************/
-#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+#if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define IS_DAC_ALL_INSTANCE(INSTANCE) (((INSTANCE) == DAC1) || \
                                        ((INSTANCE) == DAC2) || \
                                        ((INSTANCE) == DAC3) || \
                                        ((INSTANCE) == DAC4))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define IS_DAC_ALL_INSTANCE(INSTANCE) (((INSTANCE) == DAC1) || \
                                        ((INSTANCE) == DAC3))
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 
 /******************************** DMA Instances *******************************/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define IS_DMA_ALL_INSTANCE(INSTANCE) (((INSTANCE) == DMA1_Channel1) || \
                                        ((INSTANCE) == DMA1_Channel2) || \
                                        ((INSTANCE) == DMA1_Channel3) || \
@@ -18209,7 +18461,7 @@ typedef struct {
                                        ((INSTANCE) == DMA2_Channel6) || \
                                        ((INSTANCE) == DMA2_Channel7) || \
                                        ((INSTANCE) == DMA2_Channel8))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_DMA_ALL_INSTANCE(INSTANCE) (((INSTANCE) == DMA1_Channel1) || \
                                        ((INSTANCE) == DMA1_Channel2) || \
                                        ((INSTANCE) == DMA1_Channel3) || \
@@ -18229,8 +18481,10 @@ typedef struct {
                                                    ((INSTANCE) == DMAMUX1_RequestGenerator2) || \
                                                    ((INSTANCE) == DMAMUX1_RequestGenerator3))
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 /******************************* FMAC Instances *******************************/
 #define IS_FMAC_ALL_INSTANCE(INSTANCE) ((INSTANCE) == FMAC)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 
 /******************************* GPIO Instances *******************************/
 #define IS_GPIO_ALL_INSTANCE(INSTANCE) (((INSTANCE) == GPIOA) || \
@@ -18253,17 +18507,20 @@ typedef struct {
                                        ((INSTANCE) == I2C2) || \
                                        ((INSTANCE) == I2C3) || \
                                        ((INSTANCE) == I2C4))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G431xx) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define IS_I2C_ALL_INSTANCE(INSTANCE) (((INSTANCE) == I2C1) || \
                                        ((INSTANCE) == I2C2) || \
                                        ((INSTANCE) == I2C3))
+#elif defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_I2C_ALL_INSTANCE(INSTANCE) (((INSTANCE) == I2C1) || \
+                                       ((INSTANCE) == I2C2))
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** I2C Instances : wakeup capability from stop modes *********/
 #define IS_I2C_WAKEUP_FROMSTOP_INSTANCE(INSTANCE) IS_I2C_ALL_INSTANCE(INSTANCE)
 
-/****************************** OPAMP Instances *******************************/
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
+/****************************** OPAMP Instances *******************************/
 #define IS_OPAMP_ALL_INSTANCE(INSTANCE) (((INSTANCE) == OPAMP1) || \
                                          ((INSTANCE) == OPAMP2) || \
                                          ((INSTANCE) == OPAMP3) || \
@@ -18271,18 +18528,25 @@ typedef struct {
                                          ((INSTANCE) == OPAMP5) || \
                                          ((INSTANCE) == OPAMP6))
 #elif defined (STM32G491xx) || defined (STM32G4A1xx)
+/****************************** OPAMP Instances *******************************/
 #define IS_OPAMP_ALL_INSTANCE(INSTANCE) (((INSTANCE) == OPAMP1) || \
                                          ((INSTANCE) == OPAMP2) || \
                                          ((INSTANCE) == OPAMP3) || \
                                          ((INSTANCE) == OPAMP6))
 #elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx)
+/****************************** OPAMP Instances *******************************/
 #define IS_OPAMP_ALL_INSTANCE(INSTANCE) (((INSTANCE) == OPAMP1) || \
                                          ((INSTANCE) == OPAMP2) || \
                                          ((INSTANCE) == OPAMP3))
+#elif defined (STM32G411xB) || defined (STM32G411xC)
+/****************************** OPAMP Instances *******************************/
+#define IS_OPAMP_ALL_INSTANCE(INSTANCE) ((INSTANCE) == OPAMP1)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /******************************** PCD Instances *******************************/
 #define IS_PCD_ALL_INSTANCE(INSTANCE) ((INSTANCE) == USB)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 /******************************* QSPI Instances *******************************/
@@ -18303,14 +18567,19 @@ typedef struct {
                                          ((INSTANCE) == I2C2) || \
                                          ((INSTANCE) == I2C3) || \
                                          ((INSTANCE) == I2C4))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G431xx) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define IS_SMBUS_ALL_INSTANCE(INSTANCE) (((INSTANCE) == I2C1) || \
                                          ((INSTANCE) == I2C2) || \
                                          ((INSTANCE) == I2C3))
+#elif defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_SMBUS_ALL_INSTANCE(INSTANCE) (((INSTANCE) == I2C1) || \
+                                         ((INSTANCE) == I2C2))
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /******************************** SAI Instances *******************************/
 #define IS_SAI_ALL_INSTANCE(INSTANCE) (((INSTANCE) == SAI1_Block_A) || ((INSTANCE) == SAI1_Block_B))
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /******************************** SPI Instances *******************************/
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
@@ -18318,15 +18587,22 @@ typedef struct {
                                        ((INSTANCE) == SPI2) || \
                                        ((INSTANCE) == SPI3) || \
                                        ((INSTANCE) == SPI4))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G414xx) || defined (STM32GBK1CB) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define IS_SPI_ALL_INSTANCE(INSTANCE) (((INSTANCE) == SPI1) || \
                                        ((INSTANCE) == SPI2) || \
                                        ((INSTANCE) == SPI3))
+#elif defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_SPI_ALL_INSTANCE(INSTANCE) (((INSTANCE) == SPI1) || \
+                                       ((INSTANCE) == SPI2))
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /******************************** I2S Instances *******************************/
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB) || defined (STM32G414xx)
 #define IS_I2S_ALL_INSTANCE(__INSTANCE__)  (((__INSTANCE__) == SPI2) || \
                                             ((__INSTANCE__) == SPI3))
+#elif defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_I2S_ALL_INSTANCE(__INSTANCE__)  ((__INSTANCE__) == SPI2)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) || (STM32G414xx) */
 
 /****************** LPTIM Instances : All supported instances *****************/
 #define IS_LPTIM_INSTANCE(INSTANCE)     ((INSTANCE) == LPTIM1)
@@ -18351,7 +18627,7 @@ typedef struct {
                                          ((INSTANCE) == TIM16)  || \
                                          ((INSTANCE) == TIM17)  || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define IS_TIM_INSTANCE(INSTANCE)       (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -18363,7 +18639,7 @@ typedef struct {
                                          ((INSTANCE) == TIM16)  || \
                                          ((INSTANCE) == TIM17)  || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_INSTANCE(INSTANCE)       (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -18381,19 +18657,19 @@ typedef struct {
 #if defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx)
 #define IS_TIM_32B_COUNTER_INSTANCE(INSTANCE) (((INSTANCE) == TIM2)   || \
                                                ((INSTANCE) == TIM5))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define IS_TIM_32B_COUNTER_INSTANCE(INSTANCE) ((INSTANCE) == TIM2)
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** TIM Instances : supporting the break function *************/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define IS_TIM_BREAK_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)    || \
                                             ((INSTANCE) == TIM8)    || \
                                             ((INSTANCE) == TIM15)   || \
                                             ((INSTANCE) == TIM16)   || \
                                             ((INSTANCE) == TIM17)   || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_BREAK_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)    || \
                                             ((INSTANCE) == TIM8)    || \
                                             ((INSTANCE) == TIM15)   || \
@@ -18402,14 +18678,14 @@ typedef struct {
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 /************** TIM Instances : supporting Break source selection *************/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define IS_TIM_BREAKSOURCE_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                                ((INSTANCE) == TIM8)   || \
                                                ((INSTANCE) == TIM15)  || \
                                                ((INSTANCE) == TIM16)  || \
                                                ((INSTANCE) == TIM17)  || \
                                                ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_BREAKSOURCE_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                                ((INSTANCE) == TIM8)   || \
                                                ((INSTANCE) == TIM15)  || \
@@ -18418,11 +18694,11 @@ typedef struct {
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 /****************** TIM Instances : supporting 2 break inputs *****************/
-#if  defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if  defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define IS_TIM_BKIN2_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)    || \
                                             ((INSTANCE) == TIM8)    || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_BKIN2_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)    || \
                                             ((INSTANCE) == TIM8))
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
@@ -18439,7 +18715,7 @@ typedef struct {
                                          ((INSTANCE) == TIM16)  || \
                                          ((INSTANCE) == TIM17)  || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
 #define IS_TIM_CC1_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -18449,7 +18725,7 @@ typedef struct {
                                          ((INSTANCE) == TIM16)  || \
                                          ((INSTANCE) == TIM17)  || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CC1_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -18470,7 +18746,7 @@ typedef struct {
                                          ((INSTANCE) == TIM8)   || \
                                          ((INSTANCE) == TIM15)  || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CC2_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -18478,7 +18754,7 @@ typedef struct {
                                          ((INSTANCE) == TIM8)   || \
                                          ((INSTANCE) == TIM15)  || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CC2_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -18496,14 +18772,14 @@ typedef struct {
                                          ((INSTANCE) == TIM5)   || \
                                          ((INSTANCE) == TIM8)   || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CC3_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
                                          ((INSTANCE) == TIM4)   || \
                                          ((INSTANCE) == TIM8)   || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CC3_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -18520,14 +18796,14 @@ typedef struct {
                                          ((INSTANCE) == TIM5)   || \
                                          ((INSTANCE) == TIM8)   || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CC4_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
                                          ((INSTANCE) == TIM4)   || \
                                          ((INSTANCE) == TIM8)   || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CC4_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -18536,34 +18812,34 @@ typedef struct {
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** TIM Instances : at least 5 capture/compare channels *******/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CC5_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM8)   || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CC5_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM8))
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 /****************** TIM Instances : at least 6 capture/compare channels *******/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CC6_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM8)   || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CC6_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM8))
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 /************ TIM Instances : DMA requests generation (TIMx_DIER.COMDE) *******/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CCDMA_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM8)   || \
                                             ((INSTANCE) == TIM15)  || \
                                             ((INSTANCE) == TIM16)  || \
                                             ((INSTANCE) == TIM17)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CCDMA_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM8)   || \
                                             ((INSTANCE) == TIM15)  || \
@@ -18585,7 +18861,7 @@ typedef struct {
                                             ((INSTANCE) == TIM16)  || \
                                             ((INSTANCE) == TIM17)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_DMA_INSTANCE(INSTANCE)      (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM2)   || \
                                             ((INSTANCE) == TIM3)   || \
@@ -18597,7 +18873,7 @@ typedef struct {
                                             ((INSTANCE) == TIM16)  || \
                                             ((INSTANCE) == TIM17)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G441xx) || defined (STM32G414xx) || defined (STM32GBK1CB)
 #define IS_TIM_DMA_INSTANCE(INSTANCE)      (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM2)   || \
                                             ((INSTANCE) == TIM3)   || \
@@ -18622,7 +18898,7 @@ typedef struct {
                                             ((INSTANCE) == TIM16)  || \
                                             ((INSTANCE) == TIM17)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_DMA_CC_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM2)   || \
                                             ((INSTANCE) == TIM3)   || \
@@ -18632,7 +18908,7 @@ typedef struct {
                                             ((INSTANCE) == TIM16)  || \
                                             ((INSTANCE) == TIM17)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_DMA_CC_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM2)   || \
                                             ((INSTANCE) == TIM3)   || \
@@ -18655,7 +18931,7 @@ typedef struct {
                                             ((INSTANCE) == TIM16)  || \
                                             ((INSTANCE) == TIM17)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_DMABURST_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM2)   || \
                                             ((INSTANCE) == TIM3)   || \
@@ -18665,7 +18941,7 @@ typedef struct {
                                             ((INSTANCE) == TIM16)  || \
                                             ((INSTANCE) == TIM17)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_DMABURST_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM2)   || \
                                             ((INSTANCE) == TIM3)   || \
@@ -18736,7 +19012,7 @@ typedef struct {
       ((CHANNEL) == TIM_CHANNEL_4) ||          \
       ((CHANNEL) == TIM_CHANNEL_5) ||          \
       ((CHANNEL) == TIM_CHANNEL_6))))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CCX_INSTANCE(INSTANCE, CHANNEL) \
     ((((INSTANCE) == TIM1) &&                  \
      (((CHANNEL) == TIM_CHANNEL_1) ||          \
@@ -18789,7 +19065,7 @@ typedef struct {
       ((CHANNEL) == TIM_CHANNEL_4) ||          \
       ((CHANNEL) == TIM_CHANNEL_5) ||          \
       ((CHANNEL) == TIM_CHANNEL_6))))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CCX_INSTANCE(INSTANCE, CHANNEL) \
     ((((INSTANCE) == TIM1) &&                  \
      (((CHANNEL) == TIM_CHANNEL_1) ||          \
@@ -18837,7 +19113,7 @@ typedef struct {
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** TIM Instances : supporting complementary output(s) ********/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CCXN_INSTANCE(INSTANCE, CHANNEL) \
    ((((INSTANCE) == TIM1) &&                    \
      (((CHANNEL) == TIM_CHANNEL_1) ||           \
@@ -18866,7 +19142,7 @@ typedef struct {
       ((CHANNEL) == TIM_CHANNEL_3) ||           \
       ((CHANNEL) == TIM_CHANNEL_4))))
 
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CCXN_INSTANCE(INSTANCE, CHANNEL) \
    ((((INSTANCE) == TIM1) &&                    \
      (((CHANNEL) == TIM_CHANNEL_1) ||           \
@@ -18902,7 +19178,7 @@ typedef struct {
                                                     ((INSTANCE) == TIM16)   || \
                                                     ((INSTANCE) == TIM17)   || \
                                                     ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CLOCK_DIVISION_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)    || \
                                                     ((INSTANCE) == TIM2)    || \
                                                     ((INSTANCE) == TIM3)    || \
@@ -18912,7 +19188,7 @@ typedef struct {
                                                     ((INSTANCE) == TIM16)   || \
                                                     ((INSTANCE) == TIM17)   || \
                                                     ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CLOCK_DIVISION_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)    || \
                                                     ((INSTANCE) == TIM2)    || \
                                                     ((INSTANCE) == TIM3)    || \
@@ -18932,14 +19208,14 @@ typedef struct {
                                                         ((INSTANCE) == TIM5) || \
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CLOCKSOURCE_ETRMODE1_INSTANCE(INSTANCE) (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
                                                         ((INSTANCE) == TIM4) || \
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CLOCKSOURCE_ETRMODE1_INSTANCE(INSTANCE) (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
@@ -18956,14 +19232,14 @@ typedef struct {
                                                         ((INSTANCE) == TIM5) || \
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CLOCKSOURCE_ETRMODE2_INSTANCE(INSTANCE) (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
                                                         ((INSTANCE) == TIM4) || \
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CLOCKSOURCE_ETRMODE2_INSTANCE(INSTANCE) (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
@@ -18981,7 +19257,7 @@ typedef struct {
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM15)|| \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CLOCKSOURCE_TIX_INSTANCE(INSTANCE)      (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
@@ -18989,7 +19265,7 @@ typedef struct {
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM15)|| \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CLOCKSOURCE_TIX_INSTANCE(INSTANCE)      (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
@@ -19008,7 +19284,7 @@ typedef struct {
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM15)|| \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(INSTANCE)     (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
@@ -19016,7 +19292,7 @@ typedef struct {
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM15)|| \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(INSTANCE)     (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
@@ -19026,24 +19302,24 @@ typedef struct {
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** TIM Instances : supporting combined 3-phase PWM mode ******/
-#if  defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if  defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_COMBINED3PHASEPWM_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                                      ((INSTANCE) == TIM8)   || \
                                                      ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_COMBINED3PHASEPWM_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                                      ((INSTANCE) == TIM8))
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 /****************** TIM Instances : supporting commutation event generation ***/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_COMMUTATION_EVENT_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                                      ((INSTANCE) == TIM8)   || \
                                                      ((INSTANCE) == TIM15)  || \
                                                      ((INSTANCE) == TIM16)  || \
                                                      ((INSTANCE) == TIM17)  || \
                                                      ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_COMMUTATION_EVENT_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                                      ((INSTANCE) == TIM8)   || \
                                                      ((INSTANCE) == TIM15)  || \
@@ -19060,14 +19336,14 @@ typedef struct {
                                                         ((INSTANCE) == TIM5) || \
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_COUNTER_MODE_SELECT_INSTANCE(INSTANCE)  (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
                                                         ((INSTANCE) == TIM4) || \
                                                         ((INSTANCE) == TIM8) || \
                                                         ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_COUNTER_MODE_SELECT_INSTANCE(INSTANCE)  (((INSTANCE) == TIM1) || \
                                                         ((INSTANCE) == TIM2) || \
                                                         ((INSTANCE) == TIM3) || \
@@ -19084,14 +19360,14 @@ typedef struct {
                                                       ((INSTANCE) == TIM5)  || \
                                                       ((INSTANCE) == TIM8)  || \
                                                       ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)|| defined (STM32G411xC) 
 #define IS_TIM_ENCODER_INTERFACE_INSTANCE(INSTANCE)  (((INSTANCE) == TIM1)  || \
                                                       ((INSTANCE) == TIM2)  || \
                                                       ((INSTANCE) == TIM3)  || \
                                                       ((INSTANCE) == TIM4)  || \
                                                       ((INSTANCE) == TIM8)  || \
                                                       ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_ENCODER_INTERFACE_INSTANCE(INSTANCE)  (((INSTANCE) == TIM1)  || \
                                                       ((INSTANCE) == TIM2)  || \
                                                       ((INSTANCE) == TIM3)  || \
@@ -19109,7 +19385,7 @@ typedef struct {
                                                          ((INSTANCE) == TIM8)   || \
                                                          ((INSTANCE) == TIM15)  || \
                                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_HALL_SENSOR_INTERFACE_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                                          ((INSTANCE) == TIM2)   || \
                                                          ((INSTANCE) == TIM3)   || \
@@ -19117,7 +19393,7 @@ typedef struct {
                                                          ((INSTANCE) == TIM8)   || \
                                                          ((INSTANCE) == TIM15)  || \
                                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_HALL_SENSOR_INTERFACE_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                                          ((INSTANCE) == TIM2)   || \
                                                          ((INSTANCE) == TIM3)   || \
@@ -19135,14 +19411,14 @@ typedef struct {
                                             ((INSTANCE) == TIM5)  || \
                                             ((INSTANCE) == TIM8)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_ETR_INSTANCE(INSTANCE)      (((INSTANCE) == TIM1)  || \
                                             ((INSTANCE) == TIM2)  || \
                                             ((INSTANCE) == TIM3)  || \
                                             ((INSTANCE) == TIM4)  || \
                                             ((INSTANCE) == TIM8)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_ETR_INSTANCE(INSTANCE)      (((INSTANCE) == TIM1)  || \
                                             ((INSTANCE) == TIM2)  || \
                                             ((INSTANCE) == TIM3)  || \
@@ -19159,14 +19435,14 @@ typedef struct {
                                              ((INSTANCE) == TIM5)  || \
                                              ((INSTANCE) == TIM8)  || \
                                              ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_ETRSEL_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)  || \
                                              ((INSTANCE) == TIM2)  || \
                                              ((INSTANCE) == TIM3)  || \
                                              ((INSTANCE) == TIM4)  || \
                                              ((INSTANCE) == TIM8)  || \
                                              ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_ETRSEL_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)  || \
                                              ((INSTANCE) == TIM2)  || \
                                              ((INSTANCE) == TIM3)  || \
@@ -19186,7 +19462,7 @@ typedef struct {
                                             ((INSTANCE) == TIM8)  || \
                                             ((INSTANCE) == TIM15) || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_MASTER_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)  || \
                                             ((INSTANCE) == TIM2)  || \
                                             ((INSTANCE) == TIM3)  || \
@@ -19196,7 +19472,7 @@ typedef struct {
                                             ((INSTANCE) == TIM8)  || \
                                             ((INSTANCE) == TIM15) || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_MASTER_INSTANCE(INSTANCE)   (((INSTANCE) == TIM1)  || \
                                             ((INSTANCE) == TIM2)  || \
                                             ((INSTANCE) == TIM3)  || \
@@ -19217,7 +19493,7 @@ typedef struct {
                                             ((INSTANCE) == TIM8)  || \
                                             ((INSTANCE) == TIM15) || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_SLAVE_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)  || \
                                             ((INSTANCE) == TIM2)  || \
                                             ((INSTANCE) == TIM3)  || \
@@ -19225,7 +19501,7 @@ typedef struct {
                                             ((INSTANCE) == TIM8)  || \
                                             ((INSTANCE) == TIM15) || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_SLAVE_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)  || \
                                             ((INSTANCE) == TIM2)  || \
                                             ((INSTANCE) == TIM3)  || \
@@ -19246,7 +19522,7 @@ typedef struct {
                                                        ((INSTANCE) == TIM16) || \
                                                        ((INSTANCE) == TIM17) || \
                                                        ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_OCXREF_CLEAR_INSTANCE(INSTANCE)        (((INSTANCE) == TIM1)  || \
                                                        ((INSTANCE) == TIM2)  || \
                                                        ((INSTANCE) == TIM3)  || \
@@ -19256,7 +19532,7 @@ typedef struct {
                                                        ((INSTANCE) == TIM16) || \
                                                        ((INSTANCE) == TIM17) || \
                                                        ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_OCXREF_CLEAR_INSTANCE(INSTANCE)        (((INSTANCE) == TIM1) || \
                                                        ((INSTANCE) == TIM2) || \
                                                        ((INSTANCE) == TIM3) || \
@@ -19268,7 +19544,7 @@ typedef struct {
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** TIM Instances : supporting bitfield OCCS in SMCR register *******************/
-#if  defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if  defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_OCCS_INSTANCE(INSTANCE)                (((INSTANCE) == TIM1)  || \
                                                        ((INSTANCE) == TIM2)  || \
                                                        ((INSTANCE) == TIM3)  || \
@@ -19277,7 +19553,7 @@ typedef struct {
                                                        ((INSTANCE) == TIM16) || \
                                                        ((INSTANCE) == TIM17) || \
                                                        ((INSTANCE) == TIM20))
-#elif defined(STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined(STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_OCCS_INSTANCE(INSTANCE)                (((INSTANCE) == TIM1)  || \
                                                        ((INSTANCE) == TIM2)  || \
                                                        ((INSTANCE) == TIM3)  || \
@@ -19296,14 +19572,14 @@ typedef struct {
                                             ((INSTANCE) == TIM5)  || \
                                             ((INSTANCE) == TIM8)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_REMAP_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)  || \
                                             ((INSTANCE) == TIM2)  || \
                                             ((INSTANCE) == TIM3)  || \
                                             ((INSTANCE) == TIM4)  || \
                                             ((INSTANCE) == TIM8)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_REMAP_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)  || \
                                             ((INSTANCE) == TIM2)  || \
                                             ((INSTANCE) == TIM3)  || \
@@ -19312,14 +19588,14 @@ typedef struct {
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** TIM Instances : supporting repetition counter *************/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_REPETITION_COUNTER_INSTANCE(INSTANCE)  (((INSTANCE) == TIM1)  || \
                                                        ((INSTANCE) == TIM8)  || \
                                                        ((INSTANCE) == TIM15) || \
                                                        ((INSTANCE) == TIM16) || \
                                                        ((INSTANCE) == TIM17) || \
                                                        ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_REPETITION_COUNTER_INSTANCE(INSTANCE)  (((INSTANCE) == TIM1)  || \
                                                        ((INSTANCE) == TIM8)  || \
                                                        ((INSTANCE) == TIM15) || \
@@ -19328,11 +19604,11 @@ typedef struct {
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** TIM Instances : supporting ADC triggering through TRGO2 ***/
-#if  defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if  defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_TRGO2_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)    || \
                                             ((INSTANCE) == TIM8)    || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_TRGO2_INSTANCE(INSTANCE)    (((INSTANCE) == TIM1)    || \
                                             ((INSTANCE) == TIM8))
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
@@ -19347,7 +19623,7 @@ typedef struct {
                                             ((INSTANCE) == TIM8)   || \
                                             ((INSTANCE) == TIM15)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_XOR_INSTANCE(INSTANCE)      (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM2)   || \
                                             ((INSTANCE) == TIM3)   || \
@@ -19355,7 +19631,7 @@ typedef struct {
                                             ((INSTANCE) == TIM8)   || \
                                             ((INSTANCE) == TIM15)  || \
                                             ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_XOR_INSTANCE(INSTANCE)      (((INSTANCE) == TIM1)   || \
                                             ((INSTANCE) == TIM2)   || \
                                             ((INSTANCE) == TIM3)   || \
@@ -19376,7 +19652,7 @@ typedef struct {
                                          ((INSTANCE) == TIM16)  || \
                                          ((INSTANCE) == TIM17)  || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#elif defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_TISEL_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -19386,7 +19662,7 @@ typedef struct {
                                          ((INSTANCE) == TIM16)  || \
                                          ((INSTANCE) == TIM17)  || \
                                          ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_TISEL_INSTANCE(INSTANCE) (((INSTANCE) == TIM1)   || \
                                          ((INSTANCE) == TIM2)   || \
                                          ((INSTANCE) == TIM3)   || \
@@ -19398,11 +19674,11 @@ typedef struct {
 #endif /* (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) */
 
 /****************** TIM Instances : Advanced timer instances *******************/
-#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
+#if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC) 
 #define IS_TIM_ADVANCED_INSTANCE(INSTANCE)       (((INSTANCE) == TIM1)   || \
                                                   ((INSTANCE) == TIM8)   || \
                                                   ((INSTANCE) == TIM20))
-#elif defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
+#elif defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G414xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
 #define IS_TIM_ADVANCED_INSTANCE(INSTANCE)       (((INSTANCE) == TIM1)   || \
                                                   ((INSTANCE) == TIM8))
 
@@ -19412,15 +19688,20 @@ typedef struct {
 #define IS_TIM_HSE32_INSTANCE(INSTANCE)         (((INSTANCE) == TIM16)   || \
                                                  ((INSTANCE) == TIM17))
 
-#if defined (STM32G474xx) || defined (STM32G484xx)
+#if defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G484xx)
 /****************************** HRTIM Instances *******************************/
 #define IS_HRTIM_ALL_INSTANCE(INSTANCE) (((INSTANCE) == HRTIM1))
 #endif /* (STM32G474xx) || (STM32G484xx) */
 
 /******************** USART Instances : Synchronous mode **********************/
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define IS_USART_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                      ((INSTANCE) == USART2) || \
                                      ((INSTANCE) == USART3))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_USART_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
+                                     ((INSTANCE) == USART2))
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /******************** UART Instances : Asynchronous mode **********************/
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
@@ -19433,6 +19714,10 @@ typedef struct {
 #define IS_UART_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                     ((INSTANCE) == USART2) || \
                                     ((INSTANCE) == USART3) || \
+                                    ((INSTANCE) == UART4))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_UART_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
+                                    ((INSTANCE) == USART2) || \
                                     ((INSTANCE) == UART4))
 #elif defined (STM32GBK1CB)
 #define IS_UART_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
@@ -19454,6 +19739,11 @@ typedef struct {
                                          ((INSTANCE) == USART3) || \
                                          ((INSTANCE) == UART4) || \
                                          ((INSTANCE) == LPUART1))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_UART_FIFO_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
+                                         ((INSTANCE) == USART2) || \
+                                         ((INSTANCE) == UART4) || \
+                                         ((INSTANCE) == LPUART1))
 #elif defined (STM32GBK1CB)
 #define IS_UART_FIFO_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                          ((INSTANCE) == USART2) || \
@@ -19462,9 +19752,14 @@ typedef struct {
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 /*********************** UART Instances : SPI Slave mode **********************/
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define IS_UART_SPI_SLAVE_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                               ((INSTANCE) == USART2) || \
                                               ((INSTANCE) == USART3))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_UART_SPI_SLAVE_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
+                                              ((INSTANCE) == USART2))
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /****************** UART Instances : Auto Baud Rate detection ****************/
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
@@ -19477,6 +19772,10 @@ typedef struct {
 #define IS_USART_AUTOBAUDRATE_DETECTION_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                                             ((INSTANCE) == USART2) || \
                                                             ((INSTANCE) == USART3) || \
+                                                            ((INSTANCE) == UART4))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_USART_AUTOBAUDRATE_DETECTION_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
+                                                            ((INSTANCE) == USART2) || \
                                                             ((INSTANCE) == UART4))
 #elif defined (STM32GBK1CB)
 #define IS_USART_AUTOBAUDRATE_DETECTION_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
@@ -19496,6 +19795,11 @@ typedef struct {
 #define IS_UART_DRIVER_ENABLE_INSTANCE(INSTANCE)     (((INSTANCE) == USART1) || \
                                                       ((INSTANCE) == USART2) || \
                                                       ((INSTANCE) == USART3) || \
+                                                      ((INSTANCE) == UART4)  || \
+                                                      ((INSTANCE) == LPUART1))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_UART_DRIVER_ENABLE_INSTANCE(INSTANCE)     (((INSTANCE) == USART1) || \
+                                                      ((INSTANCE) == USART2) || \
                                                       ((INSTANCE) == UART4)  || \
                                                       ((INSTANCE) == LPUART1))
 #elif defined (STM32GBK1CB)
@@ -19519,6 +19823,11 @@ typedef struct {
                                                  ((INSTANCE) == USART3) || \
                                                  ((INSTANCE) == UART4)  || \
                                                  ((INSTANCE) == LPUART1))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_UART_HALFDUPLEX_INSTANCE(INSTANCE)   (((INSTANCE) == USART1) || \
+                                                 ((INSTANCE) == USART2) || \
+                                                 ((INSTANCE) == UART4)  || \
+                                                 ((INSTANCE) == LPUART1))
 #elif defined (STM32GBK1CB)
 #define IS_UART_HALFDUPLEX_INSTANCE(INSTANCE)   (((INSTANCE) == USART1) || \
                                                  ((INSTANCE) == USART2) || \
@@ -19540,6 +19849,11 @@ typedef struct {
                                            ((INSTANCE) == USART3) || \
                                            ((INSTANCE) == UART4)  || \
                                            ((INSTANCE) == LPUART1))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_UART_HWFLOW_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
+                                           ((INSTANCE) == USART2) || \
+                                           ((INSTANCE) == UART4)  || \
+                                           ((INSTANCE) == LPUART1))
 #elif defined (STM32GBK1CB)
 #define IS_UART_HWFLOW_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                            ((INSTANCE) == USART2) || \
@@ -19558,6 +19872,10 @@ typedef struct {
 #define IS_UART_LIN_INSTANCE(INSTANCE)   (((INSTANCE) == USART1) || \
                                           ((INSTANCE) == USART2) || \
                                           ((INSTANCE) == USART3) || \
+                                          ((INSTANCE) == UART4))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_UART_LIN_INSTANCE(INSTANCE)   (((INSTANCE) == USART1) || \
+                                          ((INSTANCE) == USART2) || \
                                           ((INSTANCE) == UART4))
 #elif defined (STM32GBK1CB)
 #define IS_UART_LIN_INSTANCE(INSTANCE)   (((INSTANCE) == USART1) || \
@@ -19579,6 +19897,11 @@ typedef struct {
                                                       ((INSTANCE) == USART3) || \
                                                       ((INSTANCE) == UART4)  || \
                                                       ((INSTANCE) == LPUART1))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_UART_WAKEUP_FROMSTOP_INSTANCE(INSTANCE)   (((INSTANCE) == USART1) || \
+                                                      ((INSTANCE) == USART2) || \
+                                                      ((INSTANCE) == UART4)  || \
+                                                      ((INSTANCE) == LPUART1))
 #elif defined (STM32GBK1CB)
 #define IS_UART_WAKEUP_FROMSTOP_INSTANCE(INSTANCE)   (((INSTANCE) == USART1) || \
                                                       ((INSTANCE) == USART2) || \
@@ -19598,6 +19921,10 @@ typedef struct {
                                     ((INSTANCE) == USART2) || \
                                     ((INSTANCE) == USART3) || \
                                     ((INSTANCE) == UART4))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_IRDA_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
+                                    ((INSTANCE) == USART2) || \
+                                    ((INSTANCE) == UART4))
 #elif defined (STM32GBK1CB)
 #define IS_IRDA_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                     ((INSTANCE) == USART2) || \
@@ -19605,9 +19932,14 @@ typedef struct {
 #endif /* (STM32G471xx) || (STM32G473xx) || (STM32G474xx) || (STM32G483xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 /********************* USART Instances : Smard card mode ***********************/
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 #define IS_SMARTCARD_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                          ((INSTANCE) == USART2) || \
                                          ((INSTANCE) == USART3))
+#elif defined (STM32G414xx) || defined (STM32G411xB) || defined (STM32G411xC)
+#define IS_SMARTCARD_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
+                                         ((INSTANCE) == USART2))
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /******************** LPUART Instance *****************************************/
 #define IS_LPUART_INSTANCE(INSTANCE)    ((INSTANCE) == LPUART1)
@@ -19618,11 +19950,15 @@ typedef struct {
 /****************************** WWDG Instances ********************************/
 #define IS_WWDG_ALL_INSTANCE(INSTANCE)  ((INSTANCE) == WWDG)
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /****************************** UCPD Instances ********************************/
 #define IS_UCPD_ALL_INSTANCE(INSTANCE)  ((INSTANCE) == UCPD1)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
+#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G483xx) || defined (STM32G474xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32GBK1CB)
 /******************************* USB Instances *******************************/
 #define IS_USB_ALL_INSTANCE(INSTANCE) ((INSTANCE) == USB)
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32G471xx) || (STM32G473xx) || (STM32G483xx) || (STM32G474xx) || (STM32G484xx) || (STM32G491xx) || (STM32G4A1xx) || (STM32GBK1CB) */
 
 /**
   * @}
@@ -19638,16 +19974,16 @@ typedef struct {
 /******************************************************************************/
 
 /* Aliases for __IRQn */
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx)
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define TIM7_DAC_IRQn     TIM7_IRQn
 #define COMP4_5_6_IRQn    COMP4_IRQn
-#endif /* (STM32G431xx) || (STM32G441xx) || (STM32GBK1CB) || (STM32G471xx) */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32GBK1CB) || (STM32G471xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 /* Aliases for __IRQHandler */
-#if defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx)
+#if defined (STM32G431xx) || defined (STM32G411xB) || defined (STM32G411xC) || defined (STM32G441xx) || defined (STM32GBK1CB) || defined (STM32G471xx) || defined (STM32G491xx) || defined (STM32G4A1xx)
 #define TIM7_DAC_IRQHandler     TIM7_IRQHandler
 #define COMP4_5_6_IRQHandler    COMP4_IRQHandler
-#endif /* (STM32G431xx) || (STM32G441xx) || (STM32GBK1CB) || (STM32G471xx) */
+#endif /* (STM32G431xx) || (STM32G441xx) || (STM32GBK1CB) || (STM32G471xx) || (STM32G491xx) || (STM32G4A1xx) */
 
 #ifdef __cplusplus
 }

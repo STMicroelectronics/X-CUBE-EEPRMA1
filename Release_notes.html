@@ -25,7 +25,7 @@
 <div class="col-sm-12 col-lg-4">
 <center>
 <h1 id="release-notes-for-x-cube-eeprma1">Release Notes for <mark>X-CUBE-EEPRMA1</mark></h1>
-<p>Copyright © 2024 STMicroelectronics<br />
+<p>Copyright © 2025 STMicroelectronics<br />
 </p>
 <a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
@@ -36,7 +36,7 @@
 <li>Complete software to build applications using M24xx or M95x or M95P32 based EEPROM</li>
 <li>Easy portability across different MCU families thanks to STM32Cube</li>
 <li>Free user-friendly license terms</li>
-<li>Example implementation available on the board X-NUCLEO-EEICA1, X-NUCLEO-EEPRMA2, X-NUCLEO-PGEEZ1, STM32 expansion board plugged on top of one NUCLEO-F401RE or NUCLEO-G474RE or NUCLEO-L053R8 or NUCLEO-H743ZI</li>
+<li>Example implementation available on the board X-NUCLEO-EEICA1, X-NUCLEO-EEPRMA2, X-NUCLEO-PGEEZ1, STM32 expansion board plugged on top of one NUCLEO-F401RE or NUCLEO-G474RE or NUCLEO-L053R8 or NUCLEO-H753ZI</li>
 </ul>
 <p>[<img src="_htmresc/SW_Layers.png" alt="The X-CUBE-EEPRMA1 package contents" />]</p>
 <p>Here is the list of references to user documents:</p>
@@ -48,6 +48,178 @@
 </div>
 <section id="update-history" class="col-sm-12 col-lg-8">
 <h1>Update History</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section8" checked aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">V5.2.0 / 10-May-2025</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="product-update">Product update</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="even">
+<td style="text-align: left;">Added examples for NUCLEO-H753ZI and removed NUCLEO-H743ZI</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Align to STMicroelectronics.X-CUBE-EEPRMA1.5.2.0 pack for STM32CubeMX 6.14.1(X-NUCLEO-EEICA1, X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Updated BSP drivers for X-NUCLEO-EEPRMA2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">Contents</h2>
+<p>The X-CUBE-EEPRMA1 expansion software package comes with a rich set of examples running on STMicroelectronics boards, provided with preconfigured projects for the main supported toolchains.</p>
+<p>Documentation</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Document</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X-CUBE-EEPRMA1 API Description</td>
+<td style="text-align: left;">V5.2.0</td>
+<td style="text-align: left;"><a href="Documentation\X-CUBE-EEPRMA1.chm">CHM</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Getting Started with X-CUBE-EEPRMA1 pack for STM32CubeMX</td>
+<td style="text-align: left;">V5.2.0</td>
+<td style="text-align: left;"><a href="Documentation\STMicroelectronics.X-CUBE-EEPRMA1_GettingStarted.pdf">PDF</a></td>
+</tbody>
+</table>
+<p>Drivers</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32F4xx CMSIS</td>
+<td style="text-align: left;">V2.6.10</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32F4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32F4xx HAL</td>
+<td style="text-align: left;">V1.8.3</td>
+<td style="text-align: left;"><a href="Drivers\STM32F4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32F4xx_Nucleo</td>
+<td style="text-align: left;">V1.2.9</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32F4xx-Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32L0xx CMSIS</td>
+<td style="text-align: left;">V1.9.4</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32L0xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32L0xx HAL</td>
+<td style="text-align: left;">V1.10.7</td>
+<td style="text-align: left;"><a href="Drivers\STM32L0xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32L0xx_Nucleo</td>
+<td style="text-align: left;">V2.1.4</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32L0xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G4xx CMSIS</td>
+<td style="text-align: left;">V1.2.4</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32G4xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G4xx HAL</td>
+<td style="text-align: left;">V1.2.4</td>
+<td style="text-align: left;"><a href="Drivers\STM32G4xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
+<td style="text-align: left;">V1.0.5</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32G4xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32H7xx CMSIS</td>
+<td style="text-align: left;">V1.10.6</td>
+<td style="text-align: left;"><a href="Drivers\CMSIS\Device\ST\STM32H7xx\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7xx HAL</td>
+<td style="text-align: left;">V1.11.5</td>
+<td style="text-align: left;"><a href="Drivers\STM32H7xx_HAL_Driver\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32H7xx_Nucleo</td>
+<td style="text-align: left;">V1.3.3</td>
+<td style="text-align: left;"><a href="Drivers\BSP\STM32H7xx_Nucleo\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-EEPRMA2</td>
+<td style="text-align: left;">V2.1.0</td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEPRMA2\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP X-NUCLEO-PGEEZ1</td>
+<td style="text-align: left;">V2.2.1</td>
+<td style="text-align: left;"><a href="Drivers\BSP\PGEEZ1\Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP X-NUCLEO-EEICA1</td>
+<td style="text-align: left;">V1.0.0</td>
+<td style="text-align: left;"><a href="Drivers\BSP\EEICA1\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p>Projects</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Projects</td>
+<td style="text-align: left;">V5.2.0</td>
+<td style="text-align: left;"><a href="Projects\Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Not Any</li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.60.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.38.0.0</li>
+<li>STM32CubeIDE V1.18.1</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and Boards</h2>
+<ul>
+<li>STM32F401RE devices and STM32F401RE-Nucleo board RevC</li>
+<li>STM32L053R8 devices and STM32L053R8-Nucleo board RevC</li>
+<li>STM32G474RG devices and STM32G474RG-Nucleo board RevC</li>
+<li>STM32H743ZI devices and STM32H753ZI-Nucleo board RevE</li>
+<li>M24256E-F, M24M01E-F, M24xx, M95xx, M95P32, X-NUCLEO-EEICA1, X-NUCLEO-EEPRMA2 and X-NUCLEO-PGEEZ1 board </li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section8" checked aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">V5.1.0 / 02-January-2024</label>
 <div>

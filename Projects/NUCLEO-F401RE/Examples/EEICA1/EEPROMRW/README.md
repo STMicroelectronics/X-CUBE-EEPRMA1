@@ -46,9 +46,9 @@ EEPROM, M24256E, M24M01E, I2C, External Storage Device, Configurable Device Addr
     - NUCLEO-F401RE RevC board  
     - NUCLEO-L053R8 RevC board
     - NUCLEO-G474RE RevC board
-	- NUCLEO-H743ZI RevE board
+	- NUCLEO-H753ZI RevE board
 
-- ADDITIONAL_BOARD : X-NUCLEO-EEICA1 https://www.st.com/en/evaluation-tools/x-nucleo-eeica1.html
+- ADDITIONAL_BOARD : X-NUCLEO-EEICA1 https://www.st.com/en/ecosystems/x-nucleo-eeica1.html
 - ADDITIONAL_COMP : M24256E-F https://www.st.com/en/memories/m24256e-f.html
 - ADDITIONAL_COMP : M24M01E-F https://www.st.com/en/memories/m24m01e-f.html
 
@@ -60,10 +60,10 @@ In order to make the program work, you must do the following:
    installation path is not too in-depth since the toolchain may report errors
    after building.
    
-- Open STM32CubeIDE (this firmware has been successfully tested with Version 1.13.2).
+- Open STM32CubeIDE (this firmware has been successfully tested with Version 1.18.1).
    Alternatively you can use the Keil uVision toolchain (this firmware
-   has been successfully tested with V5.37.0.0) or the IAR toolchain (this firmware has 
-   been successfully tested with Embedded Workbench V9.20.1).
+   has been successfully tested with V5.38.0.0) or the IAR toolchain (this firmware has 
+   been successfully tested with Embedded Workbench V9.60.3).
    
 - Rebuild all files and load your image into target memory.
 
@@ -77,6 +77,6 @@ SRA Application Team
 
 ### <b>License</b>
 
-Copyright (c) 2023 STMicroelectronics. All rights reserved.
+Copyright (c) 2025 STMicroelectronics. All rights reserved.
 
 This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-IS.

@@ -20,6 +20,6 @@
 | BSP M24M01E Components							   | STMicroelectronics				  | BSD-3-Clause	 |
 | Nucleo-F401RE Project Examples					   | STMicroelectronics				  | BSD-3-Clause	 |
 | Nucleo-G474RE Project Examples					   | STMicroelectronics				  | BSD-3-Clause	 |
-| Nucleo-H743ZI Project Examples					   | STMicroelectronics				  | BSD-3-Clause	 |
+| Nucleo-H753ZI Project Examples					   | STMicroelectronics				  | BSD-3-Clause	 |
 | Nucleo-L053R8 Project Examples					   | STMicroelectronics				  | BSD-3-Clause	 |
 | Utilities AT_Commands								   | STMicroelectronics				  | SLA0077			 |

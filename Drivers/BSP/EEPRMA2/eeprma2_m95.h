@@ -88,15 +88,7 @@ typedef struct{
 }EEPROMEX_CtrlPin_TypeDef;
 
 
-#define EEPROMEX_WC_PIN                 GPIO_PIN_1
-#define EEPROMEX_WC_PIN_PORT            GPIOA
 
-
-#define EEPROMEX_SLAVE_FOUR_PIN          GPIO_PIN_0
-#define EEPROMEX_SLAVE_FOUR_PIN_PORT     GPIOC
-
-
-#define EEPROMEX_SPI_SLAVE_FOUR_GPIO_CLK_ENABLE()  __HAL_RCC_GPIOC_CLK_ENABLE()
 /* External variables --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */

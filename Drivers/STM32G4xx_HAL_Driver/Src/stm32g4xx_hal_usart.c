@@ -91,7 +91,7 @@
 
     [..]
     Use function HAL_USART_UnRegisterCallback() to reset a callback to the default
-    weak (surcharged) function.
+    weak function.
     HAL_USART_UnRegisterCallback() takes as parameters the HAL peripheral handle,
     and the Callback ID.
     This function allows to reset following callbacks:
@@ -109,10 +109,10 @@
 
     [..]
     By default, after the HAL_USART_Init() and when the state is HAL_USART_STATE_RESET
-    all callbacks are set to the corresponding weak (surcharged) functions:
+    all callbacks are set to the corresponding weak functions:
     examples HAL_USART_TxCpltCallback(), HAL_USART_RxHalfCpltCallback().
     Exception done for MspInit and MspDeInit functions that are respectively
-    reset to the legacy weak (surcharged) functions in the HAL_USART_Init()
+    reset to the legacy weak functions in the HAL_USART_Init()
     and HAL_USART_DeInit() only when these callbacks are null (not registered beforehand).
     If not, MspInit or MspDeInit are not null, the HAL_USART_Init() and HAL_USART_DeInit()
     keep and use the user MspInit/MspDeInit callbacks (registered beforehand).
@@ -129,7 +129,7 @@
     [..]
     When The compilation define USE_HAL_USART_REGISTER_CALLBACKS is set to 0 or
     not defined, the callback registration feature is not available
-    and weak (surcharged) callbacks are used.
+    and weak callbacks are used.
 
 
   @endverbatim
@@ -144,7 +144,7 @@
   */
 
 /** @defgroup USART USART
-  * @brief HAL USART Synchronous module driver
+  * @brief HAL USART Synchronous SPI module driver
   * @{
   */
 
@@ -225,8 +225,8 @@ static void USART_RxISR_16BIT_FIFOEN(USART_HandleTypeDef *husart);
  ===============================================================================
     [..]
     This subsection provides a set of functions allowing to initialize the USART
-    in asynchronous and in synchronous modes.
-      (+) For the asynchronous mode only these parameters can be configured:
+    in synchronous SPI master/slave mode.
+      (+) For the synchronous SPI mode only these parameters can be configured:
         (++) Baud Rate
         (++) Word Length
         (++) Stop Bit
@@ -238,7 +238,7 @@ static void USART_RxISR_16BIT_FIFOEN(USART_HandleTypeDef *husart);
         (++) Receiver/transmitter modes
 
     [..]
-    The HAL_USART_Init() function follows the USART  synchronous configuration
+    The HAL_USART_Init() function follows the USART synchronous SPI configuration
     procedure (details for the procedure are available in reference manual).
 
 @endverbatim
@@ -316,7 +316,7 @@ HAL_StatusTypeDef HAL_USART_Init(USART_HandleTypeDef *husart)
     return HAL_ERROR;
   }
 
-  /* In Synchronous mode, the following bits must be kept cleared:
+  /* In Synchronous SPI mode, the following bits must be kept cleared:
   - LINEN bit in the USART_CR2 register
   - HDSEL, SCEN and IREN bits in the USART_CR3 register.
   */
@@ -406,7 +406,9 @@ __weak void HAL_USART_MspDeInit(USART_HandleTypeDef *husart)
 #if (USE_HAL_USART_REGISTER_CALLBACKS == 1)
 /**
   * @brief  Register a User USART Callback
-  *         To be used instead of the weak predefined callback
+  *         To be used to override the weak predefined callback
+  * @note   The HAL_USART_RegisterCallback() may be called before HAL_USART_Init() in HAL_USART_STATE_RESET
+  *         to register callbacks for HAL_USART_MSPINIT_CB_ID and HAL_USART_MSPDEINIT_CB_ID
   * @param  husart usart handle
   * @param  CallbackID ID of the callback to be registered
   *         This parameter can be one of the following values:
@@ -436,8 +438,6 @@ HAL_StatusTypeDef HAL_USART_RegisterCallback(USART_HandleTypeDef *husart, HAL_US
 
     return HAL_ERROR;
   }
-  /* Process locked */
-  __HAL_LOCK(husart);
 
   if (husart->State == HAL_USART_STATE_READY)
   {
@@ -526,15 +526,14 @@ HAL_StatusTypeDef HAL_USART_RegisterCallback(USART_HandleTypeDef *husart, HAL_US
     status =  HAL_ERROR;
   }
 
-  /* Release Lock */
-  __HAL_UNLOCK(husart);
-
   return status;
 }
 
 /**
   * @brief  Unregister an USART Callback
   *         USART callaback is redirected to the weak predefined callback
+  * @note   The HAL_USART_UnRegisterCallback() may be called before HAL_USART_Init() in HAL_USART_STATE_RESET
+  *         to un-register callbacks for HAL_USART_MSPINIT_CB_ID and HAL_USART_MSPDEINIT_CB_ID
   * @param  husart usart handle
   * @param  CallbackID ID of the callback to be unregistered
   *         This parameter can be one of the following values:
@@ -554,9 +553,6 @@ HAL_StatusTypeDef HAL_USART_RegisterCallback(USART_HandleTypeDef *husart, HAL_US
 HAL_StatusTypeDef HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart, HAL_USART_CallbackIDTypeDef CallbackID)
 {
   HAL_StatusTypeDef status = HAL_OK;
-
-  /* Process locked */
-  __HAL_LOCK(husart);
 
   if (HAL_USART_STATE_READY == husart->State)
   {
@@ -645,9 +641,6 @@ HAL_StatusTypeDef HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart, HAL_
     status =  HAL_ERROR;
   }
 
-  /* Release Lock */
-  __HAL_UNLOCK(husart);
-
   return status;
 }
 #endif /* USE_HAL_USART_REGISTER_CALLBACKS */
@@ -664,11 +657,10 @@ HAL_StatusTypeDef HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart, HAL_
  ===============================================================================
                       ##### IO operation functions #####
  ===============================================================================
-    [..] This subsection provides a set of functions allowing to manage the USART synchronous
+    [..] This subsection provides a set of functions allowing to manage the USART synchronous SPI
     data transfers.
 
-    [..] The USART supports master mode only: it cannot receive or send data related to an input
-         clock (SCLK is always an output).
+    [..] The USART Synchronous SPI supports master and slave modes (SCLK as output or input).
 
     [..]
 
@@ -748,7 +740,8 @@ HAL_StatusTypeDef HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart, HAL_
   * @param  Timeout Timeout duration.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_USART_Transmit(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size, uint32_t Timeout)
+HAL_StatusTypeDef HAL_USART_Transmit(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size,
+                                     uint32_t Timeout)
 {
   const uint8_t  *ptxdata8bits;
   const uint16_t *ptxdata16bits;
@@ -1233,7 +1226,7 @@ HAL_StatusTypeDef HAL_USART_Receive_IT(USART_HandleTypeDef *husart, uint8_t *pRx
       /* Enable the USART Parity Error interrupt and RX FIFO Threshold interrupt */
       if (husart->Init.Parity != USART_PARITY_NONE)
       {
-       SET_BIT(husart->Instance->CR1, USART_CR1_PEIE);
+        SET_BIT(husart->Instance->CR1, USART_CR1_PEIE);
       }
       SET_BIT(husart->Instance->CR3, USART_CR3_RXFTIE);
     }
@@ -1801,7 +1794,7 @@ HAL_StatusTypeDef HAL_USART_DMAResume(USART_HandleTypeDef *husart)
 
     /* Re-enable PE and ERR (Frame error, noise error, overrun error) interrupts */
     if (husart->Init.Parity != USART_PARITY_NONE)
-    {    
+    {
       SET_BIT(husart->Instance->CR1, USART_CR1_PEIE);
     }
     SET_BIT(husart->Instance->CR3, USART_CR3_EIE);
@@ -2485,7 +2478,7 @@ __weak void HAL_USART_AbortCpltCallback(USART_HandleTypeDef *husart)
   *              the configuration information for the specified USART.
   * @retval USART handle state
   */
-HAL_USART_StateTypeDef HAL_USART_GetState(USART_HandleTypeDef *husart)
+HAL_USART_StateTypeDef HAL_USART_GetState(const USART_HandleTypeDef *husart)
 {
   return husart->State;
 }
@@ -2496,7 +2489,7 @@ HAL_USART_StateTypeDef HAL_USART_GetState(USART_HandleTypeDef *husart)
   *              the configuration information for the specified USART.
   * @retval USART handle Error Code
   */
-uint32_t HAL_USART_GetError(USART_HandleTypeDef *husart)
+uint32_t HAL_USART_GetError(const USART_HandleTypeDef *husart)
 {
   return husart->ErrorCode;
 }
@@ -2914,7 +2907,7 @@ static HAL_StatusTypeDef USART_SetConfig(USART_HandleTypeDef *husart)
   /* Clear and configure the USART Clock, CPOL, CPHA, LBCL STOP and SLVEN bits:
    * set CPOL bit according to husart->Init.CLKPolarity value
    * set CPHA bit according to husart->Init.CLKPhase value
-   * set LBCL bit according to husart->Init.CLKLastBit value (used in SPI master mode only)
+   * set LBCL bit according to husart->Init.CLKLastBit value (used in USART Synchronous SPI master mode only)
    * set STOP[13:12] bits according to husart->Init.StopBits value */
   tmpreg = (uint32_t)(USART_CLOCK_ENABLE);
   tmpreg |= (uint32_t)husart->Init.CLKLastBit;

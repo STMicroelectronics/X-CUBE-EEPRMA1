@@ -164,7 +164,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 #define COMP_INPUT_MINUS_DAC3_CH2      (COMP_CSR_INMSEL_2                                        )                                           /*!< Comparator input minus connected to DAC3 Channel 2 for COMP2/4. Note: For COMPx & DACx instances availability, please refer to datasheet */
 #define COMP_INPUT_MINUS_DAC4_CH1      (COMP_CSR_INMSEL_2                                        )                                           /*!< Comparator input minus connected to DAC4 Channel 1 for COMP5/7. Note: For COMPx & DACx instances availability, please refer to datasheet */
 #define COMP_INPUT_MINUS_DAC4_CH2      (COMP_CSR_INMSEL_2                                        )                                           /*!< Comparator input minus connected to DAC4 Channel 2 for COMP6. Note: For COMPx & DACx instances availability, please refer to datasheet */
-#define COMP_INPUT_MINUS_IO1           (COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1                    )                                           /*!< Comparator input minus connected to IO1 (pin PA4 for COMP1, pin PA5 for COMP2, pin PF1 for COMP3, pin PE8 for COMP4, pin PB10 for COMP5, pin PD10 for COMP6, pin PD15 for COMP7). Note: For COMPx instance availability, please refer to datasheet */ 
+#define COMP_INPUT_MINUS_IO1           (COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1                    )                                           /*!< Comparator input minus connected to IO1 (pin PA4 for COMP1, pin PA5 for COMP2, pin PF1 for COMP3, pin PE8 for COMP4, pin PB10 for COMP5, pin PD10 for COMP6, pin PD15 for COMP7). Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_INPUT_MINUS_IO2           (COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0)                                           /*!< Comparator input minus connected to IO2 (pin PA0 for COMP1, pin PA2 for COMP2, pin PC0 for COMP3, pin PB2 for COMP4, pin PD13 for COMP5, pin PB15 for COMP6, pin PB12 for COMP7). Note: For COMPx instance availability, please refer to datasheet */
 /**
   * @}
@@ -307,14 +307,14 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @param  __HANDLE__  COMP handle
   * @retval None
   */
-#define __HAL_COMP_ENABLE(__HANDLE__)              SET_BIT((__HANDLE__)->Instance->CSR, COMP_CSR_EN)
+#define __HAL_COMP_ENABLE(__HANDLE__)       SET_BIT((__HANDLE__)->Instance->CSR, COMP_CSR_EN)
 
 /**
   * @brief  Disable the specified comparator.
   * @param  __HANDLE__  COMP handle
   * @retval None
   */
-#define __HAL_COMP_DISABLE(__HANDLE__)             CLEAR_BIT((__HANDLE__)->Instance->CSR, COMP_CSR_EN)
+#define __HAL_COMP_DISABLE(__HANDLE__)      CLEAR_BIT((__HANDLE__)->Instance->CSR, COMP_CSR_EN)
 
 /**
   * @brief  Lock the specified comparator configuration.
@@ -325,14 +325,14 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @param  __HANDLE__  COMP handle
   * @retval None
   */
-#define __HAL_COMP_LOCK(__HANDLE__)                SET_BIT((__HANDLE__)->Instance->CSR, COMP_CSR_LOCK)
+#define __HAL_COMP_LOCK(__HANDLE__)         SET_BIT((__HANDLE__)->Instance->CSR, COMP_CSR_LOCK)
 
 /**
   * @brief  Check whether the specified comparator is locked.
   * @param  __HANDLE__  COMP handle
   * @retval Value 0 if COMP instance is not locked, value 1 if COMP instance is locked
   */
-#define __HAL_COMP_IS_LOCKED(__HANDLE__)           (READ_BIT((__HANDLE__)->Instance->CSR, COMP_CSR_LOCK) == COMP_CSR_LOCK)
+#define __HAL_COMP_IS_LOCKED(__HANDLE__)    (READ_BIT((__HANDLE__)->Instance->CSR, COMP_CSR_LOCK) == COMP_CSR_LOCK)
 
 /**
   * @}
@@ -341,7 +341,6 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 /** @defgroup COMP_Exti_Management  COMP external interrupt line management
   * @{
   */
-
 /**
   * @brief  Enable the COMP1 EXTI line rising edge trigger.
   * @retval None
@@ -370,19 +369,19 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @brief  Enable the COMP1 EXTI line rising & falling edge trigger.
   * @retval None
   */
-#define __HAL_COMP_COMP1_EXTI_ENABLE_RISING_FALLING_EDGE()   do { \
-                                                               LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP1); \
-                                                               LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP1); \
-                                                             } while(0)
+#define __HAL_COMP_COMP1_EXTI_ENABLE_RISING_FALLING_EDGE() do {                                                        \
+                                                                LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP1);   \
+                                                                LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP1);  \
+                                                              } while(0)
 
 /**
   * @brief  Disable the COMP1 EXTI line rising & falling edge trigger.
   * @retval None
   */
-#define __HAL_COMP_COMP1_EXTI_DISABLE_RISING_FALLING_EDGE()  do { \
-                                                               LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP1); \
-                                                               LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP1); \
-                                                             } while(0)
+#define __HAL_COMP_COMP1_EXTI_DISABLE_RISING_FALLING_EDGE() do {                                                       \
+                                                                 LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP1); \
+                                                                 LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP1);\
+                                                               } while(0)
 
 /**
   * @brief  Enable the COMP1 EXTI line in interrupt mode.
@@ -454,19 +453,19 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @brief  Enable the COMP2 EXTI line rising & falling edge trigger.
   * @retval None
   */
-#define __HAL_COMP_COMP2_EXTI_ENABLE_RISING_FALLING_EDGE()   do { \
-                                                               LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP2); \
-                                                               LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP2); \
-                                                             } while(0)
+#define __HAL_COMP_COMP2_EXTI_ENABLE_RISING_FALLING_EDGE() do {                                                        \
+                                                                LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP2);   \
+                                                                LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP2);  \
+                                                              } while(0)
 
 /**
   * @brief  Disable the COMP2 EXTI line rising & falling edge trigger.
   * @retval None
-  */                                         
-#define __HAL_COMP_COMP2_EXTI_DISABLE_RISING_FALLING_EDGE()  do { \
-                                                               LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP2); \
-                                                               LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP2); \
-                                                             } while(0)
+  */
+#define __HAL_COMP_COMP2_EXTI_DISABLE_RISING_FALLING_EDGE() do {                                                       \
+                                                                 LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP2); \
+                                                                 LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP2);\
+                                                               } while(0)
 
 /**
   * @brief  Enable the COMP2 EXTI line in interrupt mode.
@@ -538,19 +537,19 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @brief  Enable the COMP3 EXTI line rising & falling edge trigger.
   * @retval None
   */
-#define __HAL_COMP_COMP3_EXTI_ENABLE_RISING_FALLING_EDGE()   do { \
-                                                               LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP3); \
-                                                               LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP3); \
-                                                             } while(0)
+#define __HAL_COMP_COMP3_EXTI_ENABLE_RISING_FALLING_EDGE() do {                                                        \
+                                                                LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP3);   \
+                                                                LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP3);  \
+                                                              } while(0)
 
 /**
   * @brief  Disable the COMP3 EXTI line rising & falling edge trigger.
   * @retval None
-  */                                         
-#define __HAL_COMP_COMP3_EXTI_DISABLE_RISING_FALLING_EDGE()  do { \
-                                                               LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP3); \
-                                                               LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP3); \
-                                                             } while(0)
+  */
+#define __HAL_COMP_COMP3_EXTI_DISABLE_RISING_FALLING_EDGE() do {                                                       \
+                                                                 LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP3); \
+                                                                 LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP3);\
+                                                               } while(0)
 
 /**
   * @brief  Enable the COMP3 EXTI line in interrupt mode.
@@ -622,19 +621,19 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @brief  Enable the COMP4 EXTI line rising & falling edge trigger.
   * @retval None
   */
-#define __HAL_COMP_COMP4_EXTI_ENABLE_RISING_FALLING_EDGE()   do { \
-                                                               LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP4); \
-                                                               LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP4); \
-                                                             } while(0)
+#define __HAL_COMP_COMP4_EXTI_ENABLE_RISING_FALLING_EDGE() do {                                                        \
+                                                                LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP4);   \
+                                                                LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP4);  \
+                                                              } while(0)
 
 /**
   * @brief  Disable the COMP4 EXTI line rising & falling edge trigger.
   * @retval None
-  */                                         
-#define __HAL_COMP_COMP4_EXTI_DISABLE_RISING_FALLING_EDGE()  do { \
-                                                               LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP4); \
-                                                               LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP4); \
-                                                             } while(0)
+  */
+#define __HAL_COMP_COMP4_EXTI_DISABLE_RISING_FALLING_EDGE() do {                                                       \
+                                                                 LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP4); \
+                                                                 LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP4);\
+                                                               } while(0)
 
 /**
   * @brief  Enable the COMP4 EXTI line in interrupt mode.
@@ -678,7 +677,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   */
 #define __HAL_COMP_COMP4_EXTI_CLEAR_FLAG()            LL_EXTI_ClearFlag_0_31(COMP_EXTI_LINE_COMP4)
 
-#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
+#if  defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 /**
   * @brief  Enable the COMP5 EXTI line rising edge trigger.
   * @retval None
@@ -707,19 +706,19 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @brief  Enable the COMP5 EXTI line rising & falling edge trigger.
   * @retval None
   */
-#define __HAL_COMP_COMP5_EXTI_ENABLE_RISING_FALLING_EDGE()   do { \
-                                                               LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP5); \
-                                                               LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP5); \
-                                                             } while(0)
+#define __HAL_COMP_COMP5_EXTI_ENABLE_RISING_FALLING_EDGE() do {                                                        \
+                                                                LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP5);   \
+                                                                LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP5);  \
+                                                              } while(0)
 
 /**
   * @brief  Disable the COMP5 EXTI line rising & falling edge trigger.
   * @retval None
-  */                                         
-#define __HAL_COMP_COMP5_EXTI_DISABLE_RISING_FALLING_EDGE()  do { \
-                                                               LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP5); \
-                                                               LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP5); \
-                                                             } while(0)
+  */
+#define __HAL_COMP_COMP5_EXTI_DISABLE_RISING_FALLING_EDGE() do {                                                       \
+                                                                 LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP5); \
+                                                                 LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP5);\
+                                                               } while(0)
 
 /**
   * @brief  Enable the COMP5 EXTI line in interrupt mode.
@@ -763,8 +762,8 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   */
 #define __HAL_COMP_COMP5_EXTI_CLEAR_FLAG()            LL_EXTI_ClearFlag_0_31(COMP_EXTI_LINE_COMP5)
 
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx*/
-#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx*/
+#if  defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 /**
   * @brief  Enable the COMP6 EXTI line rising edge trigger.
   * @retval None
@@ -793,19 +792,19 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @brief  Enable the COMP6 EXTI line rising & falling edge trigger.
   * @retval None
   */
-#define __HAL_COMP_COMP6_EXTI_ENABLE_RISING_FALLING_EDGE()   do { \
-                                                               LL_EXTI_EnableRisingTrig_32_63(COMP_EXTI_LINE_COMP6); \
-                                                               LL_EXTI_EnableFallingTrig_32_63(COMP_EXTI_LINE_COMP6); \
-                                                             } while(0)
+#define __HAL_COMP_COMP6_EXTI_ENABLE_RISING_FALLING_EDGE() do {                                                        \
+                                                                LL_EXTI_EnableRisingTrig_32_63(COMP_EXTI_LINE_COMP6);  \
+                                                                LL_EXTI_EnableFallingTrig_32_63(COMP_EXTI_LINE_COMP6); \
+                                                              } while(0)
 
 /**
   * @brief  Disable the COMP6 EXTI line rising & falling edge trigger.
   * @retval None
-  */                                         
-#define __HAL_COMP_COMP6_EXTI_DISABLE_RISING_FALLING_EDGE()  do { \
-                                                               LL_EXTI_DisableRisingTrig_32_63(COMP_EXTI_LINE_COMP6); \
-                                                               LL_EXTI_DisableFallingTrig_32_63(COMP_EXTI_LINE_COMP6); \
-                                                             } while(0)
+  */
+#define __HAL_COMP_COMP6_EXTI_DISABLE_RISING_FALLING_EDGE() do {                                                       \
+                                                                 LL_EXTI_DisableRisingTrig_32_63(COMP_EXTI_LINE_COMP6);\
+                                                                 LL_EXTI_DisableFallingTrig_32_63(COMP_EXTI_LINE_COMP6);\
+                                                               } while(0)
 
 /**
   * @brief  Enable the COMP6 EXTI line in interrupt mode.
@@ -849,8 +848,8 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   */
 #define __HAL_COMP_COMP6_EXTI_CLEAR_FLAG()            LL_EXTI_ClearFlag_32_63(COMP_EXTI_LINE_COMP6)
 
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx*/
-#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx*/
+#if  defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 /**
   * @brief  Enable the COMP7 EXTI line rising edge trigger.
   * @retval None
@@ -879,19 +878,19 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @brief  Enable the COMP7 EXTI line rising & falling edge trigger.
   * @retval None
   */
-#define __HAL_COMP_COMP7_EXTI_ENABLE_RISING_FALLING_EDGE()   do { \
-                                                               LL_EXTI_EnableRisingTrig_32_63(COMP_EXTI_LINE_COMP7); \
-                                                               LL_EXTI_EnableFallingTrig_32_63(COMP_EXTI_LINE_COMP7); \
-                                                             } while(0)
+#define __HAL_COMP_COMP7_EXTI_ENABLE_RISING_FALLING_EDGE() do {                                                        \
+                                                                LL_EXTI_EnableRisingTrig_32_63(COMP_EXTI_LINE_COMP7);  \
+                                                                LL_EXTI_EnableFallingTrig_32_63(COMP_EXTI_LINE_COMP7); \
+                                                              } while(0)
 
 /**
   * @brief  Disable the COMP7 EXTI line rising & falling edge trigger.
   * @retval None
-  */                                         
-#define __HAL_COMP_COMP7_EXTI_DISABLE_RISING_FALLING_EDGE()  do { \
-                                                               LL_EXTI_DisableRisingTrig_32_63(COMP_EXTI_LINE_COMP7); \
-                                                               LL_EXTI_DisableFallingTrig_32_63(COMP_EXTI_LINE_COMP7); \
-                                                             } while(0)
+  */
+#define __HAL_COMP_COMP7_EXTI_DISABLE_RISING_FALLING_EDGE() do {                                                       \
+                                                                 LL_EXTI_DisableRisingTrig_32_63(COMP_EXTI_LINE_COMP7);\
+                                                                 LL_EXTI_DisableFallingTrig_32_63(COMP_EXTI_LINE_COMP7);\
+                                                               } while(0)
 
 /**
   * @brief  Enable the COMP7 EXTI line in interrupt mode.
@@ -935,7 +934,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   */
 #define __HAL_COMP_COMP7_EXTI_CLEAR_FLAG()            LL_EXTI_ClearFlag_32_63(COMP_EXTI_LINE_COMP7)
 
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
+#endif /* STM32G414xx ||  STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
 /**
   * @}
   */
@@ -958,11 +957,11 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 #define COMP_EXTI_LINE_COMP2           (LL_EXTI_LINE_22)  /*!< EXTI line 22 connected to COMP2 output. Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_EXTI_LINE_COMP3           (LL_EXTI_LINE_29)  /*!< EXTI line 29 connected to COMP3 output. Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_EXTI_LINE_COMP4           (LL_EXTI_LINE_30)  /*!< EXTI line 30 connected to COMP4 output. Note: For COMPx instance availability, please refer to datasheet */
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
+#if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define COMP_EXTI_LINE_COMP5           (LL_EXTI_LINE_31)  /*!< EXTI line 31 connected to COMP5 output. Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_EXTI_LINE_COMP6           (LL_EXTI_LINE_32)  /*!< EXTI line 32 connected to COMP6 output. Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_EXTI_LINE_COMP7           (LL_EXTI_LINE_33)  /*!< EXTI line 33 connected to COMP7 output. Note: For COMPx instance availability, please refer to datasheet */
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */                  
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
 /**
   * @}
   */
@@ -995,7 +994,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @param  __INSTANCE__  specifies the COMP instance.
   * @retval value of @ref COMP_ExtiLine
   */
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
+#if  defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define COMP_GET_EXTI_LINE(__INSTANCE__)    (((__INSTANCE__) == COMP1) ? COMP_EXTI_LINE_COMP1  \
                                              :((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2 \
                                              :((__INSTANCE__) == COMP3) ? COMP_EXTI_LINE_COMP3 \
@@ -1008,7 +1007,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
                                              :((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2 \
                                              :((__INSTANCE__) == COMP3) ? COMP_EXTI_LINE_COMP3 \
                                              : COMP_EXTI_LINE_COMP4)
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
 /**
   * @}
   */
@@ -1019,7 +1018,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 #define IS_COMP_INPUT_PLUS(__COMP_INSTANCE__, __INPUT_PLUS__) (((__INPUT_PLUS__) == COMP_INPUT_PLUS_IO1) || \
                                                                ((__INPUT_PLUS__) == COMP_INPUT_PLUS_IO2))
 
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
+#if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define IS_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__) (((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_4VREFINT)  || \
                                                                  ((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_2VREFINT)  || \
                                                                  ((__INPUT_MINUS__) == COMP_INPUT_MINUS_3_4VREFINT)  || \
@@ -1099,7 +1098,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 /*       Better use IS_COMP_BLANKINGSRC_INSTANCE instead      */
 /*       Macro kept for compatibility with other STM32 series */
 #define IS_COMP_BLANKINGSRCE(__OUTPUT_BLANKING_SOURCE__)                    \
-  (   ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)               \
+  (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)                  \
    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1)     \
    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2)     \
    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3)     \
@@ -1132,126 +1131,126 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1)          \
    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3)           \
   )
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
+#if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)  \
-   ((((__INSTANCE__) == COMP1) &&                                               \
+  ((((__INSTANCE__) == COMP1) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP2) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP2) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP3) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP3) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP4) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP4) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4)))       \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP5) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP5) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP5)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP5)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP5)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP5)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP6) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP6) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP6)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP6)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP6)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP6)))       \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP7) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP7) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP7)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP7)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP7)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP7)))       \
-    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5)             \
-    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1)             \
-    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3)              \
-    )
+   || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5)              \
+   || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1)              \
+   || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3)               \
+  )
 #elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx)
 #define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)  \
-   ((((__INSTANCE__) == COMP1) &&                                               \
+  ((((__INSTANCE__) == COMP1) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP2) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP2) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP3) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP3) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP4) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP4) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4)))       \
-    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1)             \
-    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3)              \
-    )
+   || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1)              \
+   || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3)               \
+  )
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
 #define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)  \
-   ((((__INSTANCE__) == COMP1) &&                                               \
+  ((((__INSTANCE__) == COMP1) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP2) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP2) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP3) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP3) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3)))        \
-    ||                                                                          \
-    (((__INSTANCE__) == COMP4) &&                                               \
+   ||                                                                           \
+   (((__INSTANCE__) == COMP4) &&                                                \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4)  ||      \
      ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4)))       \
-    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5)             \
-    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1)             \
-    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3)              \
-    )
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
+   || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5)              \
+   || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1)              \
+   || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3)               \
+  )
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
 
 #define IS_COMP_TRIGGERMODE(__MODE__)       (((__MODE__) == COMP_TRIGGERMODE_NONE)                 || \
                                              ((__MODE__) == COMP_TRIGGERMODE_IT_RISING)            || \
@@ -1314,7 +1313,7 @@ void              HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp);
   * @{
   */
 HAL_StatusTypeDef HAL_COMP_Lock(COMP_HandleTypeDef *hcomp);
-uint32_t          HAL_COMP_GetOutputLevel(COMP_HandleTypeDef *hcomp);
+uint32_t          HAL_COMP_GetOutputLevel(const COMP_HandleTypeDef *hcomp);
 /* Callback in interrupt mode */
 void              HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp);
 /**
@@ -1325,8 +1324,8 @@ void              HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp);
 /** @addtogroup COMP_Exported_Functions_Group4
   * @{
   */
-HAL_COMP_StateTypeDef HAL_COMP_GetState(COMP_HandleTypeDef *hcomp);
-uint32_t              HAL_COMP_GetError(COMP_HandleTypeDef *hcomp);
+HAL_COMP_StateTypeDef HAL_COMP_GetState(const COMP_HandleTypeDef *hcomp);
+uint32_t              HAL_COMP_GetError(const COMP_HandleTypeDef *hcomp);
 /**
   * @}
   */

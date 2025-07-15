@@ -20,9 +20,67 @@ Copyright &copy; 2017 STMicroelectronics\
 ::: {.col-sm-12 .col-lg-8}
 
 # __Update History__
+
 ::: {.collapse}
-<input type="checkbox" id="collapse-section15" checked aria-hidden="true">
-<label for="collapse-section15" aria-hidden="true">__V1.10.3  /  04-November-2022__</label>
+<input type="checkbox" id="collapse-section18" checked aria-hidden="true">
+<label for="collapse-section18" aria-hidden="true">__V1.10.6  /  06-December-2024__</label>
+<div>
+
+## Main Changes
+
+- **system_stm32h7xx.c template files**
+  - Fix computed frequencies returned by the HAL_RCC_GetHCLKFreq(), HAL_RCC_GetPCLK1Freq(), and HAL_RCC_GetPCLK2Freq() APIs.
+  - Enable FMC clock to ensure effective write access to FMC Bank1 registers in the SystemInit() API.
+- **STM32H723/H725/H730/H733/H735 devices header files**
+  - Align the RTC TAMPER register and bitfields naming with the terminology used in the Reference Manual (RM0468).
+- **STM32H742/H743/H745/H747/H750/H753/H755/H757/H7A3/H7B0/H7B3 device header files**
+  - Define new RTC macros to manage specific supported Tamper features:
+    - RTC_TAMPER2_SUPPORT to manage Tamper 2 support
+    - RTC_TAMPMASKFLAG_SUPPORT to manage Tamper Event Masking support
+    - RTC_TAMPNOERASE_SUPPORT to manage Backup Registers erasure upon Tamper Event support
+    - RTC_TAMPxIE_SUPPORT to manage selective TAMPERx interrupt enable support.
+
+</div>
+:::
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section17" aria-hidden="true">
+<label for="collapse-section17" aria-hidden="true">__V1.10.5  /  30-October-2024__</label>
+<div>
+
+## Main Changes
+
+- Update startup files to safely exit from Run* mode. 
+  - Deploy the recommended “how to exit from Run* mode” configuration sequence available within product documentation.
+- Update DBGMCU_APB1HFZ1_DBG_TIM24_Pos and FMC_SDCMR_MODE_2 macros with the new values.
+- Align GPIO MODER defines with naming used in reference manual.
+  - Rename “GPIO_MODER_MODExx” to “GPIO_MODER_MODERxx”.
+- Add alignment statements ALIGN(4) to Flash sections in gcc template linker files.
+
+</div>
+:::
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section16" aria-hidden="true">
+<label for="collapse-section16" aria-hidden="true">__V1.10.4  /  15-March-2024__</label>
+<div>
+
+## Main Changes
+
+- Update the values of the sensor calibration temperatures for H742, H743, and H753 part numbers.
+- Remove the unsupported MDMA BASE channel.
+- Align CMSIS with IP spec and product reference manual by adding missing bit fields definition.
+- Update STM32CubeIDE projects to fix the location of .size directive in startup code to allow proper size information of vector table.
+- Update the Cortex-M7 core revision.
+- Set FMC_SDCMR_MODE_2 bit field definition to 0x4.
+- Update to support I2S feature on SPI6 instance available on STM32H723xx, STM32H725xx, STM32H730xx, STM32H730xxQ, STM32H733xx and STM32H735xx devices.
+
+</div>
+:::
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section15" aria-hidden="true">
+<label for="collapse-section15" aria-hidden="true">__V1.10.3  /  23-September-2022__</label>
 <div>
 
 ## Main Changes
