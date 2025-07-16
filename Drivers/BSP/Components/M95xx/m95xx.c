@@ -222,7 +222,7 @@ int32_t M95_spi_ReadData( M95_Object_t *pObj,uint8_t * pData, const uint32_t Tar
     status = pObj->IO.ReadBuffer( pData, TarAddr,  pObj->IO.Address, Size, EEPROMEX_READ );
    else if (TarAddr > 256U)
      status =  pObj->IO.ReadBuffer( pData, TarAddr,  pObj->IO.Address, Size, EEPROMEX_UPREAD );
-   else if (((TarAddr + Size) > 256U)&&(TarAddr <= 256U))
+   else
    { 
      uint32_t temp1,temp2;
      temp1=(256U - targetAddress);        /* no. of bytes in lower half */ 
@@ -300,9 +300,33 @@ int32_t M95_spi_WriteData(M95_Object_t *pObj, uint8_t * pData, const uint32_t Ta
                           const uint16_t PageSize, const uint16_t Size )
 {
   int32_t status = M95_OK;
-  
+  uint32_t iNumberOfPage;
   uint32_t targetAddress = TarAddr;
-  uint32_t remainingSize = Size;
+  /*to handle dynamically start writing address*/
+  if (targetAddress >= PageSize)
+  {
+     iNumberOfPage =  (Size / PageSize);
+     const int Page = (targetAddress / PageSize);
+
+    if (Size < PageSize)
+    {
+     if(((targetAddress + Size) / PageSize) > Page)
+     {
+        iNumberOfPage += 1;
+     }
+    }
+    else 
+    {
+       if ((targetAddress % PageSize) > 0)
+      {
+        iNumberOfPage += 1;
+      }
+    } 
+  }
+  else  
+  {
+    iNumberOfPage = ( targetAddress + Size ) / PageSize;
+  }
   
   /* Check for invalid inputs */
   if ((pObj == NULL) || (pData == NULL) || (PageSize == 0U) || (remainingSize == 0U)) 
